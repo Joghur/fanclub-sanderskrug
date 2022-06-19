@@ -21,11 +21,11 @@ import { useTheme, styled } from "@mui/material/styles";
 import { useEffect, useState } from "react";
 
 import { apiFetch } from "../api/axios";
-import { bundesligaData } from "../../config/settings";
+import { bundesligaData, werderData } from "../../config/settings";
 
 type Props = {
-  blString: string;
-  currentYear: string;
+  blString?: string;
+  currentYear?: string;
 };
 
 type Standing = {
@@ -66,11 +66,13 @@ const Standings = ({ blString, currentYear }: Props) => {
 
   const thisYear = new Date().getFullYear();
   const thisSeason = String(
-    new Date().getMonth() < 5 ? thisYear : thisYear - 1
+    new Date().getMonth() > 5 ? thisYear : thisYear - 1
   );
 
   const [year, setYear] = useState<string>(currentYear || thisSeason);
-  const [league, setLeague] = useState(blString || "bl1");
+  const [league, setLeague] = useState(
+    blString || werderData.currentLeagueString || "bl1"
+  );
   const [standings, setStandings] = useState<Standing[]>([]);
 
   useEffect(() => {
@@ -124,9 +126,9 @@ const Standings = ({ blString, currentYear }: Props) => {
                 autoWidth
                 variant="outlined"
               >
-                {[...Array(21)].map((_, i) => (
+                {[...Array(12)].map((_, i) => (
                   <MenuItem value={thisYear - i}>
-                    {thisYear - i - 1}/{thisYear - i}
+                    {thisYear - i}/{thisYear - i + 1}
                   </MenuItem>
                 ))}
               </Select>

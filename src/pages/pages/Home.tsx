@@ -8,14 +8,9 @@ import Games from "../components/Games";
 import TestApi from "../components/TestApi";
 import Standings from "../components/Standings";
 
-import { werderData } from "../../config/settings";
-
 type Props = {};
 
 const Homes = (props: Props) => {
-  const blStr = werderData.currentLeagueString || werderData.lastLeagueString;
-  const year = werderData.currentYear || werderData.lastYear;
-
   return (
     <>
       {/* <HomeGames />
@@ -29,7 +24,7 @@ const Homes = (props: Props) => {
         spacing={2}
       >
         <Grid item>
-          <Standings blString={blStr} currentYear={year} />
+          <Standings />
         </Grid>
       </Grid>
       {/* <TestApi /> */}

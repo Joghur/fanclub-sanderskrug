@@ -26,14 +26,17 @@ import {
   queryDocuments,
   editDocument,
   saveData,
+  deleteDocument,
 } from "../api/database";
 import { useSnackbar } from "notistack";
 import styled from "@emotion/styled";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getAuth } from "firebase/auth";
 
 import { werderData } from "../../config/settings";
 import { format } from "date-fns";
 import { validateObj } from "../utils/validation";
+import { Link } from "react-router-dom";
+import AlertDialog from "../components/Confirmation";
 
 const StyledTextField = styled(TextField)({
   marginBottom: 10,
@@ -76,10 +79,12 @@ const CardOrdering = (props: Props) => {
   const auth = getAuth();
   const [cardInfo, setCardInfo] = useState("");
   const [cardOrder, setCardOrder] = useState<CardOrder>({ amount: 0 });
+  const [currentOrder, setCurrentOrder] = useState<CardOrder | null>(null);
   const [cards, setCards] = useState<CardOrder[]>([]);
   const [currentMatch, setCurrentMatch] = useState<MatchInfo | null>(null);
   const [validated, setValidated] = useState(false);
   const [error, setError] = useState("");
+  const [openAlert, setOpenAlert] = React.useState(false);
 
   const fetchingStartInfo = async () => {
     const info = await queryDocuments("info", "cardInfoText", "!=", "");
@@ -165,6 +170,37 @@ const CardOrdering = (props: Props) => {
     }
   };
 
+  const handleOpenAlert = () => {
+    setOpenAlert(true);
+  };
+
+  const handleCloseAlert = () => {
+    setOpenAlert(false);
+  };
+
+  const handleEditOrder = async (order: CardOrder) => {
+    if (order?.id) {
+      await editDocument("cards", order.id, order);
+    }
+  };
+
+  const handleDeleteOrder = async (order: CardOrder) => {
+    setCurrentOrder(order);
+    handleOpenAlert();
+  };
+
+  const deleteOrder = async (order: CardOrder) => {
+    if (order?.id) {
+      const res = await deleteDocument("cards", order.id);
+      if (res.success) {
+        setCards((old) => old.filter((o) => o.id !== order.id));
+        snackbar.enqueueSnackbar("Bestellung is geløscht", {
+          variant: "success",
+        });
+      }
+    }
+  };
+
   const handleSubmitInfo = async () => {
     const res = await editDocument("info", "cardInfo", {
       cardInfoText: cardInfo,
@@ -181,6 +217,7 @@ const CardOrdering = (props: Props) => {
   };
 
   console.log("cardOrder", cardOrder);
+  console.log("cards", cards);
   console.log("validated", validated);
 
   return (
@@ -219,8 +256,8 @@ const CardOrdering = (props: Props) => {
               id="name"
               value={cardOrder?.name}
               onChange={handleChangeOrder}
-              error={!!error}
-              helperText={error && "Incorrect entry."}
+            //   error={!!error}
+            //   helperText={error && "Incorrect entry."}
             />
           </Grid>
           <Grid item>
@@ -230,8 +267,8 @@ const CardOrdering = (props: Props) => {
               type="number"
               value={cardOrder?.amount}
               onChange={handleChangeOrder}
-              error={!!error}
-              helperText={error && "Incorrect entry."}
+            //   error={!!error}
+            //   helperText={error && "Incorrect entry."}
             />
           </Grid>
           <Grid item>
@@ -246,7 +283,7 @@ const CardOrdering = (props: Props) => {
             <StyledButton
               variant="contained"
               onClick={handleSubmitOrder}
-              disabled={!cardOrder || !validated}
+              disabled={!cardOrder}
               sx={{ marginTop: 3, height: 58 }}
             >
               Karte bestellen
@@ -280,6 +317,21 @@ const CardOrdering = (props: Props) => {
                           <TableCell>{row.name}</TableCell>
                           <TableCell>{row.amount}</TableCell>
                           <TableCell>{row.comment}</TableCell>
+                          <TableCell>
+                            {/* <Button
+                              variant="outlined"
+                              onClick={() => handleEditOrder(row)}
+                            >
+                              Bearbeiten
+                            </Button> */}
+                            <Button
+                              variant="outlined"
+                              onClick={() => handleDeleteOrder(row)}
+                              sx={{ color: "red", ml: 1 }}
+                            >
+                              Löschen
+                            </Button>
+                          </TableCell>
                         </StyledTableRow>
                       </>
                     ))}
@@ -287,7 +339,7 @@ const CardOrdering = (props: Props) => {
                 </Table>
               </TableContainer>
             </Grid>
-            <Grid container direction="column" item>
+            <Grid container direction="column" item sx={{ mt: 3 }}>
               <Grid item>
                 <StyledTextField
                   label="Kartenvorbestellung info text"
@@ -305,6 +357,16 @@ const CardOrdering = (props: Props) => {
               </Grid>
             </Grid>
           </>
+        )}
+        {openAlert && (
+          <AlertDialog
+            header="Karte löschen"
+            alertText="Möchten Sie diese Karte wirklich löschen? Daten können nicht
+          wiederhergestellt werden"
+            open={openAlert}
+            onClose={handleCloseAlert}
+            onAction={() => currentOrder && deleteOrder(currentOrder)}
+          />
         )}
       </Grid>
     </Box>
