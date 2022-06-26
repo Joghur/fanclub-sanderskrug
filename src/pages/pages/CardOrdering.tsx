@@ -31,37 +31,22 @@ import {
 import { useSnackbar } from "notistack";
 import styled from "@emotion/styled";
 import { getAuth } from "firebase/auth";
+import { format } from "date-fns";
 
 import { werderData } from "../../config/settings";
-import { format } from "date-fns";
 import { validateObj } from "../utils/validation";
 import { Link } from "react-router-dom";
 import AlertDialog from "../components/Confirmation";
+import CardTable from "../components/CardTable";
+import { CardOrder } from "../types/Cards";
 
 const StyledTextField = styled(TextField)({
-  marginBottom: 10,
   marginRight: 10,
 });
 
 const StyledButton = styled(Button)({
   marginBottom: 30,
-  marginLeft: 19,
 });
-
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  // hide last border
-  "&:last-child td, &:last-child th": {
-    border: 0,
-  },
-}));
-
-type CardOrder = {
-  id?: string;
-  amount?: number;
-  comment?: string;
-  matchId?: string;
-  name?: string;
-};
 
 type MatchInfo = {
   currentMatchId?: string;
@@ -74,17 +59,26 @@ type MatchInfo = {
 
 type Props = {};
 
+const initCardOrder: CardOrder = {
+  id: "",
+  comment: "",
+  name: "",
+  amount: 0,
+  matchId: "",
+};
+
 const CardOrdering = (props: Props) => {
   const snackbar = useSnackbar();
   const auth = getAuth();
   const [cardInfo, setCardInfo] = useState("");
-  const [cardOrder, setCardOrder] = useState<CardOrder>({ amount: 0 });
+  const [cardOrder, setCardOrder] = useState<CardOrder>(initCardOrder);
   const [currentOrder, setCurrentOrder] = useState<CardOrder | null>(null);
   const [cards, setCards] = useState<CardOrder[]>([]);
   const [currentMatch, setCurrentMatch] = useState<MatchInfo | null>(null);
   const [validated, setValidated] = useState(false);
   const [error, setError] = useState("");
   const [openAlert, setOpenAlert] = React.useState(false);
+  const [editing, setEditing] = React.useState(false);
 
   const fetchingStartInfo = async () => {
     const info = await queryDocuments("info", "cardInfoText", "!=", "");
@@ -140,33 +134,61 @@ const CardOrdering = (props: Props) => {
 
   const handleSubmitOrder = async () => {
     const validate = validateObj(cardOrder);
-
     if (validate.error) {
       setError(validate.error);
     }
 
-    const res = await saveData("cards", {
-      ...cardOrder,
-      matchId: currentMatch?.currentMatchId,
-    });
+    let res;
+
+    if (editing) {
+      if (cardOrder.id) {
+        res = await editDocument("cards", cardOrder.id, {
+          ...cardOrder,
+          matchId: currentMatch?.currentMatchId,
+        });
+      }
+    } else {
+      res = await saveData("cards", {
+        ...cardOrder,
+        matchId: currentMatch?.currentMatchId,
+      });
+    }
+
     if (res.error) {
       snackbar.enqueueSnackbar("Änderungen werden nicht gespeichert", {
         variant: "error",
       });
     } else {
-      snackbar.enqueueSnackbar("Deine karte is bestellt", {
-        variant: "success",
-      });
+      snackbar.enqueueSnackbar(
+        editing ? "Deine karte is geändert" : "Deine karte is bestellt",
+        {
+          variant: "success",
+        }
+      );
       if (!cardOrder) {
         return;
       }
-      setCards((old) => [
-        ...old,
-        {
-          ...cardOrder,
-          matchId: currentMatch?.currentMatchId,
-        },
-      ]);
+      if (editing) {
+        setCards((old) =>
+          old.map((o) => {
+            if (o.id === cardOrder.id) {
+              return cardOrder;
+            }
+            return o;
+          })
+        );
+      } else {
+        setCards((old) => [
+          ...old,
+          {
+            ...cardOrder,
+            matchId: currentMatch?.currentMatchId,
+          },
+        ]);
+      }
+      setCardOrder(() => initCardOrder);
+      setEditing(false);
+      setCurrentOrder(null);
     }
   };
 
@@ -179,9 +201,8 @@ const CardOrdering = (props: Props) => {
   };
 
   const handleEditOrder = async (order: CardOrder) => {
-    if (order?.id) {
-      await editDocument("cards", order.id, order);
-    }
+    setEditing(true);
+    setCardOrder(order);
   };
 
   const handleDeleteOrder = async (order: CardOrder) => {
@@ -217,8 +238,9 @@ const CardOrdering = (props: Props) => {
   };
 
   console.log("cardOrder", cardOrder);
-  console.log("cards", cards);
-  console.log("validated", validated);
+
+  //   console.log("cards", cards);
+  //   console.log("validated", validated);
 
   return (
     <Box>
@@ -226,14 +248,22 @@ const CardOrdering = (props: Props) => {
         <Grid item>
           <Typography variant="h5">Kartenvorbestellung</Typography>
         </Grid>
-        <Grid item>
-          <Paper style={{ width: "75%", padding: 10 }}>
-            <Typography>{cardInfo}</Typography>
-          </Paper>
-        </Grid>
-        <Grid container direction="column" item>
+        <Grid
+          container
+          direction="column"
+          item
+          spacing={3}
+          alignItems="center"
+          justifyContent="center"
+          sx={{ pb: 5 }}
+        >
           <Grid item>
             <Typography variant="h5">Nächste spiel:</Typography>
+          </Grid>
+          <Grid item>
+            <Paper>
+              <Typography sx={{ p: 2 }}>{cardInfo}</Typography>
+            </Paper>
           </Grid>
           <Grid item sx={{ pb: 5 }}>
             <Typography>
@@ -248,31 +278,30 @@ const CardOrdering = (props: Props) => {
                 )}`}
             </Typography>
           </Grid>
-        </Grid>
-        <Grid container direction="row" item sx={{ pb: 5 }}>
           <Grid item>
-            <Typography>Nahme</Typography>
+            <Typography variant="h6">Nahme</Typography>
             <StyledTextField
               id="name"
               value={cardOrder?.name}
               onChange={handleChangeOrder}
-            //   error={!!error}
-            //   helperText={error && "Incorrect entry."}
+              //   error={!!error}
+              //   helperText={error && "Incorrect entry."}
             />
           </Grid>
           <Grid item>
-            <Typography>Anzahl</Typography>
+            <Typography variant="h6">Anzahl</Typography>
             <StyledTextField
               id="amount"
               type="number"
               value={cardOrder?.amount}
               onChange={handleChangeOrder}
-            //   error={!!error}
-            //   helperText={error && "Incorrect entry."}
+              //   error={!!error}
+              //   helperText={error && "Incorrect entry."}
             />
           </Grid>
           <Grid item>
-            <Typography>Kommentar zur bestellung (Optional)</Typography>
+            <Typography variant="h6">Kommentar zur bestellung</Typography>
+            <Typography>(Optional)</Typography>
             <StyledTextField
               id="comment"
               value={cardOrder?.comment}
@@ -284,9 +313,9 @@ const CardOrdering = (props: Props) => {
               variant="contained"
               onClick={handleSubmitOrder}
               disabled={!cardOrder}
-              sx={{ marginTop: 3, height: 58 }}
+              sx={{ height: 58 }}
             >
-              Karte bestellen
+              {editing ? "Karte ändern" : "Karte bestellen"}
             </StyledButton>
           </Grid>
         </Grid>
@@ -297,47 +326,13 @@ const CardOrdering = (props: Props) => {
               <Typography variant="h5">Admins abteilung</Typography>
             </Grid>
             <Grid item>
-              <TableContainer component={Paper}>
-                <Table aria-label="simple table" size="small">
-                  <TableHead>
-                    <StyledTableRow>
-                      <TableCell>Index</TableCell>
-                      <TableCell>Nahme</TableCell>
-                      <TableCell>Anzahl</TableCell>
-                      <TableCell>Kommentare</TableCell>
-                    </StyledTableRow>
-                  </TableHead>
-                  <TableBody>
-                    {cards.map((row: CardOrder, index) => (
-                      <>
-                        <StyledTableRow key={row.name}>
-                          <TableCell component="th" scope="row">
-                            {index + 1}
-                          </TableCell>
-                          <TableCell>{row.name}</TableCell>
-                          <TableCell>{row.amount}</TableCell>
-                          <TableCell>{row.comment}</TableCell>
-                          <TableCell>
-                            {/* <Button
-                              variant="outlined"
-                              onClick={() => handleEditOrder(row)}
-                            >
-                              Bearbeiten
-                            </Button> */}
-                            <Button
-                              variant="outlined"
-                              onClick={() => handleDeleteOrder(row)}
-                              sx={{ color: "red", ml: 1 }}
-                            >
-                              Löschen
-                            </Button>
-                          </TableCell>
-                        </StyledTableRow>
-                      </>
-                    ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
+              {
+                <CardTable
+                  cards={cards}
+                  handleEdit={handleEditOrder}
+                  handleDelete={handleDeleteOrder}
+                />
+              }
             </Grid>
             <Grid container direction="column" item sx={{ mt: 3 }}>
               <Grid item>
