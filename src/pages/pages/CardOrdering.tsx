@@ -33,12 +33,13 @@ import styled from "@emotion/styled";
 import { getAuth } from "firebase/auth";
 import { format } from "date-fns";
 
-import { werderData } from "../../config/settings";
+import { storageKeyPrefix, werderData } from "../../config/settings";
 import { validateObj } from "../utils/validation";
 import { Link } from "react-router-dom";
 import AlertDialog from "../components/Confirmation";
 import CardTable from "../components/CardTable";
 import { CardOrder } from "../types/Cards";
+import { setLocalStorage } from "../utils/storage";
 
 const StyledTextField = styled(TextField)({
   marginRight: 10,
@@ -47,6 +48,8 @@ const StyledTextField = styled(TextField)({
 const StyledButton = styled(Button)({
   marginBottom: 30,
 });
+
+const storageKeyCardOrder = `${storageKeyPrefix}cardorder`;
 
 type MatchInfo = {
   currentMatchId?: string;
@@ -168,6 +171,9 @@ const CardOrdering = (props: Props) => {
       if (!cardOrder) {
         return;
       }
+
+      setLocalStorage(storageKeyCardOrder, cardOrder);
+
       if (editing) {
         setCards((old) =>
           old.map((o) => {
@@ -236,11 +242,6 @@ const CardOrdering = (props: Props) => {
       });
     }
   };
-
-  console.log("cardOrder", cardOrder);
-
-  //   console.log("cards", cards);
-  //   console.log("validated", validated);
 
   return (
     <Box>

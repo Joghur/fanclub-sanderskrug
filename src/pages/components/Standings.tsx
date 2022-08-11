@@ -22,26 +22,9 @@ import { useEffect, useState } from "react";
 
 import { apiFetch } from "../api/axios";
 import { bundesligaData, werderData } from "../../config/settings";
-
-type Props = {
-  blString?: string;
-  currentYear?: string;
-};
-
-type Standing = {
-  TeamInfoId: number;
-  Draw: number;
-  GoalDiff: number;
-  Goals: number;
-  Lost: number;
-  Matches: number;
-  OpponentGoals: number;
-  Points: number;
-  ShortName: string;
-  TeamIconUrl: string;
-  TeamName: string;
-  Won: number;
-};
+import { thisSeason, thisYear } from "../utils/utilities";
+import { Standing } from "../types/Standing";
+import { getLeagueStatus } from "../utils/werder";
 
 const MobileTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -61,33 +44,43 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-const Standings = ({ blString, currentYear }: Props) => {
+type Props = {
+  blString?: string;
+  useYear?: string;
+};
+
+const Standings = ({ blString, useYear }: Props) => {
   const theme = useTheme();
 
-  const thisYear = new Date().getFullYear();
-  const thisSeason = String(
-    new Date().getMonth() > 5 ? thisYear : thisYear - 1
-  );
-
-  const [year, setYear] = useState<string>(currentYear || thisSeason);
-  const [league, setLeague] = useState(
-    blString || werderData.currentLeagueString || "bl1"
-  );
+  const [year, setYear] = useState<string>(useYear || thisSeason);
+  const [league, setLeague] = useState("");
   const [standings, setStandings] = useState<Standing[]>([]);
 
   useEffect(() => {
-    let standingsUrl = `${bundesligaData.endpoint}/getbltable/${league}/${year}`;
-    if (league === "dfb") {
-      standingsUrl = `${bundesligaData.endpoint}/getbltable/${league}${year}/${year}`;
-    }
+    (async function () {
+      const _league = await getLeagueStatus();
 
-    apiFetch(standingsUrl)
-      .then((result) => {
-        setStandings(result.data);
-      })
-      .catch((error) => {
-        return error;
-      });
+      if (_league) {
+        setLeague(_league);
+      }
+    })();
+  }, []);
+
+  useEffect(() => {
+    if (league) {
+      let standingsUrl = `${bundesligaData.endpoint}/getbltable/${league}/${year}`;
+      if (league === "dfb") {
+        standingsUrl = `${bundesligaData.endpoint}/getbltable/${league}${year}/${year}`;
+      }
+
+      apiFetch(standingsUrl)
+        .then((result) => {
+          setStandings(result.data);
+        })
+        .catch((error) => {
+          return error;
+        });
+    }
   }, [year, league]);
 
   const handleChangeYear = (event: SelectChangeEvent) => {
@@ -100,6 +93,8 @@ const Standings = ({ blString, currentYear }: Props) => {
 
   const mobile = useMediaQuery(theme.breakpoints.down("sm"));
   const pc = !mobile;
+
+  console.log("league", league);
 
   return (
     <>
