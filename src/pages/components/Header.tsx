@@ -117,11 +117,6 @@ const Header = (props: Props) => {
           value="kartenvorbestellung"
           icon={<AspectRatioIcon />}
         />
-        <BottomNavigationAction
-          label="Zeiten"
-          value="abfahrtzeiten"
-          icon={<ScheduleIcon />}
-        />
         <BottomNavigationAction label="Info" value="info" icon={<InfoIcon />} />
       </BottomNavigation>
       {/* </div> */}
@@ -153,16 +148,6 @@ const Header = (props: Props) => {
                 style={{ color: "white", textDecoration: "none" }}
               >
                 Kartenvorbestellung
-              </Link>
-            </Typography>
-            <Typography
-              sx={{ minWidth: 100, display: { xs: "none", sm: "flex" } }}
-            >
-              <Link
-                to="/abfahrtzeiten"
-                style={{ color: "white", textDecoration: "none" }}
-              >
-                Abfahrtzeiten
               </Link>
             </Typography>
             <Typography
