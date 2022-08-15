@@ -1,6 +1,6 @@
 {
   "name": "sanderskrug",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "homepage": "https://iq96.dk/sk/.",
   "dependencies": {
@@ -24,6 +24,7 @@
     "typescript": "^4.7.3"
   },
   "scripts": {
+    "firebase:login": "firebase login",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

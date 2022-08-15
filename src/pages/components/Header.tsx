@@ -12,7 +12,6 @@ import MenuIcon from "@mui/icons-material/Menu";
 import AspectRatioIcon from "@mui/icons-material/AspectRatio";
 import InfoIcon from "@mui/icons-material/Info";
 import HomeRounded from "@mui/icons-material/HomeRounded";
-import ScheduleIcon from "@mui/icons-material/Schedule";
 import { Container } from "@mui/system";
 import { Link, useNavigate } from "react-router-dom";
 import { useCallback, useState } from "react";
@@ -45,17 +44,6 @@ const Header = (props: Props) => {
 
   return (
     <>
-      {/* <div ref={ref}>
-        <IKImage
-          path="site/sanderskrug_2INxFun7Z.png"
-          transformation={[
-            {
-              width: width,
-            },
-          ]}
-        />
-      </div> */}
-      {/* <div> */}
       <Box
         ref={ref}
         sx={{
@@ -75,9 +63,6 @@ const Header = (props: Props) => {
             borderWidth: 1,
             border: "2px solid #73AD21",
             boxShadow: "5px 10px 9px grey",
-            // position: "fixed",
-            // left: 0,
-            // top: 0,
           }}
         />
       </Box>
@@ -89,18 +74,6 @@ const Header = (props: Props) => {
       >
         <Typography variant="h5">Werder Bremen Fanclub</Typography>
       </Box>
-      {/* </div> */}
-      {/* <Box borderBottom={1} sx={{ display: { xs: "flex", sm: "none" } }}> */}
-      {/* <div
-          style={{
-            marginTop: 8,
-            padding: 8,
-            position: "fixed",
-            width: "100%",
-            //   top: 0,
-            left: 0,
-          }}
-        > */}
       <BottomNavigation
         value={value}
         onChange={handleChange}
@@ -119,8 +92,6 @@ const Header = (props: Props) => {
         />
         <BottomNavigationAction label="Info" value="info" icon={<InfoIcon />} />
       </BottomNavigation>
-      {/* </div> */}
-      {/* </Box> */}
       <AppBar
         position="static"
         style={{ backgroundColor: "green" }}

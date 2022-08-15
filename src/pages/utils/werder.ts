@@ -35,12 +35,10 @@ export const getLeague = async (
 export const werderLeagueStatus = async () => {
   const currentSeason = thisSeason;
   const leagues: League[] = ["bl1", "bl2", "bl3"];
-  const shortName = werderData.ShortName;
-  let leagueIndex;
+  const shortName = werderData.shortName;
 
   if (currentSeason) {
     for (let index = 0; index < leagues.length; index++) {
-      const element = leagues[index];
       const lg = await getLeague(leagues[index], currentSeason);
       if (lg && lg?.length > 0) {
         const ret = lg[lg.findIndex((item) => item.ShortName == shortName)];

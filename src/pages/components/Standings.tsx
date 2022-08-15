@@ -15,13 +15,12 @@ import {
   SelectChangeEvent,
   Grid,
   Typography,
-  tableRowClasses,
 } from "@mui/material";
 import { useTheme, styled } from "@mui/material/styles";
 import { useEffect, useState } from "react";
 
 import { apiFetch } from "../api/axios";
-import { bundesligaData, werderData } from "../../config/settings";
+import { bundesligaData } from "../../config/settings";
 import { thisSeason, thisYear } from "../utils/utilities";
 import { Standing } from "../types/Standing";
 import { getLeagueStatus } from "../utils/werder";
