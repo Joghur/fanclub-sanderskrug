@@ -22,11 +22,13 @@ const fetchAllGames = (url: string) => {
 };
 
 const Games = (props: Props) => {
+  const { url } = props;
+
   const [games, setGames] = React.useState<Game[]>([]);
 
   useEffect(() => {
-    if (props?.url) {
-      fetchAllGames(props.url)
+    if (url) {
+      fetchAllGames(url)
         .then((result) => {
           setGames(result.data);
         })
@@ -41,6 +43,8 @@ const Games = (props: Props) => {
       game.team1.teamName === werderData.teamName ||
       game.team2.teamName === werderData.teamName
   );
+
+  console.log("Games - url", url);
 
   if (werderGames.length === 0) {
     return null;

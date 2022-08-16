@@ -8,6 +8,7 @@ import {
   TextField,
   SelectChangeEvent,
   Typography,
+  Divider,
 } from "@mui/material";
 import { useSnackbar } from "notistack";
 import EditIcon from "@mui/icons-material/Edit";
@@ -15,13 +16,15 @@ import styled from "@emotion/styled";
 import { Timestamp } from "firebase/firestore/lite";
 
 import Standings from "../components/Standings";
-import { editDocument, queryDocuments } from "../api/database";
+import { queryDocuments } from "../api/database";
 import Games from "../components/Games";
-import CardInfo from "../components/NextGameCard";
-import NextGameCard from "../components/NextGameCard";
+import CardInfo from "../components/NextGame";
+import NextGame from "../components/NextGame";
 import InfoCard from "../components/InfoCard";
 import { thisSeason, thisYear } from "../utils/utilities";
 import { getLeagueStatus } from "../utils/werder";
+import { NextMatch } from "../types/Game";
+import { Link } from "react-router-dom";
 
 const StyledButton = styled(Button)({
   marginBottom: 30,
@@ -31,13 +34,16 @@ const StyledTextField = styled(TextField)({
   marginRight: 10,
 });
 
-type MatchInfo = {
-  currentMatchId?: string;
-  id: string;
-  matchDate: Timestamp;
-  homeAway: string;
-  location: string;
-  league: string;
+const initNextMatch: NextMatch = {
+  id: "",
+  matchDate: new Date(),
+  location: "",
+  matchDay: 0,
+  matchType: "other",
+  opponent: "",
+  nextMatch: false,
+  active: false,
+  busTour: false,
 };
 
 type Props = {};
@@ -45,15 +51,24 @@ type Props = {};
 const Homes = (props: Props) => {
   const snackbar = useSnackbar();
 
-  const [currentMatch, setCurrentMatch] = useState<MatchInfo | null>(null);
+  const [showNextMatchDialog, setShowNextMatchDialog] = useState(false);
+  const [nextMatch, setNextMatch] = useState<NextMatch>(initNextMatch);
   const [year, setYear] = useState<string>(thisSeason);
   const [league, setLeague] = useState("");
+  const [blMatchDay, setBlMatchDay] = useState(0);
 
   const fetchingStartInfo = async () => {
-    const current = await queryDocuments("cards", "currentMatchId", "!=", "");
+    const nextMatch = await queryDocuments("match", "nextMatch", "==", true);
 
-    if (current.success.length === 1) {
-      setCurrentMatch(current.success[0]);
+    if (nextMatch.success.length === 1) {
+      setNextMatch(nextMatch.success[0]);
+    }
+
+    if (nextMatch.success.length !== 1) {
+      console.log(
+        "Error in NextMatch. nextMatch.success.length = ",
+        nextMatch.success.length
+      );
     }
   };
 
@@ -77,7 +92,11 @@ const Homes = (props: Props) => {
     setLeague(event.target.value);
   };
 
+  const showOrderButton = nextMatch && nextMatch.active;
+
   console.log("league", league);
+  console.log("year", year);
+  console.log("blMatchDay", blMatchDay);
 
   return (
     <>
@@ -89,16 +108,48 @@ const Homes = (props: Props) => {
           spacing={15}
         >
           <InfoCard />
-          <NextGameCard />
+          <NextGame nextMatch={nextMatch} setNextMatch={setNextMatch} />
         </Stack>
-
-        <Games url="https://api.openligadb.de/getmatchdata/bl1/2022/2" />
-        <Standings
-          league={league}
-          year={year}
-          setLeague={handleChangeYear}
-          setYear={handleChangeLeague}
-        />
+        {showOrderButton && (
+          <Button
+            size="large"
+            variant="outlined"
+            sx={{ boxShadow: 3, p: 5 }}
+            onClick={() => {}}
+          >
+            <Link
+              to="kartenvorbestellung"
+              style={{ color: "green", textDecoration: "none" }}
+            >
+              Kartenvorbestellung
+            </Link>
+          </Button>
+        )}
+        {!showOrderButton && (
+          <Typography
+            variant="h5"
+            color="orange"
+            sx={{ border: 1, padding: 3, boxShadow: 3, p: 5 }}
+          >
+            Kartenvorbestellung noch nicht aktiv
+          </Typography>
+        )}
+        <Divider />
+        {league && year && (
+          <>
+            {blMatchDay > 0 && (
+              <Games
+                url={`https://api.openligadb.de/getmatchdata/${league}/${year}/${blMatchDay}`}
+              />
+            )}
+            <Standings
+              league={league}
+              year={year}
+              setLeague={handleChangeYear}
+              setYear={handleChangeLeague}
+            />
+          </>
+        )}
       </Stack>
     </>
   );

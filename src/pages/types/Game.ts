@@ -54,3 +54,15 @@ export type Team = {
   teamId?: number;
   teamName?: string;
 };
+
+export interface NextMatch {
+  id?: string;
+  matchDate: Date;
+  location?: string;
+  matchDay?: number;
+  matchType: "league" | "cup" | "other";
+  opponent: string;
+  nextMatch: boolean;
+  active: boolean;
+  busTour: boolean;
+}

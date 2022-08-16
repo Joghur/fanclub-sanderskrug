@@ -23,8 +23,6 @@ const StyledTextField = styled(TextField)({
 
 const storageKeyCardOrder = `${storageKeyPrefix}cardorder`;
 
-type Props = {};
-
 const initCardOrder: CardOrder = {
   id: "",
   comment: "",
@@ -33,6 +31,8 @@ const initCardOrder: CardOrder = {
   matchId: "",
   regularCardNumber: "",
 };
+
+type Props = {};
 
 const CardOrdering = (props: Props) => {
   const snackbar = useSnackbar();
