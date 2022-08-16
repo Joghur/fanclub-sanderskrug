@@ -21,9 +21,8 @@ import { useEffect, useState } from "react";
 
 import { apiFetch } from "../api/axios";
 import { bundesligaData } from "../../config/settings";
-import { thisSeason, thisYear } from "../utils/utilities";
 import { Standing } from "../types/Standing";
-import { getLeagueStatus } from "../utils/werder";
+import { thisSeason, thisYear } from "../utils/utilities";
 
 const MobileTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -44,26 +43,18 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 type Props = {
-  blString?: string;
-  useYear?: string;
+  league: string;
+  year: string;
+  setLeague: (event: SelectChangeEvent) => void;
+  setYear: (event: SelectChangeEvent) => void;
 };
 
-const Standings = ({ blString, useYear }: Props) => {
+const Standings = (props: Props) => {
   const theme = useTheme();
 
-  const [year, setYear] = useState<string>(useYear || thisSeason);
-  const [league, setLeague] = useState("");
+  const { year, league, setLeague, setYear } = props;
+
   const [standings, setStandings] = useState<Standing[]>([]);
-
-  useEffect(() => {
-    (async function () {
-      const _league = await getLeagueStatus();
-
-      if (_league) {
-        setLeague(_league);
-      }
-    })();
-  }, []);
 
   useEffect(() => {
     if (league) {
@@ -82,18 +73,8 @@ const Standings = ({ blString, useYear }: Props) => {
     }
   }, [year, league]);
 
-  const handleChangeYear = (event: SelectChangeEvent) => {
-    setYear(event.target.value);
-  };
-
-  const handleChangeLeague = (event: SelectChangeEvent) => {
-    setLeague(event.target.value);
-  };
-
   const mobile = useMediaQuery(theme.breakpoints.down("sm"));
   const pc = !mobile;
-
-  console.log("league", league);
 
   return (
     <>
@@ -116,7 +97,7 @@ const Standings = ({ blString, useYear }: Props) => {
                 id="select-year"
                 value={year}
                 label="Saison"
-                onChange={handleChangeYear}
+                onChange={setYear}
                 autoWidth
                 variant="outlined"
               >
@@ -135,7 +116,7 @@ const Standings = ({ blString, useYear }: Props) => {
                 id="select-year"
                 value={league}
                 label="Liga"
-                onChange={handleChangeLeague}
+                onChange={setLeague}
                 autoWidth
                 variant="outlined"
               >

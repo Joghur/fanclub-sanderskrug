@@ -6,10 +6,10 @@ import {
   Stack,
   TextareaAutosize,
   TextField,
+  SelectChangeEvent,
   Typography,
 } from "@mui/material";
 import { useSnackbar } from "notistack";
-import { getAuth } from "firebase/auth";
 import EditIcon from "@mui/icons-material/Edit";
 import styled from "@emotion/styled";
 import { Timestamp } from "firebase/firestore/lite";
@@ -17,6 +17,11 @@ import { Timestamp } from "firebase/firestore/lite";
 import Standings from "../components/Standings";
 import { editDocument, queryDocuments } from "../api/database";
 import Games from "../components/Games";
+import CardInfo from "../components/NextGameCard";
+import NextGameCard from "../components/NextGameCard";
+import InfoCard from "../components/InfoCard";
+import { thisSeason, thisYear } from "../utils/utilities";
+import { getLeagueStatus } from "../utils/werder";
 
 const StyledButton = styled(Button)({
   marginBottom: 30,
@@ -39,26 +44,13 @@ type Props = {};
 
 const Homes = (props: Props) => {
   const snackbar = useSnackbar();
-  const auth = getAuth();
 
-  const [showInformationDialog, setShowInformationDialog] = useState(false);
-  const [showSpieleDialog, setShowSpieleDialog] = useState(false);
-  const [info, setInfo] = useState("");
-  const [spieleInfo, setSpieleInfo] = useState("");
   const [currentMatch, setCurrentMatch] = useState<MatchInfo | null>(null);
+  const [year, setYear] = useState<string>(thisSeason);
+  const [league, setLeague] = useState("");
 
   const fetchingStartInfo = async () => {
-    const spieleInfo = await queryDocuments("info", "cardInfoText", "!=", "");
     const current = await queryDocuments("cards", "currentMatchId", "!=", "");
-    const info = await queryDocuments("info", "infoText", "!=", "");
-
-    if (info.success.length === 1) {
-      setSpieleInfo(spieleInfo.success[0].cardInfoText);
-    }
-
-    if (info.success.length === 1) {
-      setInfo(info.success[0].infoText);
-    }
 
     if (current.success.length === 1) {
       setCurrentMatch(current.success[0]);
@@ -67,53 +59,25 @@ const Homes = (props: Props) => {
 
   useEffect(() => {
     fetchingStartInfo();
+
+    (async function () {
+      const _league = await getLeagueStatus();
+
+      if (_league) {
+        setLeague(_league);
+      }
+    })();
   }, []);
 
-  const handleSubmitInformation = async () => {
-    const res = await editDocument("info", "info", {
-      infoText: info,
-    });
-    setShowInformationDialog(false);
-
-    if (res.error) {
-      snackbar.enqueueSnackbar("Änderungen werden nicht gespeichert", {
-        variant: "error",
-      });
-    } else {
-      snackbar.enqueueSnackbar("Änderungen gespeichert", {
-        variant: "success",
-      });
-    }
+  const handleChangeYear = (event: SelectChangeEvent) => {
+    setYear(event.target.value);
   };
 
-  const handleChangeInformationText = (
-    event: React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
-    setInfo(event.target.value);
+  const handleChangeLeague = (event: SelectChangeEvent) => {
+    setLeague(event.target.value);
   };
 
-  const handleChangeSpieleInformationText = (
-    event: React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
-    setSpieleInfo(event.target.value);
-  };
-
-  const handleSubmitSpieleInfo = async () => {
-    const res = await editDocument("info", "cardInfo", {
-      cardInfoText: spieleInfo,
-    });
-    setShowSpieleDialog(false);
-
-    if (res.error) {
-      snackbar.enqueueSnackbar("Änderungen werden nicht gespeichert", {
-        variant: "error",
-      });
-    } else {
-      snackbar.enqueueSnackbar("Änderungen gespeichert", {
-        variant: "success",
-      });
-    }
-  };
+  console.log("league", league);
 
   return (
     <>
@@ -124,75 +88,17 @@ const Homes = (props: Props) => {
           justifyContent="space-around"
           spacing={15}
         >
-          {info && (
-            <Stack>
-              <Stack direction="row" alignItems="center" spacing={1}>
-                <Typography variant="h5">Information</Typography>
-                {auth.currentUser && (
-                  <EditIcon onClick={() => setShowInformationDialog(true)} />
-                )}
-              </Stack>
-              <Paper sx={{ p: 3 }}>
-                <Typography variant="body1">{info}</Typography>
-              </Paper>
-            </Stack>
-          )}
-          {spieleInfo && (
-            <Stack>
-              <Stack direction="row" alignItems="center" spacing={1}>
-                <Typography variant="h5">Nächste spiel</Typography>
-                {auth.currentUser && (
-                  <EditIcon onClick={() => setShowSpieleDialog(true)} />
-                )}
-              </Stack>
-              <Paper sx={{ p: 2 }}>
-                <Typography>{spieleInfo}</Typography>
-              </Paper>
-            </Stack>
-          )}
+          <InfoCard />
+          <NextGameCard />
         </Stack>
 
         <Games url="https://api.openligadb.de/getmatchdata/bl1/2022/2" />
-        {auth.currentUser && (
-          <>
-            <Dialog open={showInformationDialog}>
-              <Paper sx={{ p: 5 }}>
-                <Stack spacing={2}>
-                  <TextareaAutosize
-                    aria-label="empty textarea"
-                    minRows={2}
-                    value={info}
-                    onChange={handleChangeInformationText}
-                  />
-                  <Button variant="contained" onClick={handleSubmitInformation}>
-                    Info ändern
-                  </Button>
-                </Stack>
-              </Paper>
-            </Dialog>
-            <Dialog open={showSpieleDialog}>
-              <Paper sx={{ p: 5 }}>
-                <Stack spacing={2}>
-                  <StyledTextField
-                    label="Kartenvorbestellung info text"
-                    minRows={2}
-                    multiline
-                    style={{ width: "75%" }}
-                    value={spieleInfo}
-                    onChange={handleChangeSpieleInformationText}
-                  />
-                  <StyledButton
-                    variant="contained"
-                    onClick={handleSubmitSpieleInfo}
-                  >
-                    Info ändern
-                  </StyledButton>
-                </Stack>
-              </Paper>
-            </Dialog>
-          </>
-        )}
-        <Standings />
+        <Standings
+          league={league}
+          year={year}
+          setLeague={handleChangeYear}
+          setYear={handleChangeLeague}
+        />
       </Stack>
     </>
   );

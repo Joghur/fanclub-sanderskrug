@@ -13,25 +13,27 @@ import { apiFetch } from "../api/axios";
 import { werderData } from "../../config/settings";
 import { Game } from "../types/Game";
 
-type Props = {
-  url: string;
+interface Props {
+  url?: string;
+}
+
+const fetchAllGames = (url: string) => {
+  return apiFetch(url);
 };
 
 const Games = (props: Props) => {
   const [games, setGames] = React.useState<Game[]>([]);
 
-  const fetchAllGames = () => {
-    return apiFetch(props.url);
-  };
-
   useEffect(() => {
-    fetchAllGames()
-      .then((result) => {
-        setGames(result.data);
-      })
-      .catch((error) => {
-        return error;
-      });
+    if (props?.url) {
+      fetchAllGames(props.url)
+        .then((result) => {
+          setGames(result.data);
+        })
+        .catch((error) => {
+          return error;
+        });
+    }
   }, []);
 
   const werderGames = games.filter(
