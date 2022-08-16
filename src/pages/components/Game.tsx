@@ -1,21 +1,32 @@
 import { Card, CardContent, Stack, Tooltip, Typography } from "@mui/material";
 import { format } from "date-fns";
+import { Game, MatchResult } from "../types/Game";
 
 //https://github.com/OpenLigaDB/OpenLigaDB-Samples/blob/master/react/app/components/Game.jsx
 
-const Game = (props) => {
+const GameComponent: React.FunctionComponent<{ match: Game }> = ({ match }) => {
   const {
-    homeiconsrc,
-    guesticonsrc,
-    hometeamName,
-    guestteamName,
-    isGameFinished,
-    hometeamgoals,
-    guestteamgoals,
+    matchID,
+    team1,
+    team2,
+    matchResults,
     leagueName,
     matchDateTime,
-    matchResults,
-  } = props;
+  } = match;
+
+  const key = matchID;
+  const homeiconsrc = team1?.teamIconUrl;
+  const guesticonsrc = team2?.teamIconUrl;
+  const hometeamName = team1?.teamName;
+  const guestteamName = team2?.teamName;
+  const hometeamgoals = matchResults && matchResults[0]?.pointsTeam1;
+  const guestteamgoals = matchResults && matchResults[0]?.pointsTeam2;
+
+  const matchDay =
+    matchDateTime && format(new Date(matchDateTime), "dd/MM-yyyy");
+  const matchStatus = (matchResults &&
+    matchResults.length > 0 &&
+    matchResults[0]) as MatchResult;
 
   const style = {
     imgStyle: {
@@ -33,8 +44,7 @@ const Game = (props) => {
     },
   };
 
-  const matchDay = format(new Date(matchDateTime), "dd/MM-yyyy");
-  const matchStatus = matchResults[0].resultName;
+  //   if()
   return (
     <div style={{ width: 400 }}>
       <Card>
@@ -52,9 +62,9 @@ const Game = (props) => {
               <p id="guestteamname">{guestteamName}</p>
             </div>
             <div style={style.imgDiv}>
-              <Tooltip title={matchResults[0].resultDescription}>
+              <Tooltip title={matchStatus?.resultDescription}>
                 <Typography variant="h4">
-                  {`${matchResults[0].pointsTeam1} - ${matchResults[0].pointsTeam2}`}
+                  {`${matchStatus?.pointsTeam1} - ${matchStatus?.pointsTeam2}`}
                 </Typography>
               </Tooltip>
             </div>
@@ -65,7 +75,7 @@ const Game = (props) => {
                   color: "gray",
                 }}
                 variant="h6"
-              >{`${matchStatus}`}</Typography>
+              >{`${matchStatus?.resultName}`}</Typography>
             </div>
           </CardContent>
         </Stack>
@@ -74,4 +84,4 @@ const Game = (props) => {
   );
 };
 
-export default Game;
+export default GameComponent;

@@ -1,15 +1,7 @@
-import {
-  Button,
-  Grid,
-  Divider,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Button, Grid, Divider, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import React, {  useState } from "react";
-import {
-  deleteDocument,
-} from "../api/database";
+import React, { useState } from "react";
+import { deleteDocument } from "../api/database";
 import { useSnackbar } from "notistack";
 import styled from "@emotion/styled";
 import { getAuth } from "firebase/auth";
@@ -39,6 +31,7 @@ const initCardOrder: CardOrder = {
   name: "",
   amount: 0,
   matchId: "",
+  regularCardNumber: "",
 };
 
 const CardOrdering = (props: Props) => {
@@ -62,7 +55,6 @@ const CardOrdering = (props: Props) => {
 
     setCardOrder((old) => ({ ...old, [id]: _value }));
   };
-
 
   const handleSubmitOrder = async () => {
     const validate = validateObj(cardOrder);
@@ -163,6 +155,16 @@ const CardOrdering = (props: Props) => {
             <StyledTextField
               id="name"
               value={cardOrder?.name}
+              onChange={handleChangeOrder}
+              //   error={!!error}
+              //   helperText={error && "Incorrect entry."}
+            />
+          </Grid>
+          <Grid item>
+            <Typography variant="h6">Werder Stammkartnummer</Typography>
+            <StyledTextField
+              id="name"
+              value={cardOrder?.regularCardNumber}
               onChange={handleChangeOrder}
               //   error={!!error}
               //   helperText={error && "Incorrect entry."}

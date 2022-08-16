@@ -47,16 +47,17 @@ const Homes = (props: Props) => {
   const [spieleInfo, setSpieleInfo] = useState("");
   const [currentMatch, setCurrentMatch] = useState<MatchInfo | null>(null);
 
-  useEffect(() => {
-    fetchingStartInfo();
-  }, []);
-
   const fetchingStartInfo = async () => {
-    const info = await queryDocuments("info", "cardInfoText", "!=", "");
+    const spieleInfo = await queryDocuments("info", "cardInfoText", "!=", "");
     const current = await queryDocuments("cards", "currentMatchId", "!=", "");
+    const info = await queryDocuments("info", "infoText", "!=", "");
 
     if (info.success.length === 1) {
-      setSpieleInfo(info.success[0].cardInfoText);
+      setSpieleInfo(spieleInfo.success[0].cardInfoText);
+    }
+
+    if (info.success.length === 1) {
+      setInfo(info.success[0].infoText);
     }
 
     if (current.success.length === 1) {
@@ -64,16 +65,8 @@ const Homes = (props: Props) => {
     }
   };
 
-  const fetching = async () => {
-    const info = await queryDocuments("info", "infoText", "!=", "");
-
-    if (info.success.length === 1) {
-      setInfo(info.success[0].infoText);
-    }
-  };
-
   useEffect(() => {
-    fetching();
+    fetchingStartInfo();
   }, []);
 
   const handleSubmitInformation = async () => {

@@ -4,4 +4,5 @@ export type CardOrder = {
   comment?: string;
   matchId?: string;
   name?: string;
+  regularCardNumber?: string;
 };
