@@ -10,13 +10,16 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import EditIcon from "@mui/icons-material/Edit";
+import CancelIcon from "@mui/icons-material/Cancel";
 import { useSnackbar } from "notistack";
 import { getAuth } from "firebase/auth";
 import styled from "@emotion/styled";
+import { format } from "date-fns";
 
 import { NextMatch } from "../types/Game";
 import { editDocument, queryDocuments } from "../api/database";
 import NextGameAdmin from "./NextGameAdmin";
+import { Container } from "@mui/system";
 
 const StyledButton = styled(Button)({
   marginBottom: 30,
@@ -40,7 +43,6 @@ function NextGame({ nextMatch, setNextMatch }: Props) {
 
   const fetchingStartInfo = async () => {
     const spieleInfo = await queryDocuments("info", "cardInfoText", "!=", "");
-    const nextMatch = await queryDocuments("match", "nextMatch", "==", true);
 
     if (spieleInfo.success.length === 1) {
       setSpieleInfo(spieleInfo.success[0].cardInfoText);
@@ -75,8 +77,7 @@ function NextGame({ nextMatch, setNextMatch }: Props) {
   };
 
   const doBusTour = nextMatch && !nextMatch.busTour;
-
-  //   console.log("nextMatch", nextMatch);
+  const matchDate = format(nextMatch?.matchDate, "dd/MM-yyyy HH:mm");
 
   return (
     <>
@@ -90,6 +91,21 @@ function NextGame({ nextMatch, setNextMatch }: Props) {
           </Stack>
           <Paper sx={{ p: 2 }}>
             <Typography>{spieleInfo}</Typography>
+          </Paper>
+          <Paper sx={{ p: 2 }}>
+            <Typography gutterBottom>
+              {nextMatch?.matchType === "league"
+                ? "Bundesliga spiel"
+                : "Pokal spiel"}
+            </Typography>
+            <Typography variant="subtitle1">Am</Typography>
+            <Typography variant="body2" gutterBottom>
+              {matchDate && matchDate}
+            </Typography>
+            <Typography variant="subtitle1">Lokation</Typography>
+            <Typography variant="body2">
+              {nextMatch?.location && nextMatch.location}
+            </Typography>
           </Paper>
 
           {nextMatch.active && (
@@ -111,6 +127,13 @@ function NextGame({ nextMatch, setNextMatch }: Props) {
           <Dialog open={showSpieleDialog}>
             <Paper sx={{ p: 5 }}>
               <Stack spacing={2}>
+                <Stack direction="row" justifyContent="flex-end">
+                  <CancelIcon
+                    fontSize="large"
+                    sx={{ color: "red" }}
+                    onClick={() => setShowSpieleDialog(false)}
+                  />
+                </Stack>
                 <StyledTextField
                   label="Kartenvorbestellung info text"
                   minRows={2}

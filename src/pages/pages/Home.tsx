@@ -61,7 +61,9 @@ const Homes = (props: Props) => {
     const nextMatch = await queryDocuments("match", "nextMatch", "==", true);
 
     if (nextMatch.success.length === 1) {
-      setNextMatch(nextMatch.success[0]);
+      const _nextMatch = nextMatch.success[0];
+      _nextMatch.matchDate = new Date(_nextMatch.matchDate.seconds * 1000);
+      setNextMatch(_nextMatch);
     }
 
     if (nextMatch.success.length !== 1) {
@@ -94,9 +96,10 @@ const Homes = (props: Props) => {
 
   const showOrderButton = nextMatch && nextMatch.active;
 
-  console.log("league", league);
-  console.log("year", year);
-  console.log("blMatchDay", blMatchDay);
+  //   console.log("league", league);
+  //   console.log("year", year);
+  //   console.log("blMatchDay", blMatchDay);
+  console.log("nextMatch", nextMatch.matchType);
 
   return (
     <>
@@ -105,7 +108,7 @@ const Homes = (props: Props) => {
           direction="row"
           alignItems="center"
           justifyContent="space-around"
-          spacing={15}
+          spacing={4}
         >
           <InfoCard />
           <NextGame nextMatch={nextMatch} setNextMatch={setNextMatch} />
@@ -121,7 +124,7 @@ const Homes = (props: Props) => {
               to="kartenvorbestellung"
               style={{ color: "green", textDecoration: "none" }}
             >
-              Kartenvorbestellung
+              Gästekartenvorbestellung
             </Link>
           </Button>
         )}
@@ -131,7 +134,7 @@ const Homes = (props: Props) => {
             color="orange"
             sx={{ border: 1, padding: 3, boxShadow: 3, p: 5 }}
           >
-            Kartenvorbestellung noch nicht aktiv
+            Gästekartenvorbestellung noch nicht aktiv
           </Typography>
         )}
         <Divider />

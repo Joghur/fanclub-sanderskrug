@@ -29,6 +29,7 @@ const StyledButton = styled(Button)({
 
 const StyledTextField = styled(TextField)({
   marginRight: 10,
+  marginBottom: 10,
 });
 
 type Props = {
@@ -85,6 +86,10 @@ function NextGameAdmin({
     setShowSpieleDialog(false);
   };
 
+  const isMidnight =
+    new Date(nextMatch.matchDate).getHours() === 0 &&
+    new Date(nextMatch.matchDate).getMinutes() === 0;
+
   return (
     <>
       {auth.currentUser && (
@@ -97,13 +102,6 @@ function NextGameAdmin({
                 value={nextMatch.opponent}
                 onChange={handleChangeMatch}
               />
-              <FormGroup>
-                <FormControlLabel
-                  control={<Switch />}
-                  label="Extrakarte möglich"
-                />
-                <FormControlLabel control={<Switch />} label="Bus fahren" />
-              </FormGroup>
               <Typography variant="h6">Lokation</Typography>
               <StyledTextField
                 id="location"
@@ -111,11 +109,19 @@ function NextGameAdmin({
                 onChange={handleChangeMatch}
                 sx={{ mb: 5 }}
               />
+              <FormGroup sx={{ mb: 3 }}>
+                <FormControlLabel
+                  control={<Switch />}
+                  label="Extrakarte möglich"
+                />
+                <FormControlLabel control={<Switch />} label="Bus fahren" />
+              </FormGroup>
               <DateTimePicker
                 label="Spielzeit"
-                inputFormat="dd/MM/yyyy"
+                inputFormat={isMidnight ? "dd/MM-yyyy" : "dd/MM-yyyy HH:mm"}
                 value={nextMatch.matchDate}
                 ampm={false}
+                ampmInClock={false}
                 onChange={handleChangeDate}
                 renderInput={(params) => <TextField {...params} />}
               />
