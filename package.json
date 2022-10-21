@@ -2,7 +2,7 @@
   "name": "sanderskrug",
   "version": "0.1.1",
   "private": true,
-  "homepage": "https://iq96.dk/sk/.",
+  "homepage": ".",
   "dependencies": {
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
@@ -26,6 +26,7 @@
   },
   "scripts": {
     "firebase:login": "firebase login",
+    "deploy": "react-scripts build && firebase deploy --only hosting",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

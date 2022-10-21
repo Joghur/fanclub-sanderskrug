@@ -27,3 +27,7 @@ yarn-error.log*
 src/pages/components/TestApi.tsx
 
 src/config/
+
+.firebaserc
+
+.firebase/
