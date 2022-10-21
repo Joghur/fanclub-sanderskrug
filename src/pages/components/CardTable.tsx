@@ -35,7 +35,7 @@ const CardTable = (props: Props) => {
         <TableHead>
           <StyledTableRow>
             <TableCell></TableCell>
-            <TableCell>Nahme</TableCell>
+            <TableCell>Name</TableCell>
             <TableCell>Anzahl</TableCell>
             <TableCell>Kommentare</TableCell>
           </StyledTableRow>

@@ -151,7 +151,7 @@ const CardOrdering = (props: Props) => {
           sx={{ pb: 5 }}
         >
           <Grid item>
-            <Typography variant="h6">Nahme</Typography>
+            <Typography variant="h6">Name</Typography>
             <StyledTextField
               id="name"
               value={cardOrder?.name}

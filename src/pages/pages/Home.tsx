@@ -118,7 +118,7 @@ const Homes = (props: Props) => {
             size="large"
             variant="outlined"
             sx={{ boxShadow: 3, p: 5 }}
-            onClick={() => {}}
+            onClick={() => { }}
           >
             <Link
               to="kartenvorbestellung"
@@ -148,8 +148,8 @@ const Homes = (props: Props) => {
             <Standings
               league={league}
               year={year}
-              setLeague={handleChangeYear}
-              setYear={handleChangeLeague}
+              setLeague={handleChangeLeague}
+              setYear={handleChangeYear}
             />
           </>
         )}

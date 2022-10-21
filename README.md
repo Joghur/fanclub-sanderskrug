@@ -30,13 +30,13 @@
 ##### `settings.js`
 
     export const werderData = {
-    shortName: "Bremen",
-    teamGroupName: null,
-    teamIconUrl:
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/SV-Werder-Bremen-Logo.svg/681px-SV-Werder-Bremen-Logo.svg.png",
-    teamId: 134,
-    teamName: "Werder Bremen",
-    currentLeagueString: "bl1",
+        shortName: "Bremen",
+        teamGroupName: null,
+        teamIconUrl:
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/SV-Werder-Bremen-Logo.svg/681px-SV-Werder-Bremen-Logo.svg.png",
+        teamId: 134,
+        teamName: "Werder Bremen",
+        currentLeagueString: "bl1",
     };
 
     export const carlData = {
