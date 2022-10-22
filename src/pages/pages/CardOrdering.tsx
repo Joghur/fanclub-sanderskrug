@@ -6,7 +6,7 @@ import { useSnackbar } from 'notistack';
 import React, { useState } from 'react';
 
 import { storageKeyPrefix } from '../../config/settings';
-import { deleteDocument } from '../api/database';
+import { deleteDocument, editDocument, saveData } from '../api/database';
 import CardTable from '../components/CardTable';
 import AlertDialog from '../components/Confirmation';
 import { CardOrder } from '../types/Cards';
@@ -29,7 +29,7 @@ const initCardOrder: CardOrder = {
     name: '',
     amount: 0,
     matchId: '',
-    regularCardNumber: '',
+    regularCardNumber: undefined,
 };
 
 const CardOrdering = () => {
@@ -55,14 +55,22 @@ const CardOrdering = () => {
         setCardOrder(old => ({ ...old, [id]: _value }));
     };
 
-    const handleSubmitOrder = () => {
+    const handleSubmitOrder = async () => {
         const validate = validateObj(cardOrder);
         if (validate.error) {
             setError(validate.error);
         }
 
         let res;
-
+        if (cardOrder?.id) {
+            res = await editDocument('cards', cardOrder.id, {
+                ...cardOrder,
+            });
+        } else {
+            res = await saveData('cards', {
+                ...cardOrder,
+            });
+        }
         if (res.error) {
             snackbar.enqueueSnackbar('Änderungen werden nicht gespeichert', {
                 variant: 'error',
@@ -152,19 +160,20 @@ const CardOrdering = () => {
                             id="name"
                             value={cardOrder?.name}
                             onChange={handleChangeOrder}
-                            //   error={!!error}
-                            //   helperText={error && "Incorrect entry."}
+                            // error={!!error}
+                            // helperText={error && 'Incorrect entry.'}
                         />
                     </Grid>
                     <Grid item>
                         <Typography variant="h6">Werder Stammkartnummer</Typography>
-                        <Typography>(Wird auf deine Gerät gespeichert)</Typography>
+                        <Typography>info kommt hier</Typography>
                         <StyledTextField
                             id="regularCardNumber"
+                            type="number"
                             value={cardOrder?.regularCardNumber}
                             onChange={handleChangeOrder}
-                            //   error={!!error}
-                            //   helperText={error && "Incorrect entry."}
+                            // error={!!error}
+                            // helperText={error && 'Incorrect entry.'}
                         />
                     </Grid>
                     <Grid item>
@@ -174,8 +183,8 @@ const CardOrdering = () => {
                             type="number"
                             value={cardOrder?.amount}
                             onChange={handleChangeOrder}
-                            //   error={!!error}
-                            //   helperText={error && "Incorrect entry."}
+                            // error={!!error}
+                            // helperText={error && 'Incorrect entry.'}
                         />
                     </Grid>
                     <Grid item>

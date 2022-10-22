@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
-import GameComponent from './Game';
 import { Box, FormControl, InputLabel, MenuItem, Select, Typography } from '@mui/material';
+import React, { useEffect } from 'react';
 
-import { apiFetch } from '../api/axios';
 import { werderData } from '../../config/settings';
+import { apiFetch } from '../api/axios';
 import { Game } from '../types/Game';
+
+import GameComponent from './Game';
 
 interface Props {
     url?: string;

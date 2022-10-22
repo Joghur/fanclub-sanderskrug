@@ -28,6 +28,7 @@ const CardTable = (props: Props) => {
                         <TableCell></TableCell>
                         <TableCell>Name</TableCell>
                         <TableCell>Anzahl</TableCell>
+                        <TableCell>Stammkart nummer</TableCell>
                         <TableCell>Kommentare</TableCell>
                     </StyledTableRow>
                 </TableHead>
@@ -39,6 +40,7 @@ const CardTable = (props: Props) => {
                             </TableCell>
                             <TableCell>{row.name}</TableCell>
                             <TableCell>{row.amount}</TableCell>
+                            <TableCell>{row.regularCardNumber}</TableCell>
                             <TableCell>{row.comment}</TableCell>
                             <TableCell>
                                 <Button

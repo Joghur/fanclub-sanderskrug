@@ -4,5 +4,5 @@ export interface CardOrder {
   comment?: string;
   matchId?: string;
   name?: string;
-  regularCardNumber?: string;
+  regularCardNumber?: number;
 }
