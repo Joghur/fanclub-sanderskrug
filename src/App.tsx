@@ -1,8 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Layout from "./pages/components/Layout";
-import Home from "./pages/pages/Home";
 import CardOrdering from "./pages/pages/CardOrdering";
+import Home from "./pages/pages/Home";
 import Info from "./pages/pages/Info";
 import NoPage from "./pages/pages/NoPage";
 

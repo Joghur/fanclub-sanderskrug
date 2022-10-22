@@ -1,9 +1,9 @@
-export type ResponseType = {
+export interface ResponseType {
   success: string | boolean | null;
   error: string | null;
-};
+}
 
-export type StorageWerderLeague = {
+export interface StorageWerderLeague {
   currentSeason: string;
   currentLeague: string;
-};
+}

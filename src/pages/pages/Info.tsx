@@ -5,17 +5,15 @@ import {
   Grid,
   Paper,
 } from "@mui/material";
-import { useEffect, useState } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { useEffect, useState } from "react";
 
-import { logIn, logOut } from "../api/auth";
 import { auth } from "../../config/firebase";
 import { carlData } from "../../config/settings";
+import { logIn, logOut } from "../api/auth";
 
 
-type Props = {};
-
-const Info = (props: Props) => {
+const Info = () => {
   const [initializing, setInitializing] = useState(true);
   const [authUser, setAuthUser] = useState<any>(null);
   

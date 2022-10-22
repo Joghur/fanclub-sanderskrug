@@ -1,4 +1,4 @@
-export type Standing = {
+export interface Standing {
   TeamInfoId: number;
   Draw: number;
   GoalDiff: number;
@@ -11,6 +11,6 @@ export type Standing = {
   TeamIconUrl: string;
   TeamName: string;
   Won: number;
-};
+}
 
 export type League = "bl1" | "bl2" | "bl3" | "dfb";

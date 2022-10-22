@@ -1,4 +1,4 @@
-export type Game = {
+export interface Game {
   goals?: Goal[];
   group?: Group;
   lastUpdateDateTime?: Date;
@@ -16,9 +16,9 @@ export type Game = {
   team1?: Team;
   team2?: Team;
   timeZoneID?: string;
-};
+}
 
-export type MatchResult = {
+export interface MatchResult {
   resultID: number;
   resultName: string;
   pointsTeam1: number;
@@ -26,9 +26,9 @@ export type MatchResult = {
   resultDescription: string;
   resultOrderID: number;
   resultTypeID: number;
-};
+}
 
-export type Goal = {
+export interface Goal {
   comment?: string;
   goalGetterID?: number;
   goalGetterName?: string;
@@ -39,21 +39,21 @@ export type Goal = {
   matchMinute?: number;
   scoreTeam1?: number;
   scoreTeam2?: number;
-};
+}
 
-export type Group = {
+export interface Group {
   groupID?: number;
   groupOrderID?: number;
   groupName?: string;
-};
+}
 
-export type Team = {
+export interface Team {
   shortName?: string;
   teamGroupName?: string;
   teamIconUrl?: string;
   teamId?: number;
   teamName?: string;
-};
+}
 
 export interface NextMatch {
   id?: string;

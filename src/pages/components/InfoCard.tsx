@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import styled from "@emotion/styled";
 import EditIcon from "@mui/icons-material/Edit";
-import { useSnackbar } from "notistack";
 import {
   Button,
   Dialog,
@@ -11,7 +10,8 @@ import {
   Typography,
 } from "@mui/material";
 import { getAuth } from "firebase/auth";
-import styled from "@emotion/styled";
+import { useSnackbar } from "notistack";
+import React, { useEffect, useState } from "react";
 
 import { editDocument, queryDocuments } from "../api/database";
 
@@ -23,9 +23,7 @@ const StyledTextField = styled(TextField)({
   marginRight: 10,
 });
 
-type Props = {};
-
-function InfoCard({}: Props) {
+function InfoCard() {
   const snackbar = useSnackbar();
   const auth = getAuth();
 
@@ -83,8 +81,7 @@ function InfoCard({}: Props) {
         </Stack>
       )}
       {auth.currentUser && (
-        <>
-          <Dialog open={showInformationDialog}>
+        <Dialog open={showInformationDialog}>
             <Paper sx={{ p: 5 }}>
               <Stack spacing={2}>
                 <TextareaAutosize
@@ -99,7 +96,6 @@ function InfoCard({}: Props) {
               </Stack>
             </Paper>
           </Dialog>
-        </>
       )}
     </>
   );

@@ -1,11 +1,5 @@
-import React from 'react'
+const NoPage = () => {
+    return <div>404</div>;
+};
 
-type Props = {}
-
-const NoPage = (props: Props) => {
-  return (
-    <div>404</div>
-  )
-}
-
-export default NoPage
+export default NoPage;

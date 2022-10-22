@@ -1,9 +1,9 @@
-import React from "react";
-import { render } from "react-dom";
-import { IKContext } from "imagekitio-react";
-import { SnackbarProvider } from "notistack";
 import { green } from "@mui/material/colors";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { IKContext } from "imagekitio-react";
+import { SnackbarProvider } from "notistack";
+import React from "react";
+import { render } from "react-dom";
 
 import App from "./App";
 import { imageEndpoint, imageKey } from "./config/imageKit";

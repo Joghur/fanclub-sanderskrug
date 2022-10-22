@@ -1,3 +1,5 @@
+import styled from "@emotion/styled";
+import EditIcon from "@mui/icons-material/Edit";
 import {
   Button,
   Dialog,
@@ -10,18 +12,16 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import EditIcon from "@mui/icons-material/Edit";
-import { useSnackbar } from "notistack";
-import { getAuth } from "firebase/auth";
-import styled from "@emotion/styled";
 import { DateTimePicker } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { format } from "date-fns";
+import { getAuth } from "firebase/auth";
+import { useSnackbar } from "notistack";
+import React, { useEffect, useState } from "react";
 
-import { NextMatch } from "../types/Game";
 import { editDocument, queryDocuments, saveData } from "../api/database";
+import { NextMatch } from "../types/Game";
 
 const StyledButton = styled(Button)({
   marginBottom: 30,
@@ -32,11 +32,11 @@ const StyledTextField = styled(TextField)({
   marginBottom: 10,
 });
 
-type Props = {
+interface Props {
   nextMatch: NextMatch;
   setNextMatch: (NextMatch) => void;
   setShowSpieleDialog: (boolean) => void;
-};
+}
 
 function NextGameAdmin({
   nextMatch,
@@ -53,7 +53,7 @@ function NextGameAdmin({
       return;
     }
 
-    let _value = value as string | number;
+    const _value = value as string | number;
 
     setNextMatch((old) => ({ ...old, [id]: _value }));
   };
@@ -93,7 +93,6 @@ function NextGameAdmin({
   return (
     <>
       {auth.currentUser && (
-        <>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <Stack>
               <Typography variant="h6">Gegen</Typography>
@@ -135,7 +134,6 @@ function NextGameAdmin({
               </StyledButton>
             </Stack>
           </LocalizationProvider>
-        </>
       )}
     </>
   );

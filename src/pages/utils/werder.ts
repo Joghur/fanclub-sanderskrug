@@ -4,8 +4,9 @@ import {
   werderData,
 } from "../../config/settings";
 import { apiFetch } from "../api/axios";
-import { StorageWerderLeague } from "../types/response";
 import { League, Standing } from "../types/Standing";
+import { StorageWerderLeague } from "../types/response";
+
 import { getLocalStorage, setLocalStorage } from "./storage";
 import { thisSeason } from "./utilities";
 

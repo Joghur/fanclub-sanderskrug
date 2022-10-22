@@ -1,20 +1,18 @@
-import { Outlet } from "react-router-dom";
+import { BottomNavigation, BottomNavigationAction } from '@mui/material';
+import { useState } from 'react';
+import { Outlet } from 'react-router-dom';
 
-import Header from "./Header";
-import Footer from "./Footer";
-import { BottomNavigation, BottomNavigationAction } from "@mui/material";
-import { useState } from "react";
+import Footer from './Footer';
+import Header from './Header';
 
-type Props = {};
-
-const Layout = (props: Props) => {
-  return (
-    <div>
-      <Header />
-      <Outlet />
-      {/* <Footer /> */}
-    </div>
-  );
+const Layout = () => {
+    return (
+        <div>
+            <Header />
+            <Outlet />
+            {/* <Footer /> */}
+        </div>
+    );
 };
 
 export default Layout;
