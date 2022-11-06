@@ -1,8 +1,9 @@
+import { AxiosResponse } from 'axios';
+
 import { bundesligaData, storageKeyPrefix, werderData } from '../../config/settings';
 import { apiFetch } from '../api/axios';
 import { League, Standing } from '../types/Standing';
 import { StorageWerderLeague } from '../types/response';
-import { AxiosResponse } from 'axios';
 
 import { getLocalStorage, setLocalStorage } from './localStorage';
 import { thisSeason } from './utilities';

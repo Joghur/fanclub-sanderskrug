@@ -6,6 +6,8 @@
     "scripts": {
         "firebase:login": "firebase login",
         "deploy": "react-scripts build && firebase deploy --only hosting",
+        "lint": "eslint . --ext .ts",
+        "lint:fix": "eslint . --ext .ts --fix",
         "start": "react-scripts start",
         "build": "react-scripts build",
         "test": "react-scripts test",

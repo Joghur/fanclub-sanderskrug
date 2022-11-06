@@ -1,19 +1,10 @@
-import styled from '@emotion/styled';
 import EditIcon from '@mui/icons-material/Edit';
-import { Button, Dialog, Paper, Stack, TextareaAutosize, TextField, Typography } from '@mui/material';
+import { Button, Dialog, Paper, Stack, TextareaAutosize, Typography } from '@mui/material';
 import { getAuth } from 'firebase/auth';
 import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
 
 import { editDocument, queryDocuments } from '../api/database';
-
-const StyledButton = styled(Button)({
-    marginBottom: 30,
-});
-
-const StyledTextField = styled(TextField)({
-    marginRight: 10,
-});
 
 function InfoCard() {
     const snackbar = useSnackbar();
@@ -25,7 +16,7 @@ function InfoCard() {
     const fetchingStartInfo = async () => {
         const info = await queryDocuments('info', 'infoText', '!=', '');
 
-        if (info.success.length === 1) {
+        if (info?.success.length === 1) {
             setInfo(info.success[0].infoText);
         }
     };

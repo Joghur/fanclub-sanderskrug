@@ -1,38 +1,15 @@
-import styled from '@emotion/styled';
-import EditIcon from '@mui/icons-material/Edit';
-import {
-    Button,
-    Dialog,
-    Paper,
-    Stack,
-    TextareaAutosize,
-    TextField,
-    SelectChangeEvent,
-    Typography,
-    Divider,
-} from '@mui/material';
-import { Timestamp } from 'firebase/firestore/lite';
-import { useSnackbar } from 'notistack';
-import React, { useEffect, useState } from 'react';
+import { Stack, SelectChangeEvent, Typography, Divider, Button } from '@mui/material';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { queryDocuments } from './api/database';
 import Games from './components/Games';
 import InfoCard from './components/InfoCard';
-import CardInfo from './components/NextGame';
 import NextGame from './components/NextGame';
 import Standings from './components/Standings';
 import { NextMatch } from './types/Game';
-import { thisSeason, thisYear } from './utils/utilities';
+import { thisSeason } from './utils/utilities';
 import { getLeagueStatus } from './utils/werder';
-
-const StyledButton = styled(Button)({
-    marginBottom: 30,
-});
-
-const StyledTextField = styled(TextField)({
-    marginRight: 10,
-});
 
 const initNextMatch: NextMatch = {
     id: '',
@@ -47,9 +24,6 @@ const initNextMatch: NextMatch = {
 };
 
 const Homes = () => {
-    const snackbar = useSnackbar();
-
-    const [showNextMatchDialog, setShowNextMatchDialog] = useState(false);
     const [nextMatch, setNextMatch] = useState<NextMatch>(initNextMatch);
     const [year, setYear] = useState<string>(thisSeason);
     const [league, setLeague] = useState('');
@@ -91,10 +65,11 @@ const Homes = () => {
 
     const showOrderButton = nextMatch && nextMatch.active;
 
-    //   console.log("league", league);
-    //   console.log("year", year);
+    // console.log("league", league);
+    // console.log("year", year);
     // console.log('blMatchDay', blMatchDay);
-    // console.log('nextMatch', nextMatch.matchType);
+    console.log('nextMatch', nextMatch);
+    console.log('nextMatch.matchType', nextMatch.matchType);
 
     return (
         <Stack spacing={3} alignItems="center" sx={{ p: 5 }}>

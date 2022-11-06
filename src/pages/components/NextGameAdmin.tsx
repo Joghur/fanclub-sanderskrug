@@ -1,24 +1,11 @@
 import styled from '@emotion/styled';
-import EditIcon from '@mui/icons-material/Edit';
-import {
-    Button,
-    Dialog,
-    FormControlLabel,
-    FormGroup,
-    Paper,
-    Stack,
-    Switch,
-    TextareaAutosize,
-    TextField,
-    Typography,
-} from '@mui/material';
+import { Button, FormControlLabel, FormGroup, Stack, Switch, TextField, Typography } from '@mui/material';
 import { DateTimePicker } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { format } from 'date-fns';
 import { getAuth } from 'firebase/auth';
 import { useSnackbar } from 'notistack';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import { editDocument, queryDocuments, saveData } from '../api/database';
 import { NextMatch } from '../types/Game';
@@ -41,6 +28,11 @@ interface Props {
 function NextGameAdmin({ nextMatch, setNextMatch, setShowSpieleDialog }: Props) {
     const snackbar = useSnackbar();
     const auth = getAuth();
+
+    const [extraCardPossible, setExtraCardPossible] = useState<boolean>(nextMatch.active);
+    const [busTour, setBusTour] = useState<boolean>(nextMatch.busTour);
+
+    // TODO handle submit with switches
 
     const handleChangeMatch = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         const { id, value } = event.target;
@@ -100,8 +92,18 @@ function NextGameAdmin({ nextMatch, setNextMatch, setShowSpieleDialog }: Props) 
                             sx={{ mb: 5 }}
                         />
                         <FormGroup sx={{ mb: 3 }}>
-                            <FormControlLabel control={<Switch />} label="Extrakarte möglich" />
-                            <FormControlLabel control={<Switch />} label="Bus fahren" />
+                            <FormControlLabel
+                                value={extraCardPossible}
+                                control={<Switch />}
+                                label="Extrakarte möglich"
+                                onChange={old => setExtraCardPossible(!old)}
+                            />
+                            <FormControlLabel
+                                value={busTour}
+                                control={<Switch />}
+                                label="Bus fahren"
+                                onChange={old => setBusTour(!old)}
+                            />
                         </FormGroup>
                         <DateTimePicker
                             label="Spielzeit"

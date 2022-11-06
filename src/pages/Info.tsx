@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 
 import { auth } from '../config/firebase';
 import { carlData } from '../config/settings';
+
 import { logIn, logOut } from './api/auth';
 
 const Info = () => {

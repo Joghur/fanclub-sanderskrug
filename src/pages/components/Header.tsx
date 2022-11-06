@@ -1,22 +1,12 @@
 import AspectRatioIcon from '@mui/icons-material/AspectRatio';
 import HomeRounded from '@mui/icons-material/HomeRounded';
 import InfoIcon from '@mui/icons-material/Info';
-import {
-    AppBar,
-    BottomNavigation,
-    BottomNavigationAction,
-    Box,
-    Grid,
-    IconButton,
-    Menu,
-    Typography,
-} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
+import { AppBar, BottomNavigation, BottomNavigationAction, Box, IconButton, Menu, Typography } from '@mui/material';
 import { Container } from '@mui/system';
 import { IKImage } from 'imagekitio-react';
 import { useCallback, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-
 import { useMeasure } from 'react-use';
 
 const Header = () => {

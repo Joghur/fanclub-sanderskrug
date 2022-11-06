@@ -1,3 +1,4 @@
+import { AxiosResponse } from 'axios';
 import {
     collection,
     getDocs,
@@ -14,7 +15,7 @@ import {
 
 import { db } from './firebase';
 
-interface Result {
+export interface Result {
     success?: any;
     error?: any;
 }
