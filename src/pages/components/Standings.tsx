@@ -20,11 +20,11 @@ import { styled, useTheme } from '@mui/material/styles';
 import { useEffect, useState } from 'react';
 
 import { bundesligaData } from '../../config/settings';
-import { apiFetch } from '../api/axios';
+import { fetchState } from '../api/axios';
 import { Standing } from '../types/Standing';
 import { thisYear } from '../utils/utilities';
 
-const MobileTableCell = styled(TableCell)(({ theme }) => ({
+const MobileTableCell = styled(TableCell)(() => ({
     [`&.${tableCellClasses.head}`]: {
         fontSize: 14,
         padding: 1,
@@ -35,7 +35,7 @@ const MobileTableCell = styled(TableCell)(({ theme }) => ({
     },
 }));
 
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
+const StyledTableRow = styled(TableRow)(() => ({
     // hide last border
     '&:last-child td, &:last-child th': {
         border: 0,
@@ -56,20 +56,14 @@ const Standings = (props: Props) => {
 
     const [standings, setStandings] = useState<Standing[]>([]);
 
+    let standingsUrl = `${bundesligaData.endpoint}/getbltable/${league}/${year}`;
+    if (league === 'dfb') {
+        standingsUrl = `${bundesligaData.endpoint}/getbltable/${league}${year}/${year}`;
+    }
+
     useEffect(() => {
         if (league) {
-            let standingsUrl = `${bundesligaData.endpoint}/getbltable/${league}/${year}`;
-            if (league === 'dfb') {
-                standingsUrl = `${bundesligaData.endpoint}/getbltable/${league}${year}/${year}`;
-            }
-
-            apiFetch(standingsUrl)
-                .then(result => {
-                    setStandings(result.data);
-                })
-                .catch(error => {
-                    return error;
-                });
+            fetchState(standingsUrl, setStandings);
         }
     }, [year, league]);
 

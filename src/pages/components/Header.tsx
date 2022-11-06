@@ -1,7 +1,6 @@
 import AspectRatioIcon from '@mui/icons-material/AspectRatio';
 import HomeRounded from '@mui/icons-material/HomeRounded';
 import InfoIcon from '@mui/icons-material/Info';
-import MenuIcon from '@mui/icons-material/Menu';
 import {
     AppBar,
     BottomNavigation,
@@ -12,10 +11,12 @@ import {
     Menu,
     Typography,
 } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
 import { Container } from '@mui/system';
 import { IKImage } from 'imagekitio-react';
 import { useCallback, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+
 import { useMeasure } from 'react-use';
 
 const Header = () => {
@@ -53,7 +54,7 @@ const Header = () => {
                     path="site/sanderskruglogo3_TOTHa4PN7.png"
                     transformation={[
                         {
-                            width: width - 10 < 1000 ? width - 10 : 1000,
+                            width: width - 10 < 1000 ? `${width} - 10` : `1000`,
                         },
                     ]}
                     style={{

@@ -16,15 +16,15 @@ import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import { queryDocuments } from '../api/database';
-import Games from '../components/Games';
-import InfoCard from '../components/InfoCard';
-import CardInfo from '../components/NextGame';
-import NextGame from '../components/NextGame';
-import Standings from '../components/Standings';
-import { NextMatch } from '../types/Game';
-import { thisSeason, thisYear } from '../utils/utilities';
-import { getLeagueStatus } from '../utils/werder';
+import { queryDocuments } from './api/database';
+import Games from './components/Games';
+import InfoCard from './components/InfoCard';
+import CardInfo from './components/NextGame';
+import NextGame from './components/NextGame';
+import Standings from './components/Standings';
+import { NextMatch } from './types/Game';
+import { thisSeason, thisYear } from './utils/utilities';
+import { getLeagueStatus } from './utils/werder';
 
 const StyledButton = styled(Button)({
     marginBottom: 30,
@@ -93,8 +93,8 @@ const Homes = () => {
 
     //   console.log("league", league);
     //   console.log("year", year);
-    //   console.log("blMatchDay", blMatchDay);
-    console.log('nextMatch', nextMatch.matchType);
+    // console.log('blMatchDay', blMatchDay);
+    // console.log('nextMatch', nextMatch.matchType);
 
     return (
         <Stack spacing={3} alignItems="center" sx={{ p: 5 }}>

@@ -5,13 +5,13 @@ import { getAuth } from 'firebase/auth';
 import { useSnackbar } from 'notistack';
 import React, { useState } from 'react';
 
-import { storageKeyPrefix } from '../../config/settings';
-import { deleteDocument, editDocument, saveData } from '../api/database';
-import CardTable from '../components/CardTable';
-import AlertDialog from '../components/Confirmation';
-import { CardOrder } from '../types/Cards';
-import { setLocalStorage } from '../utils/storage';
-import { validateObj } from '../utils/validation';
+import { storageKeyPrefix } from '../config/settings';
+import { deleteDocument, editDocument, saveData } from './api/database';
+import CardTable from './components/CardTable';
+import AlertDialog from './components/Confirmation';
+import { CardOrder } from './types/Cards';
+import { setLocalStorage } from './utils/localStorage';
+import { validateObj } from './utils/validation';
 
 const StyledButton = styled(Button)({
     marginBottom: 30,

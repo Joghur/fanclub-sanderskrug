@@ -2,7 +2,7 @@ import { Box, FormControl, InputLabel, MenuItem, Select, Typography } from '@mui
 import React, { useEffect } from 'react';
 
 import { werderData } from '../../config/settings';
-import { apiFetch } from '../api/axios';
+import { fetchState } from '../api/axios';
 import { Game } from '../types/Game';
 
 import GameComponent from './Game';
@@ -11,10 +11,6 @@ interface Props {
     url?: string;
 }
 
-const fetchAllGames = (url: string) => {
-    return apiFetch(url);
-};
-
 const Games = (props: Props) => {
     const { url } = props;
 
@@ -22,13 +18,7 @@ const Games = (props: Props) => {
 
     useEffect(() => {
         if (url) {
-            fetchAllGames(url)
-                .then(result => {
-                    setGames(result.data);
-                })
-                .catch(error => {
-                    return error;
-                });
+            fetchState(url, setGames);
         }
     }, []);
 

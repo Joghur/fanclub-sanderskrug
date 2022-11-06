@@ -1,5 +1,3 @@
-import { BottomNavigation, BottomNavigationAction } from '@mui/material';
-import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 
 import Footer from './Footer';
