@@ -8,15 +8,15 @@ import DialogTitle from '@mui/material/DialogTitle';
 interface Props {
     header: string;
     alertText: string;
-    open: any;
-    onClose: any;
-    onAction: any;
+    open: boolean;
+    onClose: () => void;
+    onAction: () => void;
 }
 
 export default function AlertDialog(props: Props) {
     const { header, alertText, open, onClose, onAction } = props;
 
-    const handleClick = second => {
+    const handleClick = () => {
         onAction();
         onClose();
     };

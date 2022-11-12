@@ -1,10 +1,10 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import Layout from './pages/components/Layout';
 import CardOrdering from './pages/CardOrdering';
 import Home from './pages/Home';
 import Info from './pages/Info';
 import NoPage from './pages/NoPage';
+import Layout from './pages/components/Layout';
 
 function App() {
     return (

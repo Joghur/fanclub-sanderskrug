@@ -2,11 +2,11 @@
 import styled from '@emotion/styled';
 import CancelIcon from '@mui/icons-material/Cancel';
 import EditIcon from '@mui/icons-material/Edit';
-import { Button, Dialog, Divider, Paper, Stack, TextareaAutosize, TextField, Typography } from '@mui/material';
+import { Button, Dialog, Divider, Paper, Stack, TextField, Typography } from '@mui/material';
 import { format } from 'date-fns';
 import { getAuth } from 'firebase/auth';
 import { useSnackbar } from 'notistack';
-import React, { useEffect, useState } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 import { editDocument, queryDocuments } from '../api/database';
 import { NextMatch } from '../types/Game';
@@ -23,7 +23,7 @@ const StyledTextField = styled(TextField)({
 
 interface Props {
     nextMatch: NextMatch;
-    setNextMatch: (NextMatch) => void;
+    setNextMatch: Dispatch<SetStateAction<NextMatch>>;
 }
 
 function NextGame({ nextMatch, setNextMatch }: Props) {
@@ -66,7 +66,7 @@ function NextGame({ nextMatch, setNextMatch }: Props) {
         }
     };
 
-    const doBusTour = nextMatch && !nextMatch.busTour;
+    const doBusTour = nextMatch && nextMatch.busTour;
     const matchDate = format(nextMatch?.matchDate, 'dd/MM-yyyy HH:mm');
 
     return (

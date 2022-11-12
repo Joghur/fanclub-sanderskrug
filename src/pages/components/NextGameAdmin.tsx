@@ -1,14 +1,16 @@
 import styled from '@emotion/styled';
-import { Button, FormControlLabel, FormGroup, Stack, Switch, TextField, Typography } from '@mui/material';
+import { Button, Divider, Stack, TextField, Typography } from '@mui/material';
 import { DateTimePicker } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { getAuth } from 'firebase/auth';
 import { useSnackbar } from 'notistack';
-import React, { useState } from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 
-import { editDocument, queryDocuments, saveData } from '../api/database';
+import { editDocument, Result, saveData } from '../api/database';
 import { NextMatch } from '../types/Game';
+
+import FormInputSwitch from './inputform/InputSwitch';
 
 const StyledButton = styled(Button)({
     marginBottom: 30,
@@ -21,18 +23,13 @@ const StyledTextField = styled(TextField)({
 
 interface Props {
     nextMatch: NextMatch;
-    setNextMatch: (NextMatch) => void;
-    setShowSpieleDialog: (boolean) => void;
+    setNextMatch: Dispatch<SetStateAction<NextMatch>>;
+    setShowSpieleDialog: Dispatch<SetStateAction<boolean>>;
 }
 
-function NextGameAdmin({ nextMatch, setNextMatch, setShowSpieleDialog }: Props) {
+const NextGameAdmin = ({ nextMatch, setNextMatch, setShowSpieleDialog }: Props) => {
     const snackbar = useSnackbar();
     const auth = getAuth();
-
-    const [extraCardPossible, setExtraCardPossible] = useState<boolean>(nextMatch.active);
-    const [busTour, setBusTour] = useState<boolean>(nextMatch.busTour);
-
-    // TODO handle submit with switches
 
     const handleChangeMatch = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         const { id, value } = event.target;
@@ -43,15 +40,25 @@ function NextGameAdmin({ nextMatch, setNextMatch, setShowSpieleDialog }: Props) 
 
         const _value = value as string | number;
 
-        setNextMatch(old => ({ ...old, [id]: _value }));
+        setNextMatch((old: NextMatch) => ({ ...old, [id]: _value }));
     };
 
     const handleChangeDate = (newValue: Date | null) => {
-        setNextMatch(old => ({ ...old, matchDate: newValue }));
+        if (newValue) {
+            setNextMatch((old: NextMatch) => ({ ...old, matchDate: newValue }));
+        }
+    };
+
+    const handleSwitch = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (event.target.name === 'active' && event.target.checked === false) {
+            setNextMatch((old: NextMatch) => ({ ...old, busTour: false, [event.target.name]: event.target.checked }));
+            return;
+        }
+        setNextMatch((old: NextMatch) => ({ ...old, [event.target.name]: event.target.checked }));
     };
 
     const handleSubmitNextGameInfo = async () => {
-        let res;
+        let res: Result;
         if (nextMatch?.id) {
             res = await editDocument('match', nextMatch.id, {
                 ...nextMatch,
@@ -61,7 +68,6 @@ function NextGameAdmin({ nextMatch, setNextMatch, setShowSpieleDialog }: Props) 
                 ...nextMatch,
             });
         }
-        console.log('res', res);
         if (res.error) {
             snackbar.enqueueSnackbar('Änderungen werden nicht gespeichert', {
                 variant: 'error',
@@ -81,30 +87,33 @@ function NextGameAdmin({ nextMatch, setNextMatch, setShowSpieleDialog }: Props) 
         <>
             {auth.currentUser && (
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
-                    <Stack>
-                        <Typography variant="h6">Gegen</Typography>
-                        <StyledTextField id="opponent" value={nextMatch.opponent} onChange={handleChangeMatch} />
-                        <Typography variant="h6">Lokation</Typography>
-                        <StyledTextField
-                            id="location"
-                            value={nextMatch.location}
-                            onChange={handleChangeMatch}
-                            sx={{ mb: 5 }}
+                    <Stack spacing={1}>
+                        <Stack>
+                            <Typography variant="h6">Gegen</Typography>
+                            <StyledTextField id="opponent" value={nextMatch.opponent} onChange={handleChangeMatch} />
+                        </Stack>
+                        <Stack>
+                            <Typography variant="h6">Lokation</Typography>
+                            <StyledTextField
+                                id="location"
+                                value={nextMatch.location}
+                                onChange={handleChangeMatch}
+                                sx={{ mb: 5 }}
+                            />
+                        </Stack>
+                        <FormInputSwitch
+                            name="active"
+                            label="Extrakarte möglich"
+                            value={nextMatch.active}
+                            onChange={handleSwitch}
                         />
-                        <FormGroup sx={{ mb: 3 }}>
-                            <FormControlLabel
-                                value={extraCardPossible}
-                                control={<Switch />}
-                                label="Extrakarte möglich"
-                                onChange={old => setExtraCardPossible(!old)}
-                            />
-                            <FormControlLabel
-                                value={busTour}
-                                control={<Switch />}
-                                label="Bus fahren"
-                                onChange={old => setBusTour(!old)}
-                            />
-                        </FormGroup>
+                        <FormInputSwitch
+                            name="busTour"
+                            label="Bus fahren"
+                            value={nextMatch.busTour}
+                            onChange={handleSwitch}
+                        />
+                        <Divider />
                         <DateTimePicker
                             label="Spielzeit"
                             inputFormat={isMidnight ? 'dd/MM-yyyy' : 'dd/MM-yyyy HH:mm'}
@@ -124,6 +133,6 @@ function NextGameAdmin({ nextMatch, setNextMatch, setShowSpieleDialog }: Props) 
             )}
         </>
     );
-}
+};
 
 export default NextGameAdmin;

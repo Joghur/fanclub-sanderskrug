@@ -23,7 +23,7 @@ const Games = (props: Props) => {
     }, []);
 
     const werderGames = games.filter(
-        (game: any) => game.team1.teamName === werderData.teamName || game.team2.teamName === werderData.teamName,
+        (game: Game) => game.team1?.teamName === werderData.teamName || game.team2?.teamName === werderData.teamName,
     );
 
     console.log('Games - url', url);

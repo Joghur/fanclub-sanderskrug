@@ -6,6 +6,7 @@ import { useSnackbar } from 'notistack';
 import React, { useState } from 'react';
 
 import { storageKeyPrefix } from '../config/settings';
+
 import { deleteDocument, editDocument, saveData } from './api/database';
 import CardTable from './components/CardTable';
 import AlertDialog from './components/Confirmation';
@@ -54,6 +55,8 @@ const CardOrdering = () => {
 
         setCardOrder(old => ({ ...old, [id]: _value }));
     };
+
+    console.log('error', error);
 
     const handleSubmitOrder = async () => {
         const validate = validateObj(cardOrder);

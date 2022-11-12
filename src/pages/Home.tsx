@@ -27,7 +27,7 @@ const Homes = () => {
     const [nextMatch, setNextMatch] = useState<NextMatch>(initNextMatch);
     const [year, setYear] = useState<string>(thisSeason);
     const [league, setLeague] = useState('');
-    const [blMatchDay, setBlMatchDay] = useState(0);
+    const [blMatchDay] = useState(0);
 
     const fetchingStartInfo = async () => {
         const nextMatch = await queryDocuments('match', 'nextMatch', '==', true);
@@ -68,8 +68,8 @@ const Homes = () => {
     // console.log("league", league);
     // console.log("year", year);
     // console.log('blMatchDay', blMatchDay);
-    console.log('nextMatch', nextMatch);
-    console.log('nextMatch.matchType', nextMatch.matchType);
+    // console.log('nextMatch', nextMatch);
+    // console.log('nextMatch.matchType', nextMatch.matchType);
 
     return (
         <Stack spacing={3} alignItems="center" sx={{ p: 5 }}>

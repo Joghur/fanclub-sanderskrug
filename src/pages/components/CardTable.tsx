@@ -4,7 +4,7 @@ import React from 'react';
 
 import { CardOrder } from '../types/Cards';
 
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
+const StyledTableRow = styled(TableRow)(() => ({
     // hide last border
     '&:last-child td, &:last-child th': {
         border: 0,

@@ -6,15 +6,15 @@ import { Game, MatchResult } from '../types/Game';
 //https://github.com/OpenLigaDB/OpenLigaDB-Samples/blob/master/react/app/components/Game.jsx
 
 const GameComponent: React.FunctionComponent<{ match: Game }> = ({ match }) => {
-    const { matchID, team1, team2, matchResults, leagueName, matchDateTime } = match;
+    const { team1, team2, matchResults, leagueName, matchDateTime } = match;
 
-    const key = matchID;
+    // const key = matchID;
     const homeiconsrc = team1?.teamIconUrl;
     const guesticonsrc = team2?.teamIconUrl;
     const hometeamName = team1?.teamName;
     const guestteamName = team2?.teamName;
-    const hometeamgoals = matchResults && matchResults[0]?.pointsTeam1;
-    const guestteamgoals = matchResults && matchResults[0]?.pointsTeam2;
+    // const hometeamgoals = matchResults && matchResults[0]?.pointsTeam1;
+    // const guestteamgoals = matchResults && matchResults[0]?.pointsTeam2;
 
     const matchDay = matchDateTime && format(new Date(matchDateTime), 'dd/MM-yyyy');
     const matchStatus = (matchResults && matchResults.length > 0 && matchResults[0]) as MatchResult;
