@@ -6,7 +6,7 @@ import { AppBar, BottomNavigation, BottomNavigationAction, Box, IconButton, Menu
 import { Container } from '@mui/system';
 import { IKImage } from 'imagekitio-react';
 import { useCallback, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useMeasure } from 'react-use';
 
 const Header = () => {
@@ -14,14 +14,21 @@ const Header = () => {
 
     const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
     const [ref, { width }] = useMeasure<HTMLDivElement>();
-    const [value, setValue] = useState('recents');
+    const [value, setValue] = useState('');
 
     const handleChange = useCallback(
         (event: React.SyntheticEvent, newValue: string) => {
+            setValue(newValue);
             navigate(`/${newValue}`, { replace: true });
         },
         [navigate],
     );
+
+    const handleClick = (event: React.FormEventHandler<HTMLAnchorElement> | undefined) => {
+        console.log('event', event);
+        // setValue(newValue);
+        // navigate(`/${newValue}`, { replace: true });
+    };
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
@@ -84,19 +91,40 @@ const Header = () => {
                         }}
                     >
                         <Box sx={{ display: { xs: 'none', sm: 'flex' } }}>
-                            <Link to="/">
+                            <NavLink
+                                to="/"
+                                style={({ isActive }) => ({
+                                    color: isActive ? 'greenyellow' : 'white',
+                                    textDecoration: 'none',
+                                    boxShadow: isActive ? '1px 2px 3px 4px rgba(20,20,20,0.4)' : '',
+                                })}
+                            >
                                 <img src="favicon.ico" alt="werder bremen" />
-                            </Link>
+                            </NavLink>
                         </Box>
                         <Typography sx={{ minWidth: 100, display: { xs: 'none', sm: 'flex' } }}>
-                            <Link to="kartenvorbestellung" style={{ color: 'white', textDecoration: 'none' }}>
+                            <NavLink
+                                to="kartenvorbestellung"
+                                style={({ isActive }) => ({
+                                    color: isActive ? 'greenyellow' : 'white',
+                                    textDecoration: 'none',
+                                    boxShadow: isActive ? '1px 2px 3px 4px rgba(20,20,20,0.4)' : '',
+                                })}
+                            >
                                 Kartenvorbestellung
-                            </Link>
+                            </NavLink>
                         </Typography>
                         <Typography sx={{ minWidth: 100, display: { xs: 'none', sm: 'flex' } }}>
-                            <Link to="/info" style={{ color: 'white', textDecoration: 'none' }}>
+                            <NavLink
+                                to="/info"
+                                style={({ isActive }) => ({
+                                    color: isActive ? 'greenyellow' : 'white',
+                                    textDecoration: 'none',
+                                    boxShadow: isActive ? '1px 2px 3px 4px rgba(20,20,20,0.4)' : '',
+                                })}
+                            >
                                 Info
-                            </Link>
+                            </NavLink>
                         </Typography>
                     </Box>
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', sm: 'none' } }}>
