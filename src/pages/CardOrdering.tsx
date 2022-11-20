@@ -12,6 +12,7 @@ import { deleteDocument, editDocument, saveData } from './api/database';
 import CardTable from './components/CardTable';
 import AlertDialog from './components/Confirmation';
 import { storageKeyNextMatch } from './components/NextGameAdmin';
+import NextGameCard from './components/NextGameCard';
 import { CardOrder } from './types/Cards';
 import { NextMatch } from './types/Game';
 import { getLocalStorage, setLocalStorage } from './utils/localStorage';
@@ -154,38 +155,9 @@ const CardOrdering = () => {
 
     return (
         <Box>
-            <Grid container direction="column" spacing={3} sx={{ p: 5 }}>
-                <Stack
-                    alignItems="center"
-                    style={{
-                        borderRadius: '50%',
-                        borderWidth: 1,
-                        border: '2px solid #73AD21',
-                        boxShadow: '5px 10px 9px grey',
-                        padding: 20,
-                    }}
-                >
-                    <Typography variant="subtitle1">Werder gegen {nextMatch.opponent}</Typography>
-                    {nextMatch?.matchDate && (
-                        <>
-                            <Typography variant="body2">
-                                Am {format(new Date(nextMatch.matchDate), 'hh:mm')} uhr
-                            </Typography>
-                            <Typography variant="body2">
-                                {format(new Date(nextMatch.matchDate), 'dd/MMM-yyyy')}
-                            </Typography>
-                            <Typography variant="body1">{nextMatch.location}</Typography>
-                        </>
-                    )}
-                </Stack>
-                <Grid item>
-                    <Typography variant="h5">Kartenvorbestellung</Typography>
-                </Grid>
-                {!nextMatch.active && (
-                    <Grid item>
-                        <Typography variant="h6">Kein spiel</Typography>
-                    </Grid>
-                )}
+            <Stack direction="column" spacing={3} sx={{ p: 5 }}>
+                <Typography variant="h5">Gästekartenvorbestellung</Typography>
+                {!nextMatch.active && <Typography variant="h6">Kein spiel</Typography>}
                 {nextMatch.active && (
                     <Grid
                         container
@@ -196,6 +168,7 @@ const CardOrdering = () => {
                         justifyContent="center"
                         sx={{ pb: 5 }}
                     >
+                        <NextGameCard nextMatch={nextMatch} />
                         <Grid item>
                             <Typography variant="h6">Name</Typography>
                             <StyledTextField
@@ -267,7 +240,7 @@ const CardOrdering = () => {
                         onAction={() => currentOrder && deleteOrder(currentOrder)}
                     />
                 )}
-            </Grid>
+            </Stack>
         </Box>
     );
 };

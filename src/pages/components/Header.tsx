@@ -1,3 +1,4 @@
+import styled from '@emotion/styled';
 import AspectRatioIcon from '@mui/icons-material/AspectRatio';
 import HomeRounded from '@mui/icons-material/HomeRounded';
 import InfoIcon from '@mui/icons-material/Info';
@@ -70,9 +71,45 @@ const Header = () => {
                 showLabels={true}
                 sx={{ display: { xs: 'flex', sm: 'none' } }}
             >
-                <BottomNavigationAction label="Sander's Krug" value="" icon={<HomeRounded />} />
-                <BottomNavigationAction label="Karten" value="kartenvorbestellung" icon={<AspectRatioIcon />} />
-                <BottomNavigationAction label="Info" value="info" icon={<InfoIcon />} />
+                <BottomNavigationAction
+                    label="Sander's Krug"
+                    value=""
+                    icon={
+                        <HomeRounded
+                            sx={{
+                                '& .Mui-selected': {
+                                    fontSize: '0.75rem',
+                                },
+                            }}
+                        />
+                    }
+                />
+                <BottomNavigationAction
+                    label="Karten"
+                    value="kartenvorbestellung"
+                    icon={
+                        <AspectRatioIcon
+                            sx={{
+                                '& .Mui-selected': {
+                                    fontSize: '0.75rem',
+                                },
+                            }}
+                        />
+                    }
+                />
+                <BottomNavigationAction
+                    label="Info"
+                    value="info"
+                    icon={
+                        <InfoIcon
+                            sx={{
+                                '& .Mui-selected': {
+                                    fontSize: '0.75rem',
+                                },
+                            }}
+                        />
+                    }
+                />
             </BottomNavigation>
             <AppBar position="static" style={{ backgroundColor: 'green' }} sx={{ display: { xs: 'none', sm: 'flex' } }}>
                 <Container maxWidth="lg">

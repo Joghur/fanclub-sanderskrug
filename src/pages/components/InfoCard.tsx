@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react';
 
 import { editDocument, queryDocuments } from '../api/database';
 
+/** deprecated */
 function InfoCard() {
     const snackbar = useSnackbar();
     const auth = getAuth();

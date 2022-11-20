@@ -1,6 +1,6 @@
 import { Stack, SelectChangeEvent, Typography, Divider, Button } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 import { fetchDocument } from './api/database';
 import Games from './components/Games';
@@ -71,15 +71,13 @@ const Homes = () => {
 
     return (
         <Stack spacing={3} alignItems="center" sx={{ p: 5 }}>
-            <Stack direction="row" alignItems="center" justifyContent="space-around" spacing={4}>
-                <InfoCard />
-                <NextGame nextMatch={nextMatch} setNextMatch={setNextMatch} />
-            </Stack>
+            <InfoCard />
+            <NextGame nextMatch={nextMatch} setNextMatch={setNextMatch} />
             {showOrderButton && (
                 <Button size="large" variant="outlined" sx={{ boxShadow: 3, p: 5 }} onClick={() => {}}>
-                    <Link to="kartenvorbestellung" style={{ color: 'green', textDecoration: 'none' }}>
+                    <NavLink to="kartenvorbestellung" style={{ color: 'green', textDecoration: 'none' }}>
                         Gästekartenvorbestellung
-                    </Link>
+                    </NavLink>
                 </Button>
             )}
             {!showOrderButton && (

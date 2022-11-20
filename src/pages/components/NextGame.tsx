@@ -1,25 +1,24 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import styled from '@emotion/styled';
 import CancelIcon from '@mui/icons-material/Cancel';
 import EditIcon from '@mui/icons-material/Edit';
-import { Button, Dialog, Divider, Paper, Stack, TextField, Typography } from '@mui/material';
-import { format } from 'date-fns';
+import { Dialog, Paper, Stack, Typography } from '@mui/material';
 import { getAuth } from 'firebase/auth';
-import { useSnackbar } from 'notistack';
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
+// import { useSnackbar } from 'notistack';
+import { Dispatch, SetStateAction, useState } from 'react';
 
-import { editDocument, queryDocuments } from '../api/database';
+// import { queryDocuments } from '../api/database';
 import { NextMatch } from '../types/Game';
 
 import NextGameAdmin from './NextGameAdmin';
+import NextGameCard from './NextGameCard';
 
-const StyledButton = styled(Button)({
-    marginBottom: 30,
-});
+// const StyledButton = styled(Button)({
+//     marginBottom: 30,
+// });
 
-const StyledTextField = styled(TextField)({
-    marginRight: 10,
-});
+// const StyledTextField = styled(TextField)({
+//     marginRight: 10,
+// });
 
 interface Props {
     nextMatch: NextMatch;
@@ -27,47 +26,46 @@ interface Props {
 }
 
 function NextGame({ nextMatch, setNextMatch }: Props) {
-    const snackbar = useSnackbar();
+    // const snackbar = useSnackbar();
     const auth = getAuth();
 
     const [showSpieleDialog, setShowSpieleDialog] = useState(false);
-    const [spieleInfo, setSpieleInfo] = useState('');
+    // const [spieleInfo, setSpieleInfo] = useState('');
 
-    const fetchingStartInfo = async () => {
-        const spieleInfo = await queryDocuments('info', 'cardInfoText', '!=', '');
+    // const fetchingStartInfo = async () => {
+    //     const spieleInfo = await queryDocuments('info', 'cardInfoText', '!=', '');
 
-        if (spieleInfo.success.length === 1) {
-            setSpieleInfo(spieleInfo.success[0].cardInfoText);
-        }
-    };
+    //     if (spieleInfo.success.length === 1) {
+    //         setSpieleInfo(spieleInfo.success[0].cardInfoText);
+    //     }
+    // };
 
-    useEffect(() => {
-        fetchingStartInfo();
-    }, []);
+    // useEffect(() => {
+    //     fetchingStartInfo();
+    // }, []);
 
-    const handleChangeSpieleInformationText = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setSpieleInfo(event.target.value);
-    };
+    // const handleChangeSpieleInformationText = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    //     setSpieleInfo(event.target.value);
+    // };
 
-    const handleSubmitSpieleInfo = async () => {
-        const res = await editDocument('info', 'cardInfo', {
-            cardInfoText: spieleInfo,
-        });
-        setShowSpieleDialog(false);
+    // const handleSubmitSpieleInfo = async () => {
+    //     const res = await editDocument('info', 'cardInfo', {
+    //         cardInfoText: spieleInfo,
+    //     });
+    //     setShowSpieleDialog(false);
 
-        if (res.error) {
-            snackbar.enqueueSnackbar('Änderungen werden nicht gespeichert', {
-                variant: 'error',
-            });
-        } else {
-            snackbar.enqueueSnackbar('Änderungen gespeichert', {
-                variant: 'success',
-            });
-        }
-    };
+    //     if (res.error) {
+    //         snackbar.enqueueSnackbar('Änderungen werden nicht gespeichert', {
+    //             variant: 'error',
+    //         });
+    //     } else {
+    //         snackbar.enqueueSnackbar('Änderungen gespeichert', {
+    //             variant: 'success',
+    //         });
+    //     }
+    // };
 
     const doBusTour = nextMatch && nextMatch.busTour;
-    const matchDate = format(nextMatch?.matchDate, 'dd/MM-yyyy HH:mm');
 
     return (
         <>
@@ -76,40 +74,8 @@ function NextGame({ nextMatch, setNextMatch }: Props) {
                     <Typography variant="h5">Nächste spiel</Typography>
                     {auth.currentUser && <EditIcon onClick={() => setShowSpieleDialog(true)} />}
                 </Stack>
-                {spieleInfo && (
-                    <Paper sx={{ p: 2 }}>
-                        <Typography>{spieleInfo}</Typography>
-                    </Paper>
-                )}
                 <Paper sx={{ p: 2 }}>
-                    {nextMatch.active && (
-                        <>
-                            {nextMatch?.matchType !== 'other' && (
-                                <Typography gutterBottom>
-                                    {nextMatch?.matchType === 'league' ? 'Bundesliga spiel' : 'Pokal spiel'}
-                                </Typography>
-                            )}
-                            {nextMatch?.opponent && (
-                                <Typography variant="body1">
-                                    <b>Werder</b> gegen <b>{nextMatch?.opponent}</b>
-                                </Typography>
-                            )}
-                            {nextMatch.gameId && (
-                                <>
-                                    <Typography variant="subtitle1">am</Typography>
-                                    <Typography variant="body2" gutterBottom>
-                                        {matchDate && matchDate}
-                                    </Typography>
-                                </>
-                            )}
-                            {nextMatch?.location && (
-                                <>
-                                    <Typography variant="subtitle1">Lokation</Typography>
-                                    <Typography variant="body2">{nextMatch.location}</Typography>
-                                </>
-                            )}
-                        </>
-                    )}
+                    {nextMatch.active && <NextGameCard nextMatch={nextMatch} />}
                     {!nextMatch.active && (
                         <Typography variant="body2" gutterBottom>
                             Kein spiel
@@ -133,15 +99,15 @@ function NextGame({ nextMatch, setNextMatch }: Props) {
             {auth.currentUser && (
                 <Dialog open={showSpieleDialog}>
                     <Paper sx={{ p: 5 }}>
-                        <Stack spacing={2}>
-                            <Stack direction="row" justifyContent="flex-end">
-                                <CancelIcon
-                                    fontSize="large"
-                                    sx={{ color: 'red' }}
-                                    onClick={() => setShowSpieleDialog(false)}
-                                />
-                            </Stack>
-                            <StyledTextField
+                        {/* <Stack spacing={2}> */}
+                        <Stack direction="row" justifyContent="flex-end">
+                            <CancelIcon
+                                fontSize="large"
+                                sx={{ color: 'red' }}
+                                onClick={() => setShowSpieleDialog(false)}
+                            />
+                        </Stack>
+                        {/* <StyledTextField
                                 label="Kartenvorbestellung info text"
                                 minRows={2}
                                 multiline
@@ -151,14 +117,14 @@ function NextGame({ nextMatch, setNextMatch }: Props) {
                             />
                             <StyledButton variant="contained" onClick={handleSubmitSpieleInfo}>
                                 Info Text ändern
-                            </StyledButton>
-                            <Divider />
-                            <NextGameAdmin
-                                nextMatch={nextMatch}
-                                setNextMatch={setNextMatch}
-                                setShowSpieleDialog={setShowSpieleDialog}
-                            />
-                        </Stack>
+                            </StyledButton> */}
+                        {/* <Divider /> */}
+                        <NextGameAdmin
+                            nextMatch={nextMatch}
+                            setNextMatch={setNextMatch}
+                            setShowSpieleDialog={setShowSpieleDialog}
+                        />
+                        {/* </Stack> */}
                     </Paper>
                 </Dialog>
             )}

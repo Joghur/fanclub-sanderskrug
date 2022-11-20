@@ -121,8 +121,9 @@ const NextGameAdmin = ({ nextMatch, setNextMatch, setShowSpieleDialog }: Props) 
         <>
             {auth.currentUser && (
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
-                    <Stack spacing={1}>
+                    <Stack spacing={2}>
                         <Stack>
+                            <Typography variant="h3">Nächste spiel</Typography>
                             <Typography variant="h6">Gegen</Typography>
                             <StyledTextField id="opponent" value={nextMatch.opponent} onChange={handleChangeMatch} />
                         </Stack>
@@ -157,7 +158,6 @@ const NextGameAdmin = ({ nextMatch, setNextMatch, setShowSpieleDialog }: Props) 
                             value={nextMatch.busTour}
                             onChange={handleSwitch}
                         />
-                        <Divider />
                         <DateTimePicker
                             label="Spielzeit"
                             inputFormat={isMidnight ? 'dd/MM-yyyy' : 'dd/MM-yyyy HH:mm'}
@@ -167,8 +167,6 @@ const NextGameAdmin = ({ nextMatch, setNextMatch, setShowSpieleDialog }: Props) 
                             onChange={handleChangeDate}
                             renderInput={params => <TextField {...params} />}
                         />
-                    </Stack>
-                    <Stack spacing={2}>
                         <StyledButton variant="contained" onClick={handleValidateSubmit}>
                             Informationen zum nächsten Spiel ändern
                         </StyledButton>
