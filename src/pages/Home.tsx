@@ -2,7 +2,7 @@ import { Stack, SelectChangeEvent, Typography, Divider, Button } from '@mui/mate
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import { queryDocuments } from './api/database';
+import { fetchDocument } from './api/database';
 import Games from './components/Games';
 import InfoCard from './components/InfoCard';
 import NextGame from './components/NextGame';
@@ -11,8 +11,8 @@ import { NextMatch } from './types/Game';
 import { thisSeason } from './utils/utilities';
 import { getLeagueStatus } from './utils/werder';
 
-const initNextMatch: NextMatch = {
-    id: '',
+export const initNextMatch: NextMatch = {
+    gameId: '',
     matchDate: new Date(),
     location: '',
     matchDay: 0,
@@ -30,8 +30,9 @@ const Homes = () => {
     const [blMatchDay] = useState(0);
 
     const fetchingStartInfo = async () => {
-        const nextMatch = await queryDocuments('match', 'nextMatch', '==', true);
+        const nextMatch = await fetchDocument('info', 'nextMatch');
 
+        console.log('nextMatch', nextMatch);
         if (nextMatch.success.length === 1) {
             const _nextMatch = nextMatch.success[0];
             _nextMatch.matchDate = new Date(_nextMatch.matchDate.seconds * 1000);
@@ -68,7 +69,7 @@ const Homes = () => {
     // console.log("league", league);
     // console.log("year", year);
     // console.log('blMatchDay', blMatchDay);
-    // console.log('nextMatch', nextMatch);
+    console.log('nextMatch', nextMatch);
     // console.log('nextMatch.matchType', nextMatch.matchType);
 
     return (

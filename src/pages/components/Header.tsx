@@ -6,7 +6,7 @@ import { AppBar, BottomNavigation, BottomNavigationAction, Box, IconButton, Menu
 import { Container } from '@mui/system';
 import { IKImage } from 'imagekitio-react';
 import { useCallback, useState } from 'react';
-import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useMeasure } from 'react-use';
 
 const Header = () => {
@@ -23,12 +23,6 @@ const Header = () => {
         },
         [navigate],
     );
-
-    const handleClick = (event: React.FormEventHandler<HTMLAnchorElement> | undefined) => {
-        console.log('event', event);
-        // setValue(newValue);
-        // navigate(`/${newValue}`, { replace: true });
-    };
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);

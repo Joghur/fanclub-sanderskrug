@@ -71,41 +71,67 @@ function NextGame({ nextMatch, setNextMatch }: Props) {
 
     return (
         <>
-            {spieleInfo && (
-                <Stack>
-                    <Stack direction="row" alignItems="center" spacing={1}>
-                        <Typography variant="h5">Nächste spiel</Typography>
-                        {auth.currentUser && <EditIcon onClick={() => setShowSpieleDialog(true)} />}
-                    </Stack>
+            {/* {spieleInfo && ( */}
+            <Stack>
+                <Stack direction="row" alignItems="center" spacing={1}>
+                    <Typography variant="h5">Nächste spiel</Typography>
+                    {auth.currentUser && <EditIcon onClick={() => setShowSpieleDialog(true)} />}
+                </Stack>
+                {spieleInfo && (
                     <Paper sx={{ p: 2 }}>
                         <Typography>{spieleInfo}</Typography>
                     </Paper>
-                    <Paper sx={{ p: 2 }}>
-                        <Typography gutterBottom>
-                            {nextMatch?.matchType === 'league' ? 'Bundesliga spiel' : 'Pokal spiel'}
-                        </Typography>
-                        <Typography variant="subtitle1">Am</Typography>
-                        <Typography variant="body2" gutterBottom>
-                            {matchDate && matchDate}
-                        </Typography>
-                        <Typography variant="subtitle1">Lokation</Typography>
-                        <Typography variant="body2">{nextMatch?.location && nextMatch.location}</Typography>
-                    </Paper>
-
+                )}
+                <Paper sx={{ p: 2 }}>
                     {nextMatch.active && (
-                        <Typography
-                            variant="h5"
-                            sx={{
-                                color: doBusTour ? 'green' : 'red',
-                                my: 2,
-                                border: 1,
-                                padding: 3,
-                                boxShadow: 3,
-                            }}
-                        >{`Wir fahren ${doBusTour ? '' : 'nicht'}`}</Typography>
+                        <>
+                            {nextMatch?.matchType !== 'other' && (
+                                <Typography gutterBottom>
+                                    {nextMatch?.matchType === 'league' ? 'Bundesliga spiel' : 'Pokal spiel'}
+                                </Typography>
+                            )}
+                            {nextMatch?.opponent && (
+                                <Typography variant="body1">
+                                    <b>Werder</b> gegen <b>{nextMatch?.opponent}</b>
+                                </Typography>
+                            )}
+                            {nextMatch.gameId && (
+                                <>
+                                    <Typography variant="subtitle1">am</Typography>
+                                    <Typography variant="body2" gutterBottom>
+                                        {matchDate && matchDate}
+                                    </Typography>
+                                </>
+                            )}
+                            {nextMatch?.location && (
+                                <>
+                                    <Typography variant="subtitle1">Lokation</Typography>
+                                    <Typography variant="body2">{nextMatch.location}</Typography>
+                                </>
+                            )}
+                        </>
                     )}
-                </Stack>
-            )}
+                    {!nextMatch.active && (
+                        <Typography variant="body2" gutterBottom>
+                            Kein spiel
+                        </Typography>
+                    )}
+                </Paper>
+
+                {nextMatch.active && (
+                    <Typography
+                        variant="h5"
+                        sx={{
+                            color: doBusTour ? 'green' : 'red',
+                            my: 2,
+                            border: 1,
+                            padding: 3,
+                            boxShadow: 3,
+                        }}
+                    >{`Wir fahren ${doBusTour ? '' : 'nicht'}`}</Typography>
+                )}
+            </Stack>
+            {/* )} */}
             {auth.currentUser && (
                 <Dialog open={showSpieleDialog}>
                     <Paper sx={{ p: 5 }}>

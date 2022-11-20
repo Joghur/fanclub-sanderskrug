@@ -55,12 +55,14 @@ export interface Team {
     teamName?: string;
 }
 
+export type GameType = 'league' | 'cup' | 'other';
+
 export interface NextMatch {
-    id?: string;
+    gameId?: string;
     matchDate: Date;
     location?: string;
     matchDay?: number;
-    matchType: 'league' | 'cup' | 'other';
+    matchType: GameType;
     opponent: string;
     nextMatch: boolean;
     active: boolean;
