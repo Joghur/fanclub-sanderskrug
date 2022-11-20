@@ -8,9 +8,12 @@ import { getAuth } from 'firebase/auth';
 import { useSnackbar } from 'notistack';
 import React, { Dispatch, SetStateAction, useState } from 'react';
 
+import { storageKeyPrefix } from 'src/config/settings';
+
 import { initNextMatch } from '../Home';
 import { editDocument, Result } from '../api/database';
 import { GameType, NextMatch } from '../types/Game';
+import { setLocalStorage } from '../utils/localStorage';
 
 import FormInputSelect from './inputform/FormInputSelect';
 import FormInputSwitch from './inputform/FormInputSwitch';
@@ -30,6 +33,8 @@ interface Props {
     setShowSpieleDialog: Dispatch<SetStateAction<boolean>>;
 }
 
+export const storageKeyNextMatch = `${storageKeyPrefix}next_match`;
+
 const NextGameAdmin = ({ nextMatch, setNextMatch, setShowSpieleDialog }: Props) => {
     const snackbar = useSnackbar();
     const auth = getAuth();
@@ -38,11 +43,6 @@ const NextGameAdmin = ({ nextMatch, setNextMatch, setShowSpieleDialog }: Props) 
 
     const handleChangeMatch = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         const { id, value } = event.target;
-
-        if (!value || value.length === 0) {
-            return;
-        }
-
         const _value = value as string | number;
 
         setNextMatch((old: NextMatch) => ({
@@ -86,7 +86,6 @@ const NextGameAdmin = ({ nextMatch, setNextMatch, setShowSpieleDialog }: Props) 
             .filter(n => !ignoreKeys.includes(n) && !nextMatch[n])
             .map(e => ignoreValues[e])
             .filter(Boolean);
-        console.log('notValidated', notValidated);
         if (notValidated.length > 0 && !notValidated.includes('notActive')) {
             snackbar.enqueueSnackbar(`Fehlen: ${notValidated.join(', ')} `, {
                 variant: 'error',
@@ -105,6 +104,9 @@ const NextGameAdmin = ({ nextMatch, setNextMatch, setShowSpieleDialog }: Props) 
                 variant: 'error',
             });
         } else {
+            setLocalStorage(storageKeyNextMatch, {
+                nextMatch: nextMatch,
+            });
             snackbar.enqueueSnackbar('Spiele Info is geändert', {
                 variant: 'success',
             });

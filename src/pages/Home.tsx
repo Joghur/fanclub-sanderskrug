@@ -34,7 +34,6 @@ const Homes = () => {
 
         if (nextMatch.success) {
             const _nextMatch = nextMatch.success;
-            console.log('_nextMatch', _nextMatch);
             _nextMatch.matchDate = new Date(_nextMatch.matchDate.seconds * 1000);
             setNextMatch(_nextMatch);
             return;

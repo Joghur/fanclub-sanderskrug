@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
-import { Button, Grid, Divider, TextField, Typography } from '@mui/material';
+import { Button, Grid, TextField, Typography, Skeleton, Stack, Divider } from '@mui/material';
 import { Box } from '@mui/system';
+import { format } from 'date-fns';
 import { getAuth } from 'firebase/auth';
 import { useSnackbar } from 'notistack';
 import React, { useState } from 'react';
@@ -10,8 +11,10 @@ import { storageKeyPrefix } from '../config/settings';
 import { deleteDocument, editDocument, saveData } from './api/database';
 import CardTable from './components/CardTable';
 import AlertDialog from './components/Confirmation';
+import { storageKeyNextMatch } from './components/NextGameAdmin';
 import { CardOrder } from './types/Cards';
-import { setLocalStorage } from './utils/localStorage';
+import { NextMatch } from './types/Game';
+import { getLocalStorage, setLocalStorage } from './utils/localStorage';
 import { validateObj } from './utils/validation';
 
 const StyledButton = styled(Button)({
@@ -37,6 +40,7 @@ const CardOrdering = () => {
     const snackbar = useSnackbar();
     const auth = getAuth();
     const [cardOrder, setCardOrder] = useState<CardOrder>(initCardOrder);
+    const [nextMatch] = useState<NextMatch>(getLocalStorage(storageKeyNextMatch)?.nextMatch);
     const [currentOrder, setCurrentOrder] = useState<CardOrder | null>(null);
     const [cards, setCards] = useState<CardOrder[]>([]);
     const [error, setError] = useState('');
@@ -57,6 +61,7 @@ const CardOrdering = () => {
     };
 
     console.log('error', error);
+    console.log('nextMatch', nextMatch);
 
     const handleSubmitOrder = async () => {
         const validate = validateObj(cardOrder);
@@ -138,75 +143,110 @@ const CardOrdering = () => {
                 snackbar.enqueueSnackbar('Bestellung is geløscht', {
                     variant: 'success',
                 });
+                setLocalStorage(storageKeyCardOrder, initCardOrder);
             }
         }
     };
 
+    if (!nextMatch) {
+        return <Skeleton variant="text" />;
+    }
+
     return (
         <Box>
             <Grid container direction="column" spacing={3} sx={{ p: 5 }}>
+                <Stack
+                    alignItems="center"
+                    style={{
+                        borderRadius: '50%',
+                        borderWidth: 1,
+                        border: '2px solid #73AD21',
+                        boxShadow: '5px 10px 9px grey',
+                        padding: 20,
+                    }}
+                >
+                    <Typography variant="subtitle1">Werder gegen {nextMatch.opponent}</Typography>
+                    {nextMatch?.matchDate && (
+                        <>
+                            <Typography variant="body2">
+                                Am {format(new Date(nextMatch.matchDate), 'hh:mm')} uhr
+                            </Typography>
+                            <Typography variant="body2">
+                                {format(new Date(nextMatch.matchDate), 'dd/MMM-yyyy')}
+                            </Typography>
+                            <Typography variant="body1">{nextMatch.location}</Typography>
+                        </>
+                    )}
+                </Stack>
                 <Grid item>
                     <Typography variant="h5">Kartenvorbestellung</Typography>
                 </Grid>
-                <Grid
-                    container
-                    direction="column"
-                    item
-                    spacing={3}
-                    alignItems="center"
-                    justifyContent="center"
-                    sx={{ pb: 5 }}
-                >
+                {!nextMatch.active && (
                     <Grid item>
-                        <Typography variant="h6">Name</Typography>
-                        <StyledTextField
-                            id="name"
-                            value={cardOrder?.name}
-                            onChange={handleChangeOrder}
-                            // error={!!error}
-                            // helperText={error && 'Incorrect entry.'}
-                        />
+                        <Typography variant="h6">Kein spiel</Typography>
                     </Grid>
-                    <Grid item>
-                        <Typography variant="h6">Werder Stammkartnummer</Typography>
-                        <Typography>info kommt hier</Typography>
-                        <StyledTextField
-                            id="regularCardNumber"
-                            type="number"
-                            value={cardOrder?.regularCardNumber}
-                            onChange={handleChangeOrder}
-                            // error={!!error}
-                            // helperText={error && 'Incorrect entry.'}
-                        />
+                )}
+                {nextMatch.active && (
+                    <Grid
+                        container
+                        direction="column"
+                        item
+                        spacing={3}
+                        alignItems="center"
+                        justifyContent="center"
+                        sx={{ pb: 5 }}
+                    >
+                        <Grid item>
+                            <Typography variant="h6">Name</Typography>
+                            <StyledTextField
+                                id="name"
+                                value={cardOrder?.name}
+                                onChange={handleChangeOrder}
+                                // error={!!error}
+                                // helperText={error && 'Incorrect entry.'}
+                            />
+                        </Grid>
+                        <Grid item>
+                            <Typography variant="h6">Werder Stammkartnummer</Typography>
+                            <Typography>info kommt hier</Typography>
+                            <StyledTextField
+                                id="regularCardNumber"
+                                type="number"
+                                value={cardOrder?.regularCardNumber}
+                                onChange={handleChangeOrder}
+                                // error={!!error}
+                                // helperText={error && 'Incorrect entry.'}
+                            />
+                        </Grid>
+                        <Grid item>
+                            <Typography variant="h6">Anzahl</Typography>
+                            <StyledTextField
+                                id="amount"
+                                type="number"
+                                value={cardOrder?.amount}
+                                onChange={handleChangeOrder}
+                                // error={!!error}
+                                // helperText={error && 'Incorrect entry.'}
+                            />
+                        </Grid>
+                        <Grid item>
+                            <Typography variant="h6">Kommentar zur bestellung</Typography>
+                            <Typography>(Optional)</Typography>
+                            <StyledTextField id="comment" value={cardOrder?.comment} onChange={handleChangeOrder} />
+                        </Grid>
+                        <Grid item>
+                            <StyledButton
+                                variant="contained"
+                                onClick={handleSubmitOrder}
+                                disabled={!cardOrder}
+                                sx={{ height: 58 }}
+                            >
+                                {editing ? 'Karte ändern' : 'Karte bestellen'}
+                            </StyledButton>
+                        </Grid>
                     </Grid>
-                    <Grid item>
-                        <Typography variant="h6">Anzahl</Typography>
-                        <StyledTextField
-                            id="amount"
-                            type="number"
-                            value={cardOrder?.amount}
-                            onChange={handleChangeOrder}
-                            // error={!!error}
-                            // helperText={error && 'Incorrect entry.'}
-                        />
-                    </Grid>
-                    <Grid item>
-                        <Typography variant="h6">Kommentar zur bestellung</Typography>
-                        <Typography>(Optional)</Typography>
-                        <StyledTextField id="comment" value={cardOrder?.comment} onChange={handleChangeOrder} />
-                    </Grid>
-                    <Grid item>
-                        <StyledButton
-                            variant="contained"
-                            onClick={handleSubmitOrder}
-                            disabled={!cardOrder}
-                            sx={{ height: 58 }}
-                        >
-                            {editing ? 'Karte ändern' : 'Karte bestellen'}
-                        </StyledButton>
-                    </Grid>
-                </Grid>
-                {auth.currentUser && (
+                )}
+                {auth.currentUser && nextMatch.active && (
                     <>
                         <Divider variant="middle" />
                         <Grid item>

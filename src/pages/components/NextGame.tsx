@@ -2,7 +2,7 @@
 import styled from '@emotion/styled';
 import CancelIcon from '@mui/icons-material/Cancel';
 import EditIcon from '@mui/icons-material/Edit';
-import { Button, Dialog, Divider, Paper, Skeleton, Stack, TextField, Typography } from '@mui/material';
+import { Button, Dialog, Divider, Paper, Stack, TextField, Typography } from '@mui/material';
 import { format } from 'date-fns';
 import { getAuth } from 'firebase/auth';
 import { useSnackbar } from 'notistack';
