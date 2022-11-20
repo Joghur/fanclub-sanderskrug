@@ -32,16 +32,14 @@ const Homes = () => {
     const fetchingStartInfo = async () => {
         const nextMatch = await fetchDocument('info', 'nextMatch');
 
-        console.log('nextMatch', nextMatch);
-        if (nextMatch.success.length === 1) {
-            const _nextMatch = nextMatch.success[0];
+        if (nextMatch.success) {
+            const _nextMatch = nextMatch.success;
+            console.log('_nextMatch', _nextMatch);
             _nextMatch.matchDate = new Date(_nextMatch.matchDate.seconds * 1000);
             setNextMatch(_nextMatch);
+            return;
         }
-
-        if (nextMatch.success.length !== 1) {
-            console.log('Error in NextMatch. nextMatch.success.length = ', nextMatch.success.length);
-        }
+        console.log('Error in NextMatch: ', nextMatch.error);
     };
 
     useEffect(() => {
@@ -69,7 +67,7 @@ const Homes = () => {
     // console.log("league", league);
     // console.log("year", year);
     // console.log('blMatchDay', blMatchDay);
-    console.log('nextMatch', nextMatch);
+    // console.log('nextMatch', nextMatch);
     // console.log('nextMatch.matchType', nextMatch.matchType);
 
     return (

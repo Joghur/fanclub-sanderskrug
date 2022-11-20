@@ -2,7 +2,7 @@
 import styled from '@emotion/styled';
 import CancelIcon from '@mui/icons-material/Cancel';
 import EditIcon from '@mui/icons-material/Edit';
-import { Button, Dialog, Divider, Paper, Stack, TextField, Typography } from '@mui/material';
+import { Button, Dialog, Divider, Paper, Skeleton, Stack, TextField, Typography } from '@mui/material';
 import { format } from 'date-fns';
 import { getAuth } from 'firebase/auth';
 import { useSnackbar } from 'notistack';
@@ -71,7 +71,6 @@ function NextGame({ nextMatch, setNextMatch }: Props) {
 
     return (
         <>
-            {/* {spieleInfo && ( */}
             <Stack>
                 <Stack direction="row" alignItems="center" spacing={1}>
                     <Typography variant="h5">Nächste spiel</Typography>
@@ -131,7 +130,6 @@ function NextGame({ nextMatch, setNextMatch }: Props) {
                     >{`Wir fahren ${doBusTour ? '' : 'nicht'}`}</Typography>
                 )}
             </Stack>
-            {/* )} */}
             {auth.currentUser && (
                 <Dialog open={showSpieleDialog}>
                     <Paper sx={{ p: 5 }}>

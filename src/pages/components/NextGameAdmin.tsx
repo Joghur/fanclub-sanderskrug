@@ -80,14 +80,14 @@ const NextGameAdmin = ({ nextMatch, setNextMatch, setShowSpieleDialog }: Props) 
     };
 
     const handleValidateSubmit = async () => {
-        const ignoreKeys = ['matchDay', 'nextMatch', 'gameId', 'busTour'];
-        const ignoreValues = { active: 'Extrakarte nich aktiviert', location: 'Lokation', opponent: 'Gegner' };
+        const ignoreKeys = ['matchDay', 'nextMatch', 'busTour'];
+        const ignoreValues = { active: 'notActive', gameId: 'Neues dato', location: 'Lokation', opponent: 'Gegner' };
         const notValidated = Object.keys(nextMatch)
             .filter(n => !ignoreKeys.includes(n) && !nextMatch[n])
             .map(e => ignoreValues[e])
             .filter(Boolean);
         console.log('notValidated', notValidated);
-        if (notValidated.length > 0 && !notValidated.includes('Extrakarte nich aktiviert')) {
+        if (notValidated.length > 0 && !notValidated.includes('notActive')) {
             snackbar.enqueueSnackbar(`Fehlen: ${notValidated.join(', ')} `, {
                 variant: 'error',
             });
