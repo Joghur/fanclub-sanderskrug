@@ -1,30 +1,20 @@
-import styled from '@emotion/styled';
-import { Button, Grid, TextField, Typography, Skeleton, Stack, Divider } from '@mui/material';
+import { Grid, Typography, Skeleton, Stack, Divider } from '@mui/material';
 import { Box } from '@mui/system';
-import { format } from 'date-fns';
 import { getAuth } from 'firebase/auth';
 import { useSnackbar } from 'notistack';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { storageKeyPrefix } from '../config/settings';
 
-import { deleteDocument, editDocument, saveData } from './api/database';
+import { fetchDocument, deleteDocument, editDocument, saveData } from './api/database';
 import CardTable from './components/CardTable';
 import AlertDialog from './components/Confirmation';
-import { storageKeyNextMatch } from './components/NextGameAdmin';
-import NextGameCard from './components/NextGameCard';
+import InfoCard from './components/InfoCard';
+import NextGame from './components/NextGame';
 import { CardOrder } from './types/Cards';
 import { NextMatch } from './types/Game';
-import { getLocalStorage, setLocalStorage } from './utils/localStorage';
+import { setLocalStorage } from './utils/localStorage';
 import { validateObj } from './utils/validation';
-
-const StyledButton = styled(Button)({
-    marginBottom: 30,
-});
-
-const StyledTextField = styled(TextField)({
-    marginRight: 10,
-});
 
 const storageKeyCardOrder = `${storageKeyPrefix}cardorder`;
 
@@ -37,16 +27,44 @@ const initCardOrder: CardOrder = {
     regularCardNumber: undefined,
 };
 
+export const initNextMatch: NextMatch = {
+    gameId: '',
+    matchDate: new Date(),
+    location: '',
+    matchDay: 0,
+    matchType: 'other',
+    opponent: '',
+    nextMatch: false,
+    active: false,
+    busTour: false,
+};
+
 const CardOrdering = () => {
     const snackbar = useSnackbar();
     const auth = getAuth();
     const [cardOrder, setCardOrder] = useState<CardOrder>(initCardOrder);
-    const [nextMatch] = useState<NextMatch>(getLocalStorage(storageKeyNextMatch)?.nextMatch);
     const [currentOrder, setCurrentOrder] = useState<CardOrder | null>(null);
     const [cards, setCards] = useState<CardOrder[]>([]);
     const [error, setError] = useState('');
     const [openAlert, setOpenAlert] = React.useState(false);
     const [editing, setEditing] = React.useState(false);
+    const [nextMatch, setNextMatch] = useState<NextMatch>(initNextMatch);
+
+    const fetchingStartInfo = async () => {
+        const nextMatch = await fetchDocument('info', 'nextMatch');
+
+        if (nextMatch.success) {
+            const _nextMatch = nextMatch.success;
+            _nextMatch.matchDate = new Date(_nextMatch.matchDate.seconds * 1000);
+            setNextMatch(_nextMatch);
+            return;
+        }
+        console.log('Error in NextMatch: ', nextMatch.error);
+    };
+
+    useEffect(() => {
+        fetchingStartInfo();
+    }, []);
 
     const handleChangeOrder = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         const { id, value } = event.target;
@@ -156,69 +174,9 @@ const CardOrdering = () => {
     return (
         <Box>
             <Stack direction="column" spacing={3} sx={{ p: 5 }}>
-                <Typography variant="h5">Gästekartenvorbestellung</Typography>
+                <NextGame nextMatch={nextMatch} setNextMatch={setNextMatch} />
                 {!nextMatch.active && <Typography variant="h6">Kein spiel</Typography>}
-                {nextMatch.active && (
-                    <Grid
-                        container
-                        direction="column"
-                        item
-                        spacing={3}
-                        alignItems="center"
-                        justifyContent="center"
-                        sx={{ pb: 5 }}
-                    >
-                        <NextGameCard nextMatch={nextMatch} />
-                        <Grid item>
-                            <Typography variant="h6">Name</Typography>
-                            <StyledTextField
-                                id="name"
-                                value={cardOrder?.name}
-                                onChange={handleChangeOrder}
-                                // error={!!error}
-                                // helperText={error && 'Incorrect entry.'}
-                            />
-                        </Grid>
-                        <Grid item>
-                            <Typography variant="h6">Werder Stammkartnummer</Typography>
-                            <Typography>info kommt hier</Typography>
-                            <StyledTextField
-                                id="regularCardNumber"
-                                type="number"
-                                value={cardOrder?.regularCardNumber}
-                                onChange={handleChangeOrder}
-                                // error={!!error}
-                                // helperText={error && 'Incorrect entry.'}
-                            />
-                        </Grid>
-                        <Grid item>
-                            <Typography variant="h6">Anzahl</Typography>
-                            <StyledTextField
-                                id="amount"
-                                type="number"
-                                value={cardOrder?.amount}
-                                onChange={handleChangeOrder}
-                                // error={!!error}
-                                // helperText={error && 'Incorrect entry.'}
-                            />
-                        </Grid>
-                        <Grid item>
-                            <Typography variant="h6">Kommentar zur bestellung</Typography>
-                            <Typography>(Optional)</Typography>
-                            <StyledTextField id="comment" value={cardOrder?.comment} onChange={handleChangeOrder} />
-                        </Grid>
-                        <Grid item>
-                            <StyledButton
-                                variant="contained"
-                                onClick={handleSubmitOrder}
-                                disabled={!cardOrder}
-                                sx={{ height: 58 }}
-                            >
-                                {editing ? 'Karte ändern' : 'Karte bestellen'}
-                            </StyledButton>
-                        </Grid>
-                    </Grid>
-                )}
+                <InfoCard />
                 {auth.currentUser && nextMatch.active && (
                     <>
                         <Divider variant="middle" />

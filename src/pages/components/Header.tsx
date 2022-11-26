@@ -1,9 +1,17 @@
-import styled from '@emotion/styled';
-import AspectRatioIcon from '@mui/icons-material/AspectRatio';
+import BookOnline from '@mui/icons-material/BookOnline';
 import HomeRounded from '@mui/icons-material/HomeRounded';
-import InfoIcon from '@mui/icons-material/Info';
 import MenuIcon from '@mui/icons-material/Menu';
-import { AppBar, BottomNavigation, BottomNavigationAction, Box, IconButton, Menu, Typography } from '@mui/material';
+import SportsSoccerIcon from '@mui/icons-material/SportsSoccer';
+import {
+    AppBar,
+    BottomNavigation,
+    BottomNavigationAction,
+    Box,
+    IconButton,
+    Menu,
+    Stack,
+    Typography,
+} from '@mui/material';
 import { Container } from '@mui/system';
 import { IKImage } from 'imagekitio-react';
 import { useCallback, useState } from 'react';
@@ -72,10 +80,10 @@ const Header = () => {
                 sx={{ display: { xs: 'flex', sm: 'none' } }}
             >
                 <BottomNavigationAction
-                    label="Sander's Krug"
+                    label="Kartenvorbestellung"
                     value=""
                     icon={
-                        <HomeRounded
+                        <BookOnline
                             sx={{
                                 '& .Mui-selected': {
                                     fontSize: '0.75rem',
@@ -85,10 +93,10 @@ const Header = () => {
                     }
                 />
                 <BottomNavigationAction
-                    label="Karten"
-                    value="kartenvorbestellung"
+                    label="Liga"
+                    value="liga"
                     icon={
-                        <AspectRatioIcon
+                        <SportsSoccerIcon
                             sx={{
                                 '& .Mui-selected': {
                                     fontSize: '0.75rem',
@@ -98,10 +106,10 @@ const Header = () => {
                     }
                 />
                 <BottomNavigationAction
-                    label="Info"
+                    label="Sander's Krug"
                     value="info"
                     icon={
-                        <InfoIcon
+                        <HomeRounded
                             sx={{
                                 '& .Mui-selected': {
                                     fontSize: '0.75rem',
@@ -130,19 +138,37 @@ const Header = () => {
                                     boxShadow: isActive ? '1px 2px 3px 4px rgba(20,20,20,0.4)' : '',
                                 })}
                             >
-                                <img src="favicon.ico" alt="werder bremen" />
+                                <Stack alignItems="center">
+                                    <BookOnline
+                                        sx={{
+                                            '& .Mui-selected': {
+                                                fontSize: '0.75rem',
+                                            },
+                                        }}
+                                    />
+                                    Kartenvorbestellung
+                                </Stack>
                             </NavLink>
                         </Box>
                         <Typography sx={{ minWidth: 100, display: { xs: 'none', sm: 'flex' } }}>
                             <NavLink
-                                to="kartenvorbestellung"
+                                to="liga"
                                 style={({ isActive }) => ({
                                     color: isActive ? 'greenyellow' : 'white',
                                     textDecoration: 'none',
                                     boxShadow: isActive ? '1px 2px 3px 4px rgba(20,20,20,0.4)' : '',
                                 })}
                             >
-                                Kartenvorbestellung
+                                <Stack alignItems="center">
+                                    <SportsSoccerIcon
+                                        sx={{
+                                            '& .Mui-selected': {
+                                                fontSize: '0.75rem',
+                                            },
+                                        }}
+                                    />
+                                    Bundesliga
+                                </Stack>
                             </NavLink>
                         </Typography>
                         <Typography sx={{ minWidth: 100, display: { xs: 'none', sm: 'flex' } }}>
@@ -154,7 +180,17 @@ const Header = () => {
                                     boxShadow: isActive ? '1px 2px 3px 4px rgba(20,20,20,0.4)' : '',
                                 })}
                             >
-                                Info
+                                <Stack alignItems="center">
+                                    <HomeRounded
+                                        sx={{
+                                            '& .Mui-selected': {
+                                                fontSize: '0.75rem',
+                                            },
+                                        }}
+                                    />
+                                    Sander&apos;s Krug
+                                </Stack>
+                                {/* <img src="favicon.ico" alt="werder bremen" /> */}
                             </NavLink>
                         </Typography>
                     </Box>

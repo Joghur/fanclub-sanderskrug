@@ -1,13 +1,19 @@
+import EditIcon from '@mui/icons-material/Edit';
 import { Stack, Typography } from '@mui/material';
 import { format } from 'date-fns';
+import { getAuth } from 'firebase/auth';
+import { Dispatch, SetStateAction } from 'react';
 
 import { NextMatch } from '../types/Game';
 
 interface Props {
     nextMatch: NextMatch;
+    setNextMatch?: Dispatch<SetStateAction<NextMatch>>;
+    setShowSpieleDialog?: Dispatch<SetStateAction<boolean>>;
 }
 
-function NextGameCard({ nextMatch }: Props) {
+function NextGameCard({ nextMatch, setNextMatch, setShowSpieleDialog }: Props) {
+    const auth = getAuth();
     return (
         <>
             <Stack
@@ -20,6 +26,12 @@ function NextGameCard({ nextMatch }: Props) {
                     padding: 30,
                 }}
             >
+                <Stack direction="row" alignItems="center">
+                    <Typography variant="h4">Nächste spiel</Typography>
+                    {auth.currentUser && setNextMatch && setShowSpieleDialog && (
+                        <EditIcon onClick={() => setShowSpieleDialog(true)} />
+                    )}
+                </Stack>
                 <Typography variant="subtitle1">Werder gegen {nextMatch.opponent}</Typography>
                 {nextMatch?.matchDate && (
                     <>

@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Button, Dialog, Divider, Paper, SelectChangeEvent, Stack, TextField, Typography } from '@mui/material';
+import { Button, Dialog, Paper, SelectChangeEvent, Stack, TextField, Typography } from '@mui/material';
 import { DateTimePicker } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -10,8 +10,8 @@ import React, { Dispatch, SetStateAction, useState } from 'react';
 
 import { storageKeyPrefix } from 'src/config/settings';
 
-import { initNextMatch } from '../Home';
 import { editDocument, Result } from '../api/database';
+import { initNextMatch } from '../CardOrdering';
 import { GameType, NextMatch } from '../types/Game';
 import { setLocalStorage } from '../utils/localStorage';
 
@@ -116,6 +116,10 @@ const NextGameAdmin = ({ nextMatch, setNextMatch, setShowSpieleDialog }: Props) 
 
     const isMidnight =
         new Date(nextMatch.matchDate).getHours() === 0 && new Date(nextMatch.matchDate).getMinutes() === 0;
+
+    // console.log('blMatchDay', blMatchDay);
+    // console.log('nextMatch', nextMatch);
+    // console.log('nextMatch.matchType', nextMatch.matchType);
 
     return (
         <>
