@@ -14,6 +14,7 @@ import NextGame from './components/NextGame';
 import { CardOrder } from './types/Cards';
 import { NextMatch } from './types/Game';
 import { setLocalStorage } from './utils/localStorage';
+import EditIcon from '@mui/icons-material/Edit';
 import { validateObj } from './utils/validation';
 
 const storageKeyCardOrder = `${storageKeyPrefix}cardorder`;
@@ -172,34 +173,31 @@ const CardOrdering = () => {
     }
 
     return (
-        <Box>
-            <Stack direction="column" spacing={3} sx={{ p: 5 }}>
-                <NextGame nextMatch={nextMatch} setNextMatch={setNextMatch} />
-                {!nextMatch.active && <Typography variant="h6">Kein spiel</Typography>}
-                <InfoCard />
-                {auth.currentUser && nextMatch.active && (
-                    <>
-                        <Divider variant="middle" />
-                        <Grid item>
-                            <Typography variant="h5">Admins abteilung</Typography>
-                        </Grid>
-                        <Grid item>
-                            <CardTable cards={cards} handleEdit={handleEditOrder} handleDelete={handleDeleteOrder} />
-                        </Grid>
-                    </>
-                )}
-                {openAlert && (
-                    <AlertDialog
-                        header="Karte löschen"
-                        alertText="Möchten Sie diese Karte wirklich löschen? Daten können nicht
+        <Stack direction="column" spacing={3} sx={{ p: 5 }}>
+            <NextGame nextMatch={nextMatch} setNextMatch={setNextMatch} />
+            <InfoCard />
+            {auth.currentUser && nextMatch.active && (
+                <>
+                    <Divider variant="middle" />
+                    <Grid item>
+                        <Typography variant="h5">Admins abteilung</Typography>
+                    </Grid>
+                    <Grid item>
+                        <CardTable cards={cards} handleEdit={handleEditOrder} handleDelete={handleDeleteOrder} />
+                    </Grid>
+                </>
+            )}
+            {openAlert && (
+                <AlertDialog
+                    header="Karte löschen"
+                    alertText="Möchten Sie diese Karte wirklich löschen? Daten können nicht
           wiederhergestellt werden"
-                        open={openAlert}
-                        onClose={handleCloseAlert}
-                        onAction={() => currentOrder && deleteOrder(currentOrder)}
-                    />
-                )}
-            </Stack>
-        </Box>
+                    open={openAlert}
+                    onClose={handleCloseAlert}
+                    onAction={() => currentOrder && deleteOrder(currentOrder)}
+                />
+            )}
+        </Stack>
     );
 };
 

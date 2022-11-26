@@ -19,36 +19,14 @@ function NextGame({ nextMatch, setNextMatch }: Props) {
 
     const [showSpieleDialog, setShowSpieleDialog] = useState(false);
 
-    const doBusTour = nextMatch && nextMatch.busTour;
-
     return (
         <>
-            <Stack>
-                {nextMatch.active && (
-                    <NextGameCard
-                        nextMatch={nextMatch}
-                        setNextMatch={setNextMatch}
-                        setShowSpieleDialog={setShowSpieleDialog}
-                    />
-                )}
-                {!nextMatch.active && (
-                    <Typography variant="body2" gutterBottom>
-                        Kein spiel
-                    </Typography>
-                )}
-
-                {nextMatch.active && (
-                    <Typography
-                        variant="h5"
-                        sx={{
-                            color: doBusTour ? 'green' : 'red',
-                            my: 2,
-                            border: 1,
-                            padding: 3,
-                            boxShadow: 3,
-                        }}
-                    >{`Wir fahren ${doBusTour ? '' : 'nicht'}`}</Typography>
-                )}
+            <Stack alignItems="center" justifyContent="center">
+                <NextGameCard
+                    nextMatch={nextMatch}
+                    setNextMatch={setNextMatch}
+                    setShowSpieleDialog={setShowSpieleDialog}
+                />
             </Stack>
             {auth.currentUser && setNextMatch && (
                 <Dialog open={showSpieleDialog}>

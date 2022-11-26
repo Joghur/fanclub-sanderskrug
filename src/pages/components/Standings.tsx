@@ -6,6 +6,7 @@ import {
     Paper,
     Select,
     SelectChangeEvent,
+    styled,
     Table,
     TableBody,
     TableCell,
@@ -15,8 +16,8 @@ import {
     TableRow,
     Typography,
     useMediaQuery,
+    useTheme,
 } from '@mui/material';
-import { styled, useTheme } from '@mui/material/styles';
 import { useEffect, useState } from 'react';
 
 import { bundesligaData } from '../../config/settings';

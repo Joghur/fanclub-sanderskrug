@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Button, Dialog, Paper, SelectChangeEvent, Stack, TextField, Typography } from '@mui/material';
+import { Alert, Button, Dialog, Paper, SelectChangeEvent, Stack, TextField, Typography } from '@mui/material';
 import { DateTimePicker } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -155,12 +155,14 @@ const NextGameAdmin = ({ nextMatch, setNextMatch, setShowSpieleDialog }: Props) 
                             label="Extrakarte möglich"
                             value={nextMatch.active}
                             onChange={handleSwitch}
+                            disabled={false}
                         />
                         <FormInputSwitch
                             name="busTour"
                             label="Bus fahren"
                             value={nextMatch.busTour}
                             onChange={handleSwitch}
+                            disabled={!nextMatch.location || !nextMatch.opponent || !nextMatch.gameId}
                         />
                         <DateTimePicker
                             label="Spielzeit"
@@ -171,6 +173,12 @@ const NextGameAdmin = ({ nextMatch, setNextMatch, setShowSpieleDialog }: Props) 
                             onChange={handleChangeDate}
                             renderInput={params => <TextField {...params} />}
                         />
+                        <Alert color="error">
+                            Nur eine Änderung des Datums (nicht Uhrzeit - nur Datum) und &quot;extrakarte möglich&quot;
+                            auf &quot;aus&quot; führt zu Änderungen bei den Karteninhabern. Wenn Sie das Datum ändern,
+                            nachdem Personen begonnen haben, zusätzliche Karten zu kaufen, können sie diese nicht auf
+                            ihrem Gerät sehen.
+                        </Alert>
                         <StyledButton variant="contained" onClick={handleValidateSubmit}>
                             Informationen zum nächsten Spiel ändern
                         </StyledButton>
@@ -182,41 +190,37 @@ const NextGameAdmin = ({ nextMatch, setNextMatch, setShowSpieleDialog }: Props) 
                             Nächstes Spiel
                         </StyledButton>
                     </Stack>
-                    {showValidateNag && (
-                        <Dialog open={showValidateNag}>
-                            <Paper sx={{ p: 5 }}>
-                                <Typography paragraph>nicht alles ist ausgefüllt</Typography>
-                                <Stack direction="row" spacing={1}>
-                                    <Button
-                                        variant="contained"
-                                        color="error"
-                                        onClick={() => setShowValidateNag(!showValidateNag)}
-                                    >
-                                        Zurück
-                                    </Button>
-                                </Stack>
-                            </Paper>
-                        </Dialog>
-                    )}
-                    {showNewGameNag && (
-                        <Dialog open={showNewGameNag}>
-                            <Paper sx={{ p: 5 }}>
-                                <Typography paragraph>Neu - Bist du sicher!</Typography>
-                                <Stack direction="row" spacing={1}>
-                                    <Button variant="contained" color="primary" onClick={handleNewMatch}>
-                                        Ja
-                                    </Button>
-                                    <Button
-                                        variant="contained"
-                                        color="error"
-                                        onClick={() => setShowChangeNag(!showNewGameNag)}
-                                    >
-                                        Nein
-                                    </Button>
-                                </Stack>
-                            </Paper>
-                        </Dialog>
-                    )}
+                    <Dialog open={showValidateNag}>
+                        <Paper sx={{ p: 5 }}>
+                            <Typography paragraph>nicht alles ist ausgefüllt</Typography>
+                            <Stack direction="row" spacing={1}>
+                                <Button
+                                    variant="contained"
+                                    color="error"
+                                    onClick={() => setShowValidateNag(!showValidateNag)}
+                                >
+                                    Zurück
+                                </Button>
+                            </Stack>
+                        </Paper>
+                    </Dialog>
+                    <Dialog open={showNewGameNag}>
+                        <Paper sx={{ p: 5 }}>
+                            <Typography paragraph>Neu - Bist du sicher!</Typography>
+                            <Stack direction="row" spacing={1}>
+                                <Button variant="contained" color="primary" onClick={handleNewMatch}>
+                                    Ja
+                                </Button>
+                                <Button
+                                    variant="contained"
+                                    color="error"
+                                    onClick={() => setShowChangeNag(!showNewGameNag)}
+                                >
+                                    Nein
+                                </Button>
+                            </Stack>
+                        </Paper>
+                    </Dialog>
                 </LocalizationProvider>
             )}
         </>
