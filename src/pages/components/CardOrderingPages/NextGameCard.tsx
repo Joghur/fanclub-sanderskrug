@@ -4,7 +4,7 @@ import { format } from 'date-fns';
 import { getAuth } from 'firebase/auth';
 import { Dispatch, SetStateAction } from 'react';
 
-import { NextMatch } from '../types/Game';
+import { NextMatch } from '../../types/Game';
 
 interface Props {
     nextMatch: NextMatch;

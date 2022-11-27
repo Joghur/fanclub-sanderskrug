@@ -20,10 +20,10 @@ import {
 } from '@mui/material';
 import { useEffect, useState } from 'react';
 
-import { bundesligaData } from '../../config/settings';
-import { fetchState } from '../api/axios';
-import { Standing } from '../types/Standing';
-import { thisYear } from '../utils/utilities';
+import { bundesligaData } from 'src/config/settings';
+import { fetchState } from 'src/pages/api/axios';
+import { Standing } from 'src/pages/types/Standing';
+import { thisYear } from 'src/pages/utils/utilities';
 
 const MobileTableCell = styled(TableCell)(() => ({
     [`&.${tableCellClasses.head}`]: {

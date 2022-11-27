@@ -16,9 +16,9 @@ import { format } from 'date-fns';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
 
-import { CardOrder } from '../types/Cards';
-import { NextMatch } from '../types/Game';
-import { StyledButton } from '../utils/styles';
+import { CardOrder } from '../../types/Cards';
+import { NextMatch } from '../../types/Game';
+import { StyledButton } from '../../utils/styles';
 
 const StyledTableRow = styled(TableRow)(() => ({
     // hide last border

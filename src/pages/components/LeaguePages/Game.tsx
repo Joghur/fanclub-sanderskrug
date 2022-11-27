@@ -1,7 +1,7 @@
 import { Card, CardContent, Stack, Tooltip, Typography } from '@mui/material';
 import { format } from 'date-fns';
 
-import { Game, MatchResult } from '../types/Game';
+import { Game, MatchResult } from '../../types/Game';
 
 //https://github.com/OpenLigaDB/OpenLigaDB-Samples/blob/master/react/app/components/Game.jsx
 

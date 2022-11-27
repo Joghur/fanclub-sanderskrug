@@ -3,20 +3,11 @@ import { getAuth } from 'firebase/auth';
 import React, { useEffect, useState } from 'react';
 
 import { fetchDocument } from './api/database';
-import AdminPart from './components/AdminPart';
-import CardownerPart from './components/CartownerPart';
+import AdminPart from './components/CardOrderingPages/AdminPart';
+import CardownerPart from './components/CardOrderingPages/CartownerPart';
+import NextGame from './components/CardOrderingPages/NextGame';
 import InfoCard from './components/InfoCard';
-import NextGame from './components/NextGame';
 import { NextMatch } from './types/Game';
-
-// const initCardOrder: CardOrder = {
-//     id: '',
-//     comment: '',
-//     name: '',
-//     amount: 0,
-//     gameId: '',
-//     regularCardNumber: undefined,
-// };
 
 export const initNextMatch: NextMatch = {
     gameId: '',
@@ -32,8 +23,6 @@ export const initNextMatch: NextMatch = {
 
 const CardOrdering = () => {
     const auth = getAuth();
-    // const [error, setError] = useState('');
-    // const [editing, setEditing] = React.useState(false);
     const [nextMatch, setNextMatch] = useState<NextMatch>(initNextMatch);
 
     const fetchingStartInfo = async () => {
@@ -51,9 +40,6 @@ const CardOrdering = () => {
     useEffect(() => {
         fetchingStartInfo();
     }, []);
-
-    // console.log('error', error);
-    console.log('nextMatch', nextMatch);
 
     if (!nextMatch) {
         return <Skeleton variant="text" />;

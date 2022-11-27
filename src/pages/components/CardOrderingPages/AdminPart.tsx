@@ -1,9 +1,9 @@
 import { Divider, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 
-import { queryDocuments } from '../api/database';
-import { CardOrder } from '../types/Cards';
-import { NextMatch } from '../types/Game';
+import { queryDocuments } from '../../api/database';
+import { CardOrder } from '../../types/Cards';
+import { NextMatch } from '../../types/Game';
 
 import CardTable from './CardTable';
 
@@ -30,7 +30,6 @@ function AdminPart({ gameId, nextMatch }: Props) {
         fetchingCards();
     }, []);
 
-    console.log('cards', cards);
     return (
         <>
             <Divider variant="middle" />

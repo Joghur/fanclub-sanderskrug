@@ -9,14 +9,14 @@ import React, { Dispatch, SetStateAction, useState } from 'react';
 
 import { storageKeyPrefix } from 'src/config/settings';
 
-import { initNextMatch } from '../CardOrdering';
-import { editDocument, Result } from '../api/database';
-import { GameType, NextMatch } from '../types/Game';
-import { setLocalStorage } from '../utils/localStorage';
-import { StyledButton, StyledTextField } from '../utils/styles';
+import { initNextMatch } from '../../CardOrdering';
+import { editDocument, Result } from '../../api/database';
+import { GameType, NextMatch } from '../../types/Game';
+import { setLocalStorage } from '../../utils/localStorage';
+import { StyledButton, StyledTextField } from '../../utils/styles';
 
-import FormInputSelect from './inputform/FormInputSelect';
-import FormInputSwitch from './inputform/FormInputSwitch';
+import FormInputSelect from '../inputform/FormInputSelect';
+import FormInputSwitch from '../inputform/FormInputSwitch';
 
 interface Props {
     nextMatch: NextMatch;

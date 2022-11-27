@@ -4,11 +4,10 @@ import { useSnackbar } from 'notistack';
 import { useState } from 'react';
 
 import { storageKeyPrefix } from 'src/config/settings';
-
-import { editDocument, saveData } from '../api/database';
-import { CardOrder } from '../types/Cards';
-import { getLocalStorage, setLocalStorage } from '../utils/localStorage';
-import { StyledTextField, StyledButton } from '../utils/styles';
+import { editDocument, saveData } from 'src/pages/api/database';
+import { CardOrder } from 'src/pages/types/Cards';
+import { getLocalStorage, setLocalStorage } from 'src/pages/utils/localStorage';
+import { StyledTextField, StyledButton } from 'src/pages/utils/styles';
 
 const storageKeyCardOrder = `${storageKeyPrefix}cardorder`;
 const storageKeyCardOwner = `${storageKeyPrefix}cardOwner`;
@@ -64,8 +63,6 @@ function CardownerPart({ gameId }: Props) {
 
     const handleChangeOrder = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         const { id, value } = event.target;
-        console.log('id', id);
-        console.log('value', value);
         if (!value || value.length === 0) {
             return;
         }
@@ -74,8 +71,7 @@ function CardownerPart({ gameId }: Props) {
 
         setCardOrder(old => ({ ...old, [id]: _value }));
     };
-    console.log('gameId', gameId);
-    console.log('submittedCardOrder', submittedCardOrder);
+
     return (
         <>
             {submittedCardOrder && submittedCardOrder?.gameId === gameId && (

@@ -1,9 +1,9 @@
 import { Box } from '@mui/material';
 import React, { useEffect } from 'react';
 
-import { werderData } from '../../config/settings';
-import { fetchState } from '../api/axios';
-import { Game } from '../types/Game';
+import { werderData } from '../../../config/settings';
+import { fetchState } from '../../api/axios';
+import { Game } from '../../types/Game';
 
 import GameComponent from './Game';
 
@@ -25,8 +25,6 @@ const Games = (props: Props) => {
     const werderGames = games.filter(
         (game: Game) => game.team1?.teamName === werderData.teamName || game.team2?.teamName === werderData.teamName,
     );
-
-    console.log('Games - url', url);
 
     if (werderGames.length === 0) {
         return null;
