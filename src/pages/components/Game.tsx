@@ -8,7 +8,7 @@ import { Game, MatchResult } from '../types/Game';
 const GameComponent: React.FunctionComponent<{ match: Game }> = ({ match }) => {
     const { team1, team2, matchResults, leagueName, matchDateTime } = match;
 
-    // const key = matchID;
+    // const key = gameId;
     const homeiconsrc = team1?.teamIconUrl;
     const guesticonsrc = team2?.teamIconUrl;
     const hometeamName = team1?.teamName;

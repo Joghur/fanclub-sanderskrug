@@ -1,4 +1,3 @@
-import styled from '@emotion/styled';
 import { Alert, Button, Dialog, Paper, SelectChangeEvent, Stack, TextField, Typography } from '@mui/material';
 import { DateTimePicker } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
@@ -10,22 +9,14 @@ import React, { Dispatch, SetStateAction, useState } from 'react';
 
 import { storageKeyPrefix } from 'src/config/settings';
 
-import { editDocument, Result } from '../api/database';
 import { initNextMatch } from '../CardOrdering';
+import { editDocument, Result } from '../api/database';
 import { GameType, NextMatch } from '../types/Game';
 import { setLocalStorage } from '../utils/localStorage';
+import { StyledButton, StyledTextField } from '../utils/styles';
 
 import FormInputSelect from './inputform/FormInputSelect';
 import FormInputSwitch from './inputform/FormInputSwitch';
-
-const StyledButton = styled(Button)({
-    marginBottom: 30,
-});
-
-const StyledTextField = styled(TextField)({
-    marginRight: 10,
-    marginBottom: 10,
-});
 
 interface Props {
     nextMatch: NextMatch;
@@ -62,7 +53,6 @@ const NextGameAdmin = ({ nextMatch, setNextMatch, setShowSpieleDialog }: Props) 
     };
 
     const handleSelect = (event: SelectChangeEvent<string>) => {
-        console.log('event', event);
         setNextMatch((old: NextMatch) => ({ ...old, matchType: event.target.value as GameType }));
     };
 
@@ -117,10 +107,6 @@ const NextGameAdmin = ({ nextMatch, setNextMatch, setShowSpieleDialog }: Props) 
     const isMidnight =
         new Date(nextMatch.matchDate).getHours() === 0 && new Date(nextMatch.matchDate).getMinutes() === 0;
 
-    // console.log('blMatchDay', blMatchDay);
-    // console.log('nextMatch', nextMatch);
-    // console.log('nextMatch.matchType', nextMatch.matchType);
-
     return (
         <>
             {auth.currentUser && (
@@ -174,10 +160,7 @@ const NextGameAdmin = ({ nextMatch, setNextMatch, setShowSpieleDialog }: Props) 
                             renderInput={params => <TextField {...params} />}
                         />
                         <Alert color="error">
-                            Nur eine Änderung des Datums (nicht Uhrzeit - nur Datum) und &quot;extrakarte möglich&quot;
-                            auf &quot;aus&quot; führt zu Änderungen bei den Karteninhabern. Wenn Sie das Datum ändern,
-                            nachdem Personen begonnen haben, zusätzliche Karten zu kaufen, können sie diese nicht auf
-                            ihrem Gerät sehen.
+                            Ändern Sie das Datum nur, wenn niemand eine Karte bestellt hat, z.B. direkt nach einem Spiel
                         </Alert>
                         <StyledButton variant="contained" onClick={handleValidateSubmit}>
                             Informationen zum nächsten Spiel ändern

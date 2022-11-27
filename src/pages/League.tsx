@@ -1,11 +1,8 @@
-import { Stack, SelectChangeEvent, Divider } from '@mui/material';
+import { Stack, SelectChangeEvent } from '@mui/material';
 import { useEffect, useState } from 'react';
 
 import Games from './components/Games';
-import NextGame from './components/NextGame';
-import { storageKeyNextMatch } from './components/NextGameAdmin';
 import Standings from './components/Standings';
-import { NextMatch } from './types/Game';
 import { thisSeason } from './utils/utilities';
 import { getLeagueStatus } from './utils/werder';
 

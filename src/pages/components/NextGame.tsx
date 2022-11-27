@@ -1,6 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import CancelIcon from '@mui/icons-material/Cancel';
-import { Dialog, Paper, Stack, Typography } from '@mui/material';
+import { Dialog, Paper, Stack } from '@mui/material';
 import { getAuth } from 'firebase/auth';
 import { Dispatch, SetStateAction, useState } from 'react';
 
