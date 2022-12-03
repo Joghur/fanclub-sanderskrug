@@ -3,9 +3,9 @@ import { getAuth } from 'firebase/auth';
 import React, { useEffect, useState } from 'react';
 
 import { fetchDocument } from './api/database';
-import AdminPart from './components/CardOrderingPages/AdminPart';
-import CardownerPart from './components/CardOrderingPages/CartownerPart';
-import NextGame from './components/CardOrderingPages/NextGame';
+import AdminPart from './components/CardOrdering/AdminPart';
+import CardownerPart from './components/CardOrdering/CartownerPart';
+import NextGame from './components/CardOrdering/NextGame';
 import InfoCard from './components/InfoCard';
 import { NextMatch } from './types/Game';
 

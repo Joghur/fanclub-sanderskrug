@@ -1,8 +1,8 @@
 import { Stack, SelectChangeEvent } from '@mui/material';
 import { useEffect, useState } from 'react';
 
-import Games from './components/LeaguePages/Games';
-import Standings from './components/LeaguePages/Standings';
+import Games from './components/League/Games';
+import Standings from './components/League/Standings';
 import { thisSeason } from './utils/utilities';
 import { getLeagueStatus } from './utils/werder';
 
