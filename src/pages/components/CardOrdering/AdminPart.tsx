@@ -1,9 +1,10 @@
 import { Divider, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 
-import { queryDocuments } from '../../api/database';
-import { CardOrder } from '../../types/Cards';
-import { NextMatch } from '../../types/Game';
+import { queryDocuments } from 'src/utils/api/database';
+
+import { CardOrder } from '../../../utils/types/Cards';
+import { NextMatch } from '../../../utils/types/Game';
 
 import CardTable from './CardTable';
 

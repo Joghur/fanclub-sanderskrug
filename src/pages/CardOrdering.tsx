@@ -2,12 +2,15 @@ import { Skeleton, Stack, Typography } from '@mui/material';
 import { getAuth } from 'firebase/auth';
 import React, { useEffect, useState } from 'react';
 
-import { fetchDocument } from './api/database';
+import { fetchDocument } from 'src/utils/api/database';
+import { useStartInfo } from 'src/utils/hooks';
+
+import { NextMatch } from '../utils/types/Game';
+
 import AdminPart from './components/CardOrdering/AdminPart';
 import CardownerPart from './components/CardOrdering/CartownerPart';
 import NextGame from './components/CardOrdering/NextGame';
 import InfoCard from './components/InfoCard';
-import { NextMatch } from './types/Game';
 
 export const initNextMatch: NextMatch = {
     gameId: '',
@@ -23,23 +26,24 @@ export const initNextMatch: NextMatch = {
 
 const CardOrdering = () => {
     const auth = getAuth();
+    const [] = useStartInfo();
     const [nextMatch, setNextMatch] = useState<NextMatch>(initNextMatch);
 
-    const fetchingStartInfo = async () => {
-        const nextMatch = await fetchDocument('info', 'nextMatch');
+    // const fetchingStartInfo = async () => {
+    //     const nextMatch = await fetchDocument('info', 'nextMatch');
 
-        if (nextMatch.success) {
-            const _nextMatch = nextMatch.success;
-            _nextMatch.matchDate = new Date(_nextMatch.matchDate.seconds * 1000);
-            setNextMatch(_nextMatch);
-            return;
-        }
-        console.log('Error in NextMatch: ', nextMatch.error);
-    };
+    //     if (nextMatch.success) {
+    //         const _nextMatch = nextMatch.success;
+    //         _nextMatch.matchDate = new Date(_nextMatch.matchDate.seconds * 1000);
+    //         setNextMatch(_nextMatch);
+    //         return;
+    //     }
+    //     console.log('Error in NextMatch: ', nextMatch.error);
+    // };
 
-    useEffect(() => {
-        fetchingStartInfo();
-    }, []);
+    // useEffect(() => {
+    //     fetchingStartInfo();
+    // }, []);
 
     if (!nextMatch) {
         return <Skeleton variant="text" />;

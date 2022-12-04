@@ -1,9 +1,10 @@
 import { Box } from '@mui/material';
 import React, { useEffect } from 'react';
 
+import { fetchState } from 'src/utils/api/axios';
+
 import { werderData } from '../../../config/settings';
-import { fetchState } from '../../api/axios';
-import { Game } from '../../types/Game';
+import { Game } from '../../../utils/types/Game';
 
 import GameComponent from './Game';
 

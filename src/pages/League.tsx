@@ -1,10 +1,11 @@
 import { Stack, SelectChangeEvent } from '@mui/material';
 import { useEffect, useState } from 'react';
 
+import { thisSeason } from '../utils/utilities';
+import { getLeagueStatus } from '../utils/werder';
+
 import Games from './components/League/Games';
 import Standings from './components/League/Standings';
-import { thisSeason } from './utils/utilities';
-import { getLeagueStatus } from './utils/werder';
 
 const League = () => {
     const [year, setYear] = useState<string>(thisSeason);

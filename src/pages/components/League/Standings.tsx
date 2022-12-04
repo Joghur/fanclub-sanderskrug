@@ -21,9 +21,9 @@ import {
 import { useEffect, useState } from 'react';
 
 import { bundesligaData } from 'src/config/settings';
-import { fetchState } from 'src/pages/api/axios';
-import { Standing } from 'src/pages/types/Standing';
-import { thisYear } from 'src/pages/utils/utilities';
+import { fetchState } from 'src/utils/api/axios';
+import { Standing } from 'src/utils/types/Standing';
+import { thisYear } from 'src/utils/utilities';
 
 const MobileTableCell = styled(TableCell)(() => ({
     [`&.${tableCellClasses.head}`]: {

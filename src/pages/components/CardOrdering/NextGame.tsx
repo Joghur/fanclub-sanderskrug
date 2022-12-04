@@ -3,7 +3,7 @@ import { Dialog, Paper, Stack } from '@mui/material';
 import { getAuth } from 'firebase/auth';
 import { Dispatch, SetStateAction, useState } from 'react';
 
-import { NextMatch } from '../../types/Game';
+import { NextMatch } from '../../../utils/types/Game';
 
 import NextGameAdmin from './NextGameAdmin';
 import NextGameCard from './NextGameCard';

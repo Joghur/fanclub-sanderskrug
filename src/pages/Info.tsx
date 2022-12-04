@@ -5,11 +5,11 @@ import Carousel from 'react-material-ui-carousel';
 import { useMeasure } from 'react-use';
 
 import { krugImages } from 'src/config/imageKit';
+import { logIn, logOut } from 'src/utils/api/auth';
 
-import { auth } from '../config/firebase';
+import { credentials } from '../config/firebase';
 import { carlData } from '../config/settings';
 
-import { logIn, logOut } from './api/auth';
 import CarouselItems from './components/Info/CarouselItems';
 
 const Info = () => {
@@ -34,7 +34,7 @@ const Info = () => {
         if (authUser) {
             await logOut();
         } else {
-            await logIn(auth);
+            await logIn(credentials);
         }
     };
 

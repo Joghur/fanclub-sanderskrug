@@ -4,10 +4,10 @@ import { useSnackbar } from 'notistack';
 import { useState } from 'react';
 
 import { storageKeyPrefix } from 'src/config/settings';
-import { editDocument, saveData } from 'src/pages/api/database';
-import { CardOrder } from 'src/pages/types/Cards';
-import { getLocalStorage, setLocalStorage } from 'src/pages/utils/localStorage';
-import { StyledTextField, StyledButton } from 'src/pages/utils/styles';
+import { editDocument, saveData } from 'src/utils/api/database';
+import { getLocalStorage, setLocalStorage } from 'src/utils/localStorage';
+import { StyledTextField, StyledButton } from 'src/utils/styles';
+import { CardOrder } from 'src/utils/types/Cards';
 
 const storageKeyCardOrder = `${storageKeyPrefix}cardorder`;
 const storageKeyCardOwner = `${storageKeyPrefix}cardOwner`;
@@ -88,7 +88,7 @@ function CardownerPart({ gameId }: Props) {
                     <Typography>
                         <b>Kommentar</b>: {submittedCardOrder.comment!}
                     </Typography>
-                    <Alert color="info">Es ist noch nicht möglich, diese Bestellung zu ändern oder zu löschen</Alert>
+                    <Alert color="info">Es ist noch nicht möglich, diese Bestellung zu ändern oder löschen</Alert>
                 </Stack>
             )}
             {(!submittedCardOrder || submittedCardOrder?.gameId !== gameId) && (
@@ -134,7 +134,7 @@ function CardownerPart({ gameId }: Props) {
                     >
                         Karte bestellen
                     </StyledButton>
-                    <Alert color="info">Es ist noch nicht möglich, diese Bestellung zu ändern oder zu löschen</Alert>
+                    <Alert color="info">Es ist noch nicht möglich, diese Bestellung zu ändern oder löschen</Alert>
                 </Stack>
             )}
         </>

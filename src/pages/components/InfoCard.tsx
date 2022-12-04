@@ -4,7 +4,7 @@ import { getAuth } from 'firebase/auth';
 import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
 
-import { editDocument, queryDocuments } from '../api/database';
+import { editDocument, queryDocuments } from 'src/utils/api/database';
 
 /** deprecated */
 function InfoCard() {

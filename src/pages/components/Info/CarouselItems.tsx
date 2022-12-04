@@ -1,8 +1,6 @@
 import { Stack } from '@mui/system';
 import { IKImage } from 'imagekitio-react';
 
-import { screenWidth } from 'src/pages/utils/dimensions';
-
 interface Props {
     item: { image: string };
     containerWidth: number;
@@ -13,6 +11,7 @@ const CarouselItems = ({ item, containerWidth }: Props) => {
 
     const _width = Math.floor(containerWidth);
 
+    // Workaround until image aspect ratios are found dynamically
     if (item.image.includes('SandersKrug5') || item.image.includes('SandersKrug6')) {
         portrait = true;
     }

@@ -1,4 +1,4 @@
-import { ResponseType } from '../types/response';
+import { ResponseType } from './types/response';
 
 export const validation = (type: string, value: any): ResponseType => {
     const response = { success: true, error: null };

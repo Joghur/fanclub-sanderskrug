@@ -8,12 +8,12 @@ import { useSnackbar } from 'notistack';
 import React, { Dispatch, SetStateAction, useState } from 'react';
 
 import { storageKeyPrefix } from 'src/config/settings';
+import { editDocument, Result } from 'src/utils/api/database';
+import { setLocalStorage } from 'src/utils/localStorage';
 
+import { StyledButton, StyledTextField } from '../../../utils/styles';
+import { GameType, NextMatch } from '../../../utils/types/Game';
 import { initNextMatch } from '../../CardOrdering';
-import { editDocument, Result } from '../../api/database';
-import { GameType, NextMatch } from '../../types/Game';
-import { setLocalStorage } from '../../utils/localStorage';
-import { StyledButton, StyledTextField } from '../../utils/styles';
 import FormInputSelect from '../inputform/FormInputSelect';
 import FormInputSwitch from '../inputform/FormInputSwitch';
 
