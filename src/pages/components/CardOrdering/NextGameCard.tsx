@@ -63,7 +63,7 @@ function NextGameCard({ nextMatch, setNextMatch, setShowSpieleDialog }: Props) {
                 </>
             )}
             {!nextMatch.matchDate && <Typography variant="body2">Kein spiel dato</Typography>}
-            {nextMatch.active && nextMatch.busTour && nextMatch.matchDate && (
+            {nextMatch.busTour && nextMatch.matchDate && (
                 <Typography variant={mobile ? 'h6' : 'h4'} color="green">
                     Wir fahren
                 </Typography>

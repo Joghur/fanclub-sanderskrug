@@ -1,7 +1,6 @@
-import { Box } from '@mui/material';
-import React, { useEffect } from 'react';
+import { Box, Typography } from '@mui/material';
 
-import { fetchState } from 'src/utils/api/axios';
+import { useAxios } from 'src/utils/api/axios';
 
 import { werderData } from '../../../config/settings';
 import { Game } from '../../../utils/types/Game';
@@ -12,22 +11,21 @@ interface Props {
     url?: string;
 }
 
-const Games = (props: Props) => {
-    const { url } = props;
+const Games = ({ url }: Props) => {
+    const [data, loading, error] = useAxios<Game[]>(url || '');
 
-    const [games, setGames] = React.useState<Game[]>([]);
-
-    useEffect(() => {
-        if (url) {
-            fetchState(url, setGames);
-        }
-    }, []);
-
-    const werderGames = games.filter(
+    const werderGames = data?.filter(
         (game: Game) => game.team1?.teamName === werderData.teamName || game.team2?.teamName === werderData.teamName,
     );
 
-    if (werderGames.length === 0) {
+    if (loading) {
+        return <Typography>Lade Daten...</Typography>;
+    }
+    if (error) {
+        return <Typography>Keine Fußballspiele gefunden</Typography>;
+    }
+
+    if (!werderGames || werderGames?.length === 0) {
         return null;
     }
 
