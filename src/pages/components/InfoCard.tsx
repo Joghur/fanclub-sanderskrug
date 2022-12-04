@@ -1,52 +1,20 @@
 import EditIcon from '@mui/icons-material/Edit';
 import { Button, Dialog, Paper, Stack, TextareaAutosize, Typography } from '@mui/material';
 import { getAuth } from 'firebase/auth';
-import { useSnackbar } from 'notistack';
-import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
 
-import { editDocument, queryDocuments } from 'src/utils/api/database';
+import { useStartInfo } from 'src/utils/hooks';
 
-/** deprecated */
 function InfoCard() {
-    const snackbar = useSnackbar();
     const auth = getAuth();
 
     const [showInformationDialog, setShowInformationDialog] = useState(false);
-    const [info, setInfo] = useState('');
-
-    const fetchingStartInfo = async () => {
-        const info = await queryDocuments('info', 'infoText', '!=', '');
-
-        if (info?.success.length === 1) {
-            setInfo(info.success[0].infoText);
-        }
-    };
-
-    useEffect(() => {
-        fetchingStartInfo();
-    }, []);
+    const [info, submitInformation, changeInformationText] = useStartInfo();
 
     const handleSubmitInformation = async () => {
-        const res = await editDocument('info', 'info', {
-            infoText: info,
-        });
+        await submitInformation();
         setShowInformationDialog(false);
-
-        if (res.error) {
-            snackbar.enqueueSnackbar('Änderungen werden nicht gespeichert', {
-                variant: 'error',
-            });
-        } else {
-            snackbar.enqueueSnackbar('Änderungen gespeichert', {
-                variant: 'success',
-            });
-        }
     };
-
-    const handleChangeInformationText = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setInfo(event.target.value);
-    };
-
     return (
         <>
             {info && (
@@ -68,7 +36,7 @@ function InfoCard() {
                                 aria-label="empty textarea"
                                 minRows={2}
                                 value={info}
-                                onChange={handleChangeInformationText}
+                                onChange={changeInformationText}
                             />
                             <Button variant="contained" onClick={handleSubmitInformation}>
                                 Info ändern

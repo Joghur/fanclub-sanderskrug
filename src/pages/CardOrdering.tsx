@@ -1,49 +1,16 @@
 import { Skeleton, Stack, Typography } from '@mui/material';
 import { getAuth } from 'firebase/auth';
-import React, { useEffect, useState } from 'react';
 
-import { fetchDocument } from 'src/utils/api/database';
-import { useStartInfo } from 'src/utils/hooks';
-
-import { NextMatch } from '../utils/types/Game';
+import { useNextMatch } from 'src/utils/hooks';
 
 import AdminPart from './components/CardOrdering/AdminPart';
 import CardownerPart from './components/CardOrdering/CartownerPart';
 import NextGame from './components/CardOrdering/NextGame';
 import InfoCard from './components/InfoCard';
 
-export const initNextMatch: NextMatch = {
-    gameId: '',
-    matchDate: new Date(),
-    location: '',
-    matchDay: 0,
-    matchType: 'other',
-    opponent: '',
-    nextMatch: false,
-    active: false,
-    busTour: false,
-};
-
 const CardOrdering = () => {
     const auth = getAuth();
-    const [] = useStartInfo();
-    const [nextMatch, setNextMatch] = useState<NextMatch>(initNextMatch);
-
-    // const fetchingStartInfo = async () => {
-    //     const nextMatch = await fetchDocument('info', 'nextMatch');
-
-    //     if (nextMatch.success) {
-    //         const _nextMatch = nextMatch.success;
-    //         _nextMatch.matchDate = new Date(_nextMatch.matchDate.seconds * 1000);
-    //         setNextMatch(_nextMatch);
-    //         return;
-    //     }
-    //     console.log('Error in NextMatch: ', nextMatch.error);
-    // };
-
-    // useEffect(() => {
-    //     fetchingStartInfo();
-    // }, []);
+    const [nextMatch, setNextMatch] = useNextMatch();
 
     if (!nextMatch) {
         return <Skeleton variant="text" />;

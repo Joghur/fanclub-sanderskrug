@@ -1,9 +1,7 @@
 import { Divider, Typography } from '@mui/material';
-import { useEffect, useState } from 'react';
 
-import { queryDocuments } from 'src/utils/api/database';
+import { useExtraCardsOrder } from 'src/utils/hooks';
 
-import { CardOrder } from '../../../utils/types/Cards';
 import { NextMatch } from '../../../utils/types/Game';
 
 import CardTable from './CardTable';
@@ -14,22 +12,7 @@ interface Props {
 }
 
 function AdminPart({ gameId, nextMatch }: Props) {
-    const [cards, setCards] = useState<CardOrder[]>([]);
-
-    const fetchingCards = async () => {
-        const dbCards = await queryDocuments('cards', 'gameId', '==', gameId);
-
-        if (dbCards.success) {
-            const _cards = dbCards.success;
-            setCards(_cards);
-            return;
-        }
-        console.log('Error in Cards: ', dbCards.error);
-    };
-
-    useEffect(() => {
-        fetchingCards();
-    }, []);
+    const [cards] = useExtraCardsOrder(gameId);
 
     return (
         <>

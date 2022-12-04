@@ -9,11 +9,11 @@ import React, { Dispatch, SetStateAction, useState } from 'react';
 
 import { storageKeyPrefix } from 'src/config/settings';
 import { editDocument, Result } from 'src/utils/api/database';
+import { initNextMatch } from 'src/utils/hooks';
 import { setLocalStorage } from 'src/utils/localStorage';
 
 import { StyledButton, StyledTextField } from '../../../utils/styles';
 import { GameType, NextMatch } from '../../../utils/types/Game';
-import { initNextMatch } from '../../CardOrdering';
 import FormInputSelect from '../inputform/FormInputSelect';
 import FormInputSwitch from '../inputform/FormInputSwitch';
 

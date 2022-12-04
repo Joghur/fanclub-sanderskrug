@@ -1,42 +1,21 @@
 import { Box, Button, Container, Grid, Paper } from '@mui/material';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { useEffect, useState } from 'react';
 import Carousel from 'react-material-ui-carousel';
 import { useMeasure } from 'react-use';
 
 import { krugImages } from 'src/config/imageKit';
-import { logIn, logOut } from 'src/utils/api/auth';
+import { useFirebaseAuth } from 'src/utils/hooks';
 
-import { credentials } from '../config/firebase';
 import { carlData } from '../config/settings';
 
 import CarouselItems from './components/Info/CarouselItems';
 
 const Info = () => {
     const [ref, { width }] = useMeasure<HTMLDivElement>();
-    const [initializing, setInitializing] = useState(true);
-    const [authUser, setAuthUser] = useState<any>(null);
+    const [authUser, handleLogin, initializing] = useFirebaseAuth();
 
-    useEffect(() => {
-        const auth = getAuth();
-        const subscriber = onAuthStateChanged(auth, userObj => {
-            if (userObj) {
-                setAuthUser(() => userObj);
-            } else {
-                setAuthUser(null);
-            }
-            setInitializing(false);
-        });
-        return subscriber; // unsubscribe on unmount
-    }, []);
-
-    const handleLogin = async () => {
-        if (authUser) {
-            await logOut();
-        } else {
-            await logIn(credentials);
-        }
-    };
+    if (initializing) {
+        return null;
+    }
 
     return (
         <div
