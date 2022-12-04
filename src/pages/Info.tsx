@@ -13,7 +13,7 @@ import { logIn, logOut } from './api/auth';
 import CarouselItems from './components/Info/CarouselItems';
 
 const Info = () => {
-    const [ref, { height, width }] = useMeasure<HTMLDivElement>();
+    const [ref, { width }] = useMeasure<HTMLDivElement>();
     const [initializing, setInitializing] = useState(true);
     const [authUser, setAuthUser] = useState<any>(null);
 
@@ -53,7 +53,7 @@ const Info = () => {
                     <Box ref={ref}>
                         <Carousel fullHeightHover={true}>
                             {krugImages.map((item, i) => (
-                                <CarouselItems key={i} item={item} width={width} />
+                                <CarouselItems key={i} item={item} containerWidth={width} />
                             ))}
                         </Carousel>
                     </Box>

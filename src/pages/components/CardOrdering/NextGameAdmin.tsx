@@ -14,7 +14,6 @@ import { editDocument, Result } from '../../api/database';
 import { GameType, NextMatch } from '../../types/Game';
 import { setLocalStorage } from '../../utils/localStorage';
 import { StyledButton, StyledTextField } from '../../utils/styles';
-
 import FormInputSelect from '../inputform/FormInputSelect';
 import FormInputSwitch from '../inputform/FormInputSwitch';
 

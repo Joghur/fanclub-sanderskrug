@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 import {
-    Box,
     Button,
     Paper,
     Stack,
