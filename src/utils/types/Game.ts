@@ -1,3 +1,5 @@
+import { Timestamp } from 'firebase/firestore/lite';
+
 export interface Game {
     goals?: Goal[];
     group?: Group;
@@ -57,9 +59,16 @@ export interface Team {
 
 export type GameType = 'league' | 'cup' | 'other';
 
-export interface NextMatch {
-    gameId?: string;
+export interface NextMatch extends NextMatchProperties {
     matchDate: Date;
+}
+
+export interface NextMatchDB extends NextMatchProperties {
+    matchDate: Timestamp;
+}
+
+interface NextMatchProperties {
+    gameId?: string;
     location?: string;
     matchDay?: number;
     matchType: GameType;

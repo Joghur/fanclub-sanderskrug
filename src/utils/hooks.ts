@@ -10,7 +10,7 @@ import { useAxios } from './api/axios';
 import { editDocument, fetchDocument, queryDocuments } from './api/database';
 import { getCurrentGroupUrl, getLeagueStandingUrl } from './api/urls';
 import { CardOrder } from './types/Cards';
-import { MatchDay, NextMatch } from './types/Game';
+import { MatchDay, NextMatch, NextMatchDB } from './types/Game';
 import { Standing } from './types/Standing';
 import { getWerderLeagueStatus } from './werder';
 
@@ -31,16 +31,18 @@ export const useNextMatch = () => {
     const [loading, setLoading] = useState(true);
 
     const fetchingStartInfo = async () => {
-        const nextMatch = await fetchDocument<NextMatch>('info', 'nextMatch');
+        const res = await fetchDocument<NextMatchDB>('info', 'nextMatch');
 
-        if (nextMatch.success) {
-            const _nextMatch = nextMatch.success as NextMatch;
-            _nextMatch.matchDate = new Date(_nextMatch.matchDate.getSeconds() * 1000);
-            setValue(_nextMatch);
+        if (res.success) {
+            const _nextMatch = res.success;
+            if (typeof _nextMatch === 'string') {
+                return;
+            }
+            setValue(() => ({ ..._nextMatch, matchDate: new Date(_nextMatch.matchDate?.seconds * 1000) }));
             setLoading(() => false);
             return;
         }
-        console.log('Error in NextMatch: ', nextMatch.error);
+        console.log('Error in NextMatch: ', res.error);
     };
 
     useEffect(() => {
