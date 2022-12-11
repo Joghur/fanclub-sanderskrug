@@ -51,7 +51,7 @@ const NextGameAdmin = ({ nextMatch, setNextMatch, setShowSpieleDialog }: Props) 
         }
     };
 
-    const handleSelect = (event: SelectChangeEvent<string>) => {
+    const handleSelect = (event: SelectChangeEvent<HTMLInputElement>) => {
         setNextMatch((old: NextMatch) => ({ ...old, matchType: event.target.value as GameType }));
     };
 

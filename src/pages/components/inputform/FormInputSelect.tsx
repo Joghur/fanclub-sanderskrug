@@ -1,17 +1,29 @@
-import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 
-const FormInputSelect = ({ value, label, onChange, menuItems }) => {
+export interface MenuItem {
+    menuItemvalue: string;
+    menuItemLabel: string;
+}
+
+interface Props {
+    label: string;
+    value: string;
+    onChange: (event: SelectChangeEvent<HTMLInputElement>) => void;
+    menuItems: MenuItem[];
+}
+
+const FormInputSelect = ({ value, label, onChange, menuItems }: Props) => {
     return (
         <FormControl fullWidth>
             <InputLabel>{label}</InputLabel>
             <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                value={value}
+                value={value as unknown as HTMLInputElement}
                 label={label}
                 onChange={onChange}
             >
-                {menuItems.map((e: { menuItemvalue: string; menuItemLabel: string }) => (
+                {menuItems.map((e: MenuItem) => (
                     <MenuItem key={e.menuItemvalue} value={e.menuItemvalue}>
                         {e.menuItemLabel}
                     </MenuItem>

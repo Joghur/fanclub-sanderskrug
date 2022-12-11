@@ -28,6 +28,7 @@ export const initNextMatch: NextMatch = {
 
 export const useNextMatch = () => {
     const [value, setValue] = useState<NextMatch>(initNextMatch);
+    const [loading, setLoading] = useState(true);
 
     const fetchingStartInfo = async () => {
         const nextMatch = await fetchDocument<NextMatch>('info', 'nextMatch');
@@ -36,6 +37,7 @@ export const useNextMatch = () => {
             const _nextMatch = nextMatch.success as NextMatch;
             _nextMatch.matchDate = new Date(_nextMatch.matchDate.getSeconds() * 1000);
             setValue(_nextMatch);
+            setLoading(() => false);
             return;
         }
         console.log('Error in NextMatch: ', nextMatch.error);
@@ -45,7 +47,7 @@ export const useNextMatch = () => {
         fetchingStartInfo();
     }, []);
 
-    return [value, setValue] as const;
+    return [value, setValue, loading] as const;
 };
 
 export const useExtraCardsOrder = (gameId: string) => {

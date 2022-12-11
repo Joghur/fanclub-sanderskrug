@@ -42,9 +42,12 @@ export const werderLeagueStatus = async () => {
 };
 
 export const getWerderLeagueStatus = async () => {
-    const localStorage: StorageWerderLeague = getLocalStorage(storageKeyWerderStatus);
+    const localStorage: StorageWerderLeague | null = getLocalStorage(storageKeyWerderStatus);
+    if (!localStorage) {
+        return;
+    }
 
-    if (!localStorage || localStorage.currentSeason !== thisSeason) {
+    if (localStorage.currentSeason !== thisSeason) {
         const league = await werderLeagueStatus();
         if (league) {
             return league;

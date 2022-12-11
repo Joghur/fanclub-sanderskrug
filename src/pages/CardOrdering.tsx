@@ -10,9 +10,9 @@ import InfoCard from './components/InfoCard';
 
 const CardOrdering = () => {
     const auth = getAuth();
-    const [nextMatch, setNextMatch] = useNextMatch();
+    const [nextMatch, setNextMatch, loading] = useNextMatch();
 
-    if (!nextMatch) {
+    if (!nextMatch || loading) {
         return <Skeleton variant="text" />;
     }
 

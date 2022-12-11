@@ -4,7 +4,7 @@ import './firebase';
 
 const auth = getAuth();
 
-export const logIn = async ({ email, password }) => {
+export const logIn = async ({ email, password }: { email: string; password: string }) => {
     let userObj;
     try {
         userObj = await signInWithEmailAndPassword(auth, email, password);
@@ -24,7 +24,7 @@ export const logOut = async () => {
     }
 };
 
-export const resetPassword = async email => {
+export const resetPassword = async (email: string) => {
     try {
         await sendPasswordResetEmail(auth, email, undefined);
     } catch (error) {
