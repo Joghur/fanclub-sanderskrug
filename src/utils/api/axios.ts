@@ -2,20 +2,6 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { useEffect, useState } from 'react';
 
-// export const apiFetch = <T>(url: string): Promise<AxiosResponse<any, any>> => {
-//     return axios.get<T | undefined>(url);
-// };
-
-// export const fetchState = async <T>(url: string, setState: (T) => void) => {
-//     let res: AxiosResponse<any, any>;
-//     try {
-//         res = await apiFetch<T>(url);
-//         setState(res.data);
-//     } catch (error) {
-//         console.log('error', error);
-//     }
-// };
-
 export const useAxios = <T>(url: string) => {
     const [value, setValue] = useState<T | undefined>(undefined);
     const [loading, setLoading] = useState<boolean | undefined>(true);

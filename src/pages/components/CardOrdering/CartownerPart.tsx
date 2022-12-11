@@ -32,7 +32,7 @@ function CardownerPart({ gameId }: Props) {
                 ...cardOrder,
             });
         } else {
-            res = await saveData('cards', {
+            res = await saveData<CardOrder>('cards', {
                 gameId: gameId,
                 ...cardOrder,
             });

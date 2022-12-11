@@ -85,7 +85,7 @@ const NextGameAdmin = ({ nextMatch, setNextMatch, setShowSpieleDialog }: Props) 
     };
 
     const handleSubmitNextGameInfo = async () => {
-        const res: Result = await editDocument('info', 'nextMatch', {
+        const res: Result<string> = await editDocument('info', 'nextMatch', {
             ...nextMatch,
         });
         if (res.error) {

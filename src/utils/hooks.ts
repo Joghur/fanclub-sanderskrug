@@ -30,11 +30,11 @@ export const useNextMatch = () => {
     const [value, setValue] = useState<NextMatch>(initNextMatch);
 
     const fetchingStartInfo = async () => {
-        const nextMatch = await fetchDocument('info', 'nextMatch');
+        const nextMatch = await fetchDocument<NextMatch>('info', 'nextMatch');
 
         if (nextMatch.success) {
-            const _nextMatch = nextMatch.success;
-            _nextMatch.matchDate = new Date(_nextMatch.matchDate.seconds * 1000);
+            const _nextMatch = nextMatch.success as NextMatch;
+            _nextMatch.matchDate = new Date(_nextMatch.matchDate.getSeconds() * 1000);
             setValue(_nextMatch);
             return;
         }
@@ -52,8 +52,10 @@ export const useExtraCardsOrder = (gameId: string) => {
     const [cards, setCards] = useState<CardOrder[]>([]);
 
     const fetchingCards = async () => {
-        const dbCards = await queryDocuments('cards', 'gameId', '==', gameId);
-
+        const dbCards = await queryDocuments<CardOrder>('cards', 'gameId', '==', gameId);
+        if (typeof dbCards.success === 'string') {
+            return;
+        }
         if (dbCards.success) {
             const _cards = dbCards.success;
             setCards(_cards);
@@ -72,12 +74,19 @@ export const useExtraCardsOrder = (gameId: string) => {
 export const useStartInfo = () => {
     const snackbar = useSnackbar();
 
+    interface Startinfo {
+        id: string;
+        infoText: string;
+    }
+
     const [info, setInfo] = useState('');
 
     const fetchingStartInfo = async () => {
-        const info = await queryDocuments('info', 'infoText', '!=', '');
-
-        if (info?.success.length === 1) {
+        const info = await queryDocuments<Startinfo>('info', 'infoText', '!=', '');
+        if (typeof info.success === 'string') {
+            return;
+        }
+        if (info && info.success?.length === 1) {
             setInfo(info.success[0].infoText);
         }
     };
