@@ -29,13 +29,6 @@ const Info = () => {
         >
             <Box>
                 <Container maxWidth="lg">
-                    <Box ref={ref}>
-                        <Carousel fullHeightHover={true}>
-                            {krugImages.map((item, i) => (
-                                <CarouselItems key={i} item={item} containerWidth={width} />
-                            ))}
-                        </Carousel>
-                    </Box>
                     <Grid container spacing={5} justifyContent="center">
                         <Grid item xs={12} sm={4}>
                             <Paper elevation={1} style={{ padding: 10 }}>
@@ -55,6 +48,13 @@ const Info = () => {
                             )}
                         </Grid>
                     </Grid>
+                    <Box ref={ref} sx={{ p: 5 }}>
+                        <Carousel fullHeightHover={true}>
+                            {krugImages.map((item, i) => (
+                                <CarouselItems key={i} item={item} containerWidth={width} />
+                            ))}
+                        </Carousel>
+                    </Box>
                 </Container>
             </Box>
         </div>

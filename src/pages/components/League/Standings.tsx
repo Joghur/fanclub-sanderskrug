@@ -18,10 +18,8 @@ import {
     useMediaQuery,
     useTheme,
 } from '@mui/material';
-import { useEffect, useState } from 'react';
 
-import { bundesligaData } from 'src/config/settings';
-import { fetchState } from 'src/utils/api/axios';
+import { useStandings } from 'src/utils/hooks';
 import { Standing } from 'src/utils/types/Standing';
 import { thisYear } from 'src/utils/utilities';
 
@@ -50,23 +48,10 @@ interface Props {
     setYear: (event: SelectChangeEvent) => void;
 }
 
-const Standings = (props: Props) => {
+const Standings = ({ year, league, setLeague, setYear }: Props) => {
     const theme = useTheme();
 
-    const { year, league, setLeague, setYear } = props;
-
-    const [standings, setStandings] = useState<Standing[]>([]);
-
-    let standingsUrl = `${bundesligaData.endpoint}/getbltable/${league}/${year}`;
-    if (league === 'dfb') {
-        standingsUrl = `${bundesligaData.endpoint}/getbltable/${league}${year}/${year}`;
-    }
-
-    useEffect(() => {
-        if (league) {
-            fetchState(standingsUrl, setStandings);
-        }
-    }, [year, league]);
+    const [standings] = useStandings(league, year);
 
     const mobile = useMediaQuery(theme.breakpoints.down('sm'));
     const pc = !mobile;
@@ -86,8 +71,8 @@ const Standings = (props: Props) => {
                             variant="outlined"
                         >
                             {[...Array(12)].map((_, i) => (
-                                <MenuItem value={thisYear - i} key={thisYear}>
-                                    {thisYear - i}/{thisYear - i + 1}
+                                <MenuItem value={`${thisYear - i}`} key={`${thisYear}`}>
+                                    {`${thisYear - i}`}/{`${thisYear - i + 1}`}
                                 </MenuItem>
                             ))}
                         </Select>
@@ -97,7 +82,7 @@ const Standings = (props: Props) => {
                     <FormControl>
                         <InputLabel>Liga</InputLabel>
                         <Select
-                            id="select-year"
+                            id="select-league"
                             value={league}
                             label="Liga"
                             onChange={setLeague}
@@ -108,6 +93,8 @@ const Standings = (props: Props) => {
                             <MenuItem value="bl2">2. Bundesliga</MenuItem>
                             <MenuItem value="bl3">3. Bundesliga</MenuItem>
                             <MenuItem value="dfb">DFB-Pokal</MenuItem>
+                            <MenuItem value="uefacl">Champions League</MenuItem>
+                            <MenuItem value="wm">WM Katar</MenuItem>
                         </Select>
                     </FormControl>
                 </Grid>
@@ -148,7 +135,7 @@ const Standings = (props: Props) => {
                                 </StyledTableRow>
                             </TableHead>
                             <TableBody>
-                                {standings.map((row: Standing, index) => {
+                                {standings.map((row: Standing, index: number) => {
                                     const isWerder = row.TeamName === 'Werder Bremen';
 
                                     return (

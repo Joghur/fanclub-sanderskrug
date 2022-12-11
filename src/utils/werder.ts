@@ -1,8 +1,7 @@
-import { AxiosResponse } from 'axios';
+import { storageKeyPrefix, werderData } from '../config/settings';
 
-import { bundesligaData, storageKeyPrefix, werderData } from '../config/settings';
-
-import { apiFetch } from './api/axios';
+import { useAxios } from './api/axios';
+import { getLeagueStandingUrl } from './api/urls';
 import { getLocalStorage, setLocalStorage } from './localStorage';
 import { League, Standing } from './types/Standing';
 import { StorageWerderLeague } from './types/response';
@@ -10,18 +9,13 @@ import { thisSeason } from './utilities';
 
 const storageKeyWerderStatus = `${storageKeyPrefix}werder_league`;
 
-export const getLeague = async (league: League, currentSeason: string): Promise<Standing[] | null> => {
-    const standingsUrl = `${bundesligaData.endpoint}/getbltable/${league}/${currentSeason}`;
-    let res: AxiosResponse<any, any>;
-    try {
-        res = await apiFetch(standingsUrl);
-        if (res.data) {
-            return res.data;
-        }
-    } catch (error) {
-        console.log('findWerder error: ', error);
+export const getLeagueStanding = async (league: League, currentSeason: string): Promise<Standing[] | undefined> => {
+    const standingsUrl = getLeagueStandingUrl(league, currentSeason);
+    const [value, loading] = useAxios<Standing[]>(standingsUrl);
+    if (loading) {
+        return undefined;
     }
-    return null;
+    return value;
 };
 
 export const werderLeagueStatus = async () => {
@@ -31,7 +25,7 @@ export const werderLeagueStatus = async () => {
 
     if (currentSeason) {
         for (let index = 0; index < leagues.length; index++) {
-            const lg = await getLeague(leagues[index], currentSeason);
+            const lg = await getLeagueStanding(leagues[index], currentSeason);
             if (lg && lg?.length > 0) {
                 const ret = lg[lg.findIndex(item => item.ShortName == shortName)];
                 if (ret) {
@@ -47,7 +41,7 @@ export const werderLeagueStatus = async () => {
     }
 };
 
-export const getLeagueStatus = async () => {
+export const getWerderLeagueStatus = async () => {
     const localStorage: StorageWerderLeague = getLocalStorage(storageKeyWerderStatus);
 
     if (!localStorage || localStorage.currentSeason !== thisSeason) {

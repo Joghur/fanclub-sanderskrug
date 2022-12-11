@@ -68,3 +68,9 @@ export interface NextMatch {
     active: boolean;
     busTour: boolean;
 }
+
+export interface MatchDay {
+    GroupId: string;
+    GroupName: string;
+    GroupOrderID: string;
+}

@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
 import { useSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
@@ -5,9 +6,13 @@ import { useEffect, useState } from 'react';
 import { credentials } from 'src/config/firebase';
 
 import { logOut, logIn } from './api/auth';
+import { useAxios } from './api/axios';
 import { editDocument, fetchDocument, queryDocuments } from './api/database';
+import { getCurrentGroupUrl, getLeagueStandingUrl } from './api/urls';
 import { CardOrder } from './types/Cards';
-import { NextMatch } from './types/Game';
+import { MatchDay, NextMatch } from './types/Game';
+import { Standing } from './types/Standing';
+import { getWerderLeagueStatus } from './werder';
 
 export const initNextMatch: NextMatch = {
     gameId: '',
@@ -130,4 +135,61 @@ export const useFirebaseAuth = () => {
     };
 
     return [authUser, handleLogin, initializing] as const;
+};
+
+export const useleague = () => {
+    const [league, setLeague] = useState<string>('');
+
+    useEffect(() => {
+        (async function () {
+            const _league = await getWerderLeagueStatus();
+
+            if (_league) {
+                setLeague(_league);
+            }
+        })();
+    }, []);
+
+    return [league, setLeague] as const;
+};
+
+export const useBlMatchday = (league: string) => {
+    const [blMatchDayData, setBlMatchDayData] = useState<MatchDay>();
+    const [blMatchDay, setBlMatchDay] = useState(blMatchDayData?.GroupOrderID || '0');
+
+    const getMatchDayData = async (league: string) => {
+        if (league.substring(0, 2) === 'bl') {
+            const url = getCurrentGroupUrl(league);
+            const res = await axios.get(url);
+            setBlMatchDayData(res.data);
+        }
+    };
+
+    useEffect(() => {
+        if (blMatchDayData?.GroupOrderID) {
+            setBlMatchDay(() => blMatchDayData.GroupOrderID);
+        }
+    }, [blMatchDayData?.GroupOrderID]);
+
+    useEffect(() => {
+        if (league) {
+            getMatchDayData(league);
+        }
+    }, [league]);
+
+    return [blMatchDay] as const;
+};
+
+export const useStandings = (league: string, year: string) => {
+    const [standings, setStandings] = useState<Standing[]>([]);
+    const standingsUrl = getLeagueStandingUrl(league, year);
+    const [data, loading, error] = useAxios<Standing[]>(standingsUrl || '');
+
+    useEffect(() => {
+        if (data) {
+            setStandings(data);
+        }
+    }, [data]);
+
+    return [standings, loading, error] as const;
 };

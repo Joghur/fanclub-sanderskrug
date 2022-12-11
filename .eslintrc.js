@@ -32,6 +32,7 @@ module.exports = {
                 project: './tsconfig.json',
             },
             rules: {
+                '@typescript-eslint/restrict-template-expressions': 'off',
                 '@typescript-eslint/explicit-function-return-type': 'off',
                 '@typescript-eslint/interface-name-prefix': 'off',
                 '@typescript-eslint/prefer-interface': 'off',

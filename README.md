@@ -43,7 +43,7 @@
         name: "xxxx",
     };
 
-    export const bundesligaData = {
+    export const ligaData = {
         endpoint: "https://www.openligadb.de/api",
     };
 

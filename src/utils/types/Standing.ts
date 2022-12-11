@@ -13,4 +13,4 @@ export interface Standing {
     Won: number;
 }
 
-export type League = 'bl1' | 'bl2' | 'bl3' | 'dfb';
+export type League = 'bl1' | 'bl2' | 'bl3' | 'dfb' | 'uefacl' | 'wm';

@@ -25,6 +25,8 @@ const Games = ({ url }: Props) => {
         return <Typography>Keine Fußballspiele gefunden</Typography>;
     }
 
+    console.log('!werderGames || werderGames?.length === 0', !werderGames || werderGames?.length === 0);
+
     if (!werderGames || werderGames?.length === 0) {
         return null;
     }
