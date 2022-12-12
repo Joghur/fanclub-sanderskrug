@@ -150,7 +150,7 @@ const Header = () => {
                                 </Stack>
                             </NavLink>
                         </Box>
-                        <Typography sx={{ minWidth: 100, display: { xs: 'none', sm: 'flex' } }}>
+                        <Box sx={{ minWidth: 100, display: { xs: 'none', sm: 'flex' } }}>
                             <NavLink
                                 to="liga"
                                 style={({ isActive }) => ({
@@ -170,8 +170,8 @@ const Header = () => {
                                     Bundesliga
                                 </Stack>
                             </NavLink>
-                        </Typography>
-                        <Typography sx={{ minWidth: 100, display: { xs: 'none', sm: 'flex' } }}>
+                        </Box>
+                        <Box sx={{ minWidth: 100, display: { xs: 'none', sm: 'flex' } }}>
                             <NavLink
                                 to="/info"
                                 style={({ isActive }) => ({
@@ -181,18 +181,11 @@ const Header = () => {
                                 })}
                             >
                                 <Stack alignItems="center">
-                                    <HomeRounded
-                                        sx={{
-                                            '& .Mui-selected': {
-                                                fontSize: '0.75rem',
-                                            },
-                                        }}
-                                    />
+                                    <img src="favicon.ico" alt="werder bremen" />
                                     Sander&apos;s Krug
                                 </Stack>
-                                {/* <img src="favicon.ico" alt="werder bremen" /> */}
                             </NavLink>
-                        </Typography>
+                        </Box>
                     </Box>
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', sm: 'none' } }}>
                         <IconButton

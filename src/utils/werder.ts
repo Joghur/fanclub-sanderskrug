@@ -41,10 +41,14 @@ export const werderLeagueStatus = async () => {
     }
 };
 
-export const getWerderLeagueStatus = async () => {
+export const getWerderLeagueStatus = async (currentSeason: string) => {
     const localStorage: StorageWerderLeague | null = getLocalStorage(storageKeyWerderStatus);
     if (!localStorage) {
-        return;
+        setLocalStorage<StorageWerderLeague>(storageKeyWerderStatus, {
+            currentLeague: 'bl1',
+            currentSeason: currentSeason,
+        });
+        return 'bl1';
     }
 
     if (localStorage.currentSeason !== thisSeason) {

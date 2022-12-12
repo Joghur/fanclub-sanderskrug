@@ -71,7 +71,7 @@ const Standings = ({ year, league, setLeague, setYear }: Props) => {
                             variant="outlined"
                         >
                             {[...Array(12)].map((_, i) => (
-                                <MenuItem value={`${thisYear - i}`} key={`${thisYear}`}>
+                                <MenuItem value={`${thisYear - i}`} key={`${thisYear}${i}`}>
                                     {`${thisYear - i}`}/{`${thisYear - i + 1}`}
                                 </MenuItem>
                             ))}

@@ -150,12 +150,11 @@ export const useFirebaseAuth = () => {
     return [authUser, handleLogin, initializing] as const;
 };
 
-export const useleague = () => {
+export const useleague = (currentSeason: string) => {
     const [league, setLeague] = useState<string>('');
-
     useEffect(() => {
         (async function () {
-            const _league = await getWerderLeagueStatus();
+            const _league = await getWerderLeagueStatus(currentSeason);
 
             if (_league) {
                 setLeague(_league);

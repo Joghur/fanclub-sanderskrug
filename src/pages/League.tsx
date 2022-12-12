@@ -12,7 +12,7 @@ import Standings from './components/League/Standings';
 const League = () => {
     const [year, setYear] = useState<string>(thisSeason);
 
-    const [league, setLeague] = useleague();
+    const [league, setLeague] = useleague(year);
     const [blMatchDay] = useBlMatchday(league);
 
     const handleChangeYear = (event: SelectChangeEvent) => {
