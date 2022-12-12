@@ -51,10 +51,14 @@ interface Props {
 const Standings = ({ year, league, setLeague, setYear }: Props) => {
     const theme = useTheme();
 
-    const [standings] = useStandings(league, year);
+    const [standings, loading] = useStandings(league, year);
 
     const mobile = useMediaQuery(theme.breakpoints.down('sm'));
     const pc = !mobile;
+
+    if (loading) {
+        return null;
+    }
 
     return (
         <Grid container direction="column" alignItems="center" justifyContent="center">

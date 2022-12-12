@@ -15,9 +15,9 @@ import { format } from 'date-fns';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
 
+import { StyledButton } from '../../../utils/styles';
 import { CardOrder } from '../../../utils/types/Cards';
 import { NextMatch } from '../../../utils/types/Game';
-import { StyledButton } from '../../../utils/styles';
 
 const StyledTableRow = styled(TableRow)(() => ({
     // hide last border
@@ -49,8 +49,8 @@ const CardTable = ({ cards, nextMatch, handleEdit, handleDelete }: Props) => {
     };
     return (
         <div>
-            <StyledButton className="mb5" sx={{ pb: 1 }}>
-                <button onClick={handlePrintDocument}>Print und Speicher</button>
+            <StyledButton variant="contained" className="mb5" onClick={handlePrintDocument} sx={{ pb: 1 }}>
+                Print und Speicher
             </StyledButton>
             <Stack spacing={1} id="divToPrint" className="mt4">
                 <Stack direction="row">

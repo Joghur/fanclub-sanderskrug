@@ -146,7 +146,7 @@ const Header = () => {
                                             },
                                         }}
                                     />
-                                    Kartenvorbestellung
+                                    <Typography>Kartenvorbestellung</Typography>
                                 </Stack>
                             </NavLink>
                         </Box>
@@ -167,7 +167,7 @@ const Header = () => {
                                             },
                                         }}
                                     />
-                                    Bundesliga
+                                    <Typography>Bundesliga</Typography>
                                 </Stack>
                             </NavLink>
                         </Box>
@@ -182,7 +182,7 @@ const Header = () => {
                             >
                                 <Stack alignItems="center">
                                     <img src="favicon.ico" alt="werder bremen" />
-                                    Sander&apos;s Krug
+                                    <Typography>Sander&apos;s Krug</Typography>
                                 </Stack>
                             </NavLink>
                         </Box>
