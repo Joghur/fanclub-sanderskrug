@@ -27,10 +27,10 @@ const League = () => {
         <Stack spacing={3} alignItems="center" sx={{ p: 5 }}>
             {league && year && (
                 <>
-                    {league.substring(0, 2) === 'bl' && blMatchDay !== '0' && (
+                    <Standings league={league} year={year} setLeague={handleChangeLeague} setYear={handleChangeYear} />
+                    {league.substring(0, 3) === 'bl1' && blMatchDay !== '0' && (
                         <Games url={getMatchDataUrl(league, year, blMatchDay)} />
                     )}
-                    <Standings league={league} year={year} setLeague={handleChangeLeague} setYear={handleChangeYear} />
                 </>
             )}
         </Stack>

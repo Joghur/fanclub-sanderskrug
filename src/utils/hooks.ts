@@ -10,7 +10,7 @@ import { useAxios } from './api/axios';
 import { editDocument, fetchDocument, queryDocuments } from './api/database';
 import { getCurrentGroupUrl, getLeagueStandingUrl } from './api/urls';
 import { CardOrder } from './types/Cards';
-import { MatchDay, NextMatch, NextMatchDB } from './types/Game';
+import { Game, MatchDay, NextMatch, NextMatchDB } from './types/Game';
 import { Standing } from './types/Standing';
 import { getWerderLeagueStatus } from './werder';
 
@@ -204,4 +204,17 @@ export const useStandings = (league: string, year: string) => {
     }, [data]);
 
     return [standings, loading, error] as const;
+};
+
+export const useGames = (url: string) => {
+    const [games, setGames] = useState<Game[]>([]);
+    const [data, loading, error] = useAxios<Game[]>(url || '');
+
+    useEffect(() => {
+        if (data) {
+            setGames(data);
+        }
+    }, [data]);
+
+    return [games, loading, error] as const;
 };

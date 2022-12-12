@@ -138,7 +138,12 @@ const Header = () => {
                                     boxShadow: isActive ? '1px 2px 3px 4px rgba(20,20,20,0.4)' : '',
                                 })}
                             >
-                                <Stack alignItems="center">
+                                <Box
+                                    alignItems="center"
+                                    sx={{
+                                        p: 2,
+                                    }}
+                                >
                                     <BookOnline
                                         sx={{
                                             '& .Mui-selected': {
@@ -147,7 +152,7 @@ const Header = () => {
                                         }}
                                     />
                                     <Typography>Kartenvorbestellung</Typography>
-                                </Stack>
+                                </Box>
                             </NavLink>
                         </Box>
                         <Box sx={{ minWidth: 100, display: { xs: 'none', sm: 'flex' } }}>
@@ -159,7 +164,12 @@ const Header = () => {
                                     boxShadow: isActive ? '1px 2px 3px 4px rgba(20,20,20,0.4)' : '',
                                 })}
                             >
-                                <Stack alignItems="center">
+                                <Box
+                                    alignItems="center"
+                                    sx={{
+                                        p: 2,
+                                    }}
+                                >
                                     <SportsSoccerIcon
                                         sx={{
                                             '& .Mui-selected': {
@@ -168,7 +178,7 @@ const Header = () => {
                                         }}
                                     />
                                     <Typography>Bundesliga</Typography>
-                                </Stack>
+                                </Box>
                             </NavLink>
                         </Box>
                         <Box sx={{ minWidth: 100, display: { xs: 'none', sm: 'flex' } }}>

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { useEffect, useState } from 'react';
 
@@ -14,6 +13,7 @@ export const useAxios = <T>(url: string) => {
     }, [url]);
 
     const fetchAxios = async <T>(url: string) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         let res: AxiosResponse<any, any>;
         try {
             res = await axios.get<T | undefined>(url);
