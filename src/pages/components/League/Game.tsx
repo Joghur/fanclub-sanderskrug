@@ -19,12 +19,10 @@ const GameComponent: React.FunctionComponent<{ match: Game }> = ({ match }) => {
     const matchStatus = (MatchResults && MatchResults.length > 0 && MatchResults[0]) as MatchResult;
 
     return (
-        <Card>
+        <Card variant="outlined">
             <Stack alignItems="center">
                 <CardContent>{LeagueName}</CardContent>
                 <CardContent>{matchDay}</CardContent>
-                <CardContent>{match.NumberOfViewers}</CardContent>
-                <CardContent>{match.MatchIsFinished && match.MatchIsFinished}</CardContent>
                 <CardContent>
                     <div style={gamesStyle.imgDiv}>
                         <img id="homeicon" src={homeiconsrc} style={gamesStyle.imgStyle} />
@@ -46,7 +44,7 @@ const GameComponent: React.FunctionComponent<{ match: Game }> = ({ match }) => {
                         <Typography
                             sx={{
                                 py: 3,
-                                color: 'gray',
+                                color: match.MatchIsFinished ? 'gray' : 'green',
                             }}
                             variant="h6"
                         >{`${matchStatus?.ResultName}`}</Typography>

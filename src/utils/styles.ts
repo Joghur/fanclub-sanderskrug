@@ -1,4 +1,4 @@
-import { Button, TextField } from '@mui/material';
+import { Button, TextField, Typography } from '@mui/material';
 import { styled } from '@mui/system';
 
 export const StyledButton = styled(Button)({
@@ -10,10 +10,22 @@ export const StyledTextField = styled(TextField)({
     marginBottom: 10,
 });
 
+export const getStyledText = (color: string, size?: number | string) => {
+    return styled(Typography)({
+        fontFamily: 'sans-serif',
+        fontSize: size || '',
+        color: color || 'black',
+    });
+};
+
 export const gamesStyle = {
     imgStyle: {
         height: '55px',
         padding: '5px',
+    },
+    thumpStyle: {
+        height: '25px',
+        padding: '2px',
     },
     imgDiv: {
         display: 'flex',

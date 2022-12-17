@@ -24,7 +24,7 @@ const League = () => {
     };
 
     return (
-        <Stack spacing={3} alignItems="center" sx={{ p: 5 }}>
+        <Stack spacing={3} alignItems="center" sx={{ py: 5 }}>
             {league && year && (
                 <>
                     <Standings league={league} year={year} setLeague={handleChangeLeague} setYear={handleChangeYear} />
