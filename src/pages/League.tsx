@@ -1,4 +1,4 @@
-import { Stack, SelectChangeEvent } from '@mui/material';
+import { Stack, SelectChangeEvent, Box, useTheme, useMediaQuery } from '@mui/material';
 import { useState } from 'react';
 
 import { getMatchDataUrl } from 'src/utils/api/urls';
@@ -10,7 +10,10 @@ import Games from './components/League/Games';
 import Standings from './components/League/Standings';
 
 const League = () => {
+    const theme = useTheme();
     const [year, setYear] = useState<string>(thisSeason);
+
+    const mobile = useMediaQuery(theme.breakpoints.down('sm'));
 
     const [league, setLeague] = useleague(year);
     const [blMatchDay] = useBlMatchday(league);
@@ -24,12 +27,14 @@ const League = () => {
     };
 
     return (
-        <Stack spacing={3} alignItems="center" sx={{ py: 5 }}>
+        <Stack spacing={3} alignItems="center" sx={{ py: 5, px: 5 }}>
             {league && year && (
                 <>
                     <Standings league={league} year={year} setLeague={handleChangeLeague} setYear={handleChangeYear} />
                     {league.substring(0, 3) === 'bl1' && blMatchDay !== '0' && (
-                        <Games url={getMatchDataUrl(league, year, blMatchDay)} />
+                        <Box sx={{ width: mobile ? '100%' : '45%' }}>
+                            <Games url={getMatchDataUrl(league, year, blMatchDay)} />
+                        </Box>
                     )}
                 </>
             )}

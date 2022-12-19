@@ -25,8 +25,9 @@ function NextGameCard({ nextMatch, setNextMatch, setShowSpieleDialog }: Props) {
                 borderRadius: '50%',
                 border: '2px solid #73AD21',
                 boxShadow: '5px 10px 9px grey',
-                padding: 30,
-                width: mobile ? '100%' : '65%',
+            }}
+            sx={{
+                py: 5,
             }}
         >
             <Stack direction="row" alignItems="center">

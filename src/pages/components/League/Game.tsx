@@ -22,7 +22,9 @@ const GameComponent: React.FunctionComponent<{ match: Game }> = ({ match }) => {
         <Card variant="outlined">
             <Stack alignItems="center">
                 <CardContent>{LeagueName}</CardContent>
-                <CardContent>{matchDay}</CardContent>
+                <CardContent>
+                    <Typography variant="h4">{matchDay}</Typography>
+                </CardContent>
                 <CardContent>
                     <div style={gamesStyle.imgDiv}>
                         <img id="homeicon" src={homeiconsrc} style={gamesStyle.imgStyle} />
@@ -36,7 +38,9 @@ const GameComponent: React.FunctionComponent<{ match: Game }> = ({ match }) => {
                     <div style={gamesStyle.imgDiv}>
                         <Tooltip title={matchStatus?.ResultDescription}>
                             <Typography variant="h4">
-                                {`${matchStatus?.PointsTeam1} - ${matchStatus?.PointsTeam2}`}
+                                {!!matchStatus?.PointsTeam1 &&
+                                    !!matchStatus?.PointsTeam2 &&
+                                    `${matchStatus?.PointsTeam1} - ${matchStatus?.PointsTeam2}`}
                             </Typography>
                         </Tooltip>
                     </div>
@@ -47,7 +51,9 @@ const GameComponent: React.FunctionComponent<{ match: Game }> = ({ match }) => {
                                 color: match.MatchIsFinished ? 'gray' : 'green',
                             }}
                             variant="h6"
-                        >{`${matchStatus?.ResultName}`}</Typography>
+                        >
+                            {!!matchStatus?.ResultName && `${matchStatus?.ResultName}`}
+                        </Typography>
                     </div>
                 </CardContent>
             </Stack>

@@ -30,12 +30,10 @@ const Games = ({ url }: Props) => {
     }
 
     return (
-        <Box justifyContent="center" sx={{ width: '100%', px: 5 }}>
-            <Stack spacing={2} alignItems="center">
+        <Box>
+            <Stack spacing={2}>
                 <Box justifyContent="center">{werderGames?.length > 0 && <GameComponent match={werderGames[0]} />}</Box>
-                <Box justifyContent="center" sx={{ width: '100%' }}>
-                    {otherGames?.length > 0 && <GameComponents matches={otherGames} />}
-                </Box>
+                <Box justifyContent="center">{otherGames?.length > 0 && <GameComponents matches={otherGames} />}</Box>
             </Stack>
         </Box>
     );

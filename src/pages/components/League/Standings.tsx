@@ -61,8 +61,8 @@ const Standings = ({ year, league, setLeague, setYear }: Props) => {
     }
 
     return (
-        <Grid container direction="column" alignItems="center" justifyContent="center">
-            <Grid container direction="row" alignItems="center" justifyContent="center">
+        <Grid container direction="column" justifyContent="center">
+            <Grid container direction="row" justifyContent="center">
                 <Grid item sx={{ marginTop: 2 }}>
                     <FormControl>
                         <InputLabel>Saison</InputLabel>

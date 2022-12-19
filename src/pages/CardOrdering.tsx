@@ -1,4 +1,4 @@
-import { Skeleton, Stack, Typography } from '@mui/material';
+import { Skeleton, Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { getAuth } from 'firebase/auth';
 
 import { useNextMatch } from 'src/utils/hooks';
@@ -9,15 +9,18 @@ import NextGame from './components/CardOrdering/NextGame';
 import InfoCard from './components/InfoCard';
 
 const CardOrdering = () => {
+    const theme = useTheme();
     const auth = getAuth();
     const [nextMatch, setNextMatch, loading] = useNextMatch();
+
+    const mobile = useMediaQuery(theme.breakpoints.down('sm'));
 
     if (!nextMatch || loading) {
         return <Skeleton variant="text" />;
     }
 
     return (
-        <Stack spacing={3} sx={{ p: 5 }}>
+        <Stack alignItems="center" spacing={3} sx={{ py: 5, px: mobile ? 5 : 0, alignItems: 'center' }}>
             {((nextMatch.gameId && nextMatch.active) || auth.currentUser) && (
                 <NextGame nextMatch={nextMatch} setNextMatch={setNextMatch} />
             )}
@@ -29,7 +32,7 @@ const CardOrdering = () => {
                 </>
             )}
             {(!nextMatch.gameId || !nextMatch.active) && (
-                <Stack alignItems="center">
+                <Stack>
                     {auth.currentUser && (
                         <Typography variant="h5">Das nächste Spiel wurde noch nicht fortgesetzt</Typography>
                     )}
