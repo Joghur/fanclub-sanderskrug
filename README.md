@@ -15,7 +15,7 @@
         appId: "xxxx",
     };
 
-    export const auth = {
+    export const credentials = {
         email: "xxxx@xxxx.xx",
         password: "12345678",
     };
@@ -25,6 +25,8 @@
     export const imageEndpoint = "https://ik.imagekit.io/xxxx";
 
     export const imageKey = "xxxx";
+
+    export const krugImages = [{image: '<imageURL>'},];
 
 
 ##### `settings.js`
