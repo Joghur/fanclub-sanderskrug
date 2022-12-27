@@ -21,9 +21,7 @@ const CardOrdering = () => {
 
     return (
         <Stack alignItems="center" spacing={3} sx={{ py: 5, px: mobile ? 5 : 0, alignItems: 'center' }}>
-            {((nextMatch.gameId && nextMatch.active) || auth.currentUser) && (
-                <NextGame nextMatch={nextMatch} setNextMatch={setNextMatch} />
-            )}
+            {(auth.currentUser || nextMatch.gameId) && <NextGame nextMatch={nextMatch} setNextMatch={setNextMatch} />}
             <InfoCard />
             {nextMatch.gameId && nextMatch.active && (
                 <>
@@ -34,10 +32,7 @@ const CardOrdering = () => {
             {(!nextMatch.gameId || !nextMatch.active) && (
                 <Stack>
                     {auth.currentUser && (
-                        <Typography variant="h5">Das nächste Spiel wurde noch nicht fortgesetzt</Typography>
-                    )}
-                    {!auth.currentUser && (
-                        <Typography variant="h5">Es ist noch nicht möglich, zusätzliche Karten zu bestellen</Typography>
+                        <Typography variant="h5">Karteninhaber können keine Zusatzkarten bestellen</Typography>
                     )}
                 </Stack>
             )}

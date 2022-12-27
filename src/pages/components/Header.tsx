@@ -17,6 +17,7 @@ import { IKImage } from 'imagekitio-react';
 import { useCallback, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useMeasure } from 'react-use';
+import { colours } from 'src/utils/colours';
 
 const Header = () => {
     const navigate = useNavigate();
@@ -119,7 +120,11 @@ const Header = () => {
                     }
                 />
             </BottomNavigation>
-            <AppBar position="static" style={{ backgroundColor: 'green' }} sx={{ display: { xs: 'none', sm: 'flex' } }}>
+            <AppBar
+                position="static"
+                style={{ backgroundColor: colours.werderGreen }}
+                sx={{ display: { xs: 'none', sm: 'flex' } }}
+            >
                 <Container maxWidth="lg">
                     <Box
                         sx={{
@@ -133,7 +138,7 @@ const Header = () => {
                             <NavLink
                                 to="/"
                                 style={({ isActive }) => ({
-                                    color: isActive ? 'greenyellow' : 'white',
+                                    color: isActive ? colours.greenyellow : colours.white,
                                     textDecoration: 'none',
                                     boxShadow: isActive ? '1px 2px 3px 4px rgba(20,20,20,0.4)' : '',
                                 })}
@@ -159,7 +164,7 @@ const Header = () => {
                             <NavLink
                                 to="liga"
                                 style={({ isActive }) => ({
-                                    color: isActive ? 'greenyellow' : 'white',
+                                    color: isActive ? colours.greenyellow : colours.white,
                                     textDecoration: 'none',
                                     boxShadow: isActive ? '1px 2px 3px 4px rgba(20,20,20,0.4)' : '',
                                 })}
@@ -185,7 +190,7 @@ const Header = () => {
                             <NavLink
                                 to="/info"
                                 style={({ isActive }) => ({
-                                    color: isActive ? 'greenyellow' : 'white',
+                                    color: isActive ? colours.greenyellow : colours.white,
                                     textDecoration: 'none',
                                     boxShadow: isActive ? '1px 2px 3px 4px rgba(20,20,20,0.4)' : '',
                                 })}

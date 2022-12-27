@@ -18,11 +18,11 @@ function NextGame({ nextMatch, setNextMatch }: Props) {
     const theme = useTheme();
 
     const [showSpieleDialog, setShowSpieleDialog] = useState(false);
-    const mobile = useMediaQuery(theme.breakpoints.down('sm'));
+    const smalldesktop = useMediaQuery(theme.breakpoints.down('md'));
 
     return (
         <>
-            <Box sx={{ width: mobile ? '90%' : '50%', justifyItems: 'center' }}>
+            <Box sx={{ width: smalldesktop ? '90%' : '50%', justifyItems: 'center' }}>
                 <NextGameCard
                     nextMatch={nextMatch}
                     setNextMatch={setNextMatch}

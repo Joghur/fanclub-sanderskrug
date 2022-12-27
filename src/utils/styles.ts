@@ -1,5 +1,6 @@
 import { Button, TextField, Typography } from '@mui/material';
 import { styled } from '@mui/system';
+import { colours } from './colours';
 
 export const StyledButton = styled(Button)({
     marginBottom: 30,
@@ -14,7 +15,7 @@ export const getStyledText = (color: string, size?: number | string) => {
     return styled(Typography)({
         fontFamily: 'sans-serif',
         fontSize: size || '',
-        color: color || 'black',
+        color: color || colours.black,
     });
 };
 

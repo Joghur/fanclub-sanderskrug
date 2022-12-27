@@ -167,7 +167,7 @@ export const useleague = (currentSeason: string) => {
 
 export const useBlMatchday = (league: string) => {
     const [blMatchDayData, setBlMatchDayData] = useState<MatchDay>();
-    const [blMatchDay, setBlMatchDay] = useState(blMatchDayData?.GroupOrderID || '0');
+    const [blMatchDay, setBlMatchDay] = useState(blMatchDayData?.GroupOrderID || 0);
 
     const getMatchDayData = async (league: string) => {
         if (league.substring(0, 2) === 'bl') {

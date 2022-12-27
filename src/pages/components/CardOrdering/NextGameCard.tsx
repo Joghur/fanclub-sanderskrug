@@ -3,6 +3,7 @@ import { Box, Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { format } from 'date-fns';
 import { getAuth } from 'firebase/auth';
 import { Dispatch, SetStateAction } from 'react';
+import { colours } from 'src/utils/colours';
 
 import { NextMatch } from '../../../utils/types/Game';
 
@@ -23,22 +24,19 @@ function NextGameCard({ nextMatch, setNextMatch, setShowSpieleDialog }: Props) {
             alignItems="center"
             style={{
                 borderRadius: '50%',
-                border: '2px solid #73AD21',
-                boxShadow: '5px 10px 9px grey',
+                border: '2px solid',
+                borderColor: colours.werderGreen,
+                boxShadow: `5px 10px 9px ${colours.grey}`,
             }}
             sx={{
                 py: 5,
+                px: mobile ? 5 : 0,
             }}
         >
-            <Stack direction="row" alignItems="center">
+            <Stack direction="row">
                 {nextMatch.active && (
-                    <Typography variant={mobile ? 'h6' : 'h4'} color="green" paragraph>
+                    <Typography variant={mobile ? 'h6' : 'h4'} color={colours.werderGreen} paragraph>
                         Extrakarte für
-                    </Typography>
-                )}
-                {!nextMatch.active && (
-                    <Typography variant={mobile ? 'h6' : 'h4'} color="red" paragraph>
-                        Keine extrakarte
                     </Typography>
                 )}
                 {auth.currentUser && setNextMatch && setShowSpieleDialog && (
@@ -47,7 +45,7 @@ function NextGameCard({ nextMatch, setNextMatch, setShowSpieleDialog }: Props) {
             </Stack>
             {nextMatch.opponent && nextMatch.matchDate && nextMatch.location && (
                 <>
-                    <Typography variant="h5">
+                    <Typography variant={mobile ? 'h6' : 'h5'}>
                         <Box component="span" fontWeight="fontWeightBold">
                             {`Werder `}
                         </Box>
@@ -65,13 +63,8 @@ function NextGameCard({ nextMatch, setNextMatch, setShowSpieleDialog }: Props) {
             )}
             {!nextMatch.matchDate && <Typography variant="body2">Kein spiel dato</Typography>}
             {nextMatch.busTour && nextMatch.matchDate && (
-                <Typography variant={mobile ? 'h6' : 'h4'} color="green">
+                <Typography variant={mobile ? 'h6' : 'h4'} color={colours.werderGreen}>
                     Wir fahren
-                </Typography>
-            )}
-            {!nextMatch.busTour && nextMatch.opponent && (
-                <Typography variant={mobile ? 'h6' : 'h4'} color="red">
-                    Wir fahren nicht
                 </Typography>
             )}
         </Stack>
