@@ -19,11 +19,11 @@ export const initNextMatch: NextMatch = {
     matchDate: new Date(),
     location: 'Weser Stadion',
     matchDay: 0,
-    matchType: 'other',
+    matchType: 'league',
     opponent: '',
     nextMatch: false,
     active: false,
-    busTour: true,
+    busTour: false,
 };
 
 export const useNextMatch = () => {

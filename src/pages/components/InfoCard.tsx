@@ -17,7 +17,7 @@ function InfoCard() {
     };
     return (
         <>
-            {info && (
+            {(auth.currentUser || info) && (
                 <Stack>
                     <Stack direction="row" alignItems="center" spacing={1}>
                         <Typography variant="h5">Information</Typography>
