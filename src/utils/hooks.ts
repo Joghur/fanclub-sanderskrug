@@ -115,8 +115,13 @@ export const useStartInfo = () => {
         }
     };
 
-    const changeInformationText = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setInfo(event.target.value);
+    const changeInformationText = (event?: React.ChangeEvent<HTMLTextAreaElement>) => {
+        if (!event) {
+            setInfo('');
+        }
+        if (event?.target) {
+            setInfo(event.target.value);
+        }
     };
 
     return [info, submitInformation, changeInformationText] as const;

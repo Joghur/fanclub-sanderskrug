@@ -3,6 +3,8 @@ import { Box, Dialog, Paper, Stack, useMediaQuery, useTheme } from '@mui/materia
 import { getAuth } from 'firebase/auth';
 import { Dispatch, SetStateAction, useState } from 'react';
 
+import { colours } from 'src/utils/colours';
+
 import { NextMatch } from '../../../utils/types/Game';
 
 import NextGameAdmin from './NextGameAdmin';
@@ -22,7 +24,7 @@ function NextGame({ nextMatch, setNextMatch }: Props) {
 
     return (
         <>
-            <Box sx={{ width: smalldesktop ? '90%' : '50%', justifyItems: 'center' }}>
+            <Box sx={{ width: smalldesktop ? '95%' : '50%', justifyItems: 'center' }}>
                 <NextGameCard
                     nextMatch={nextMatch}
                     setNextMatch={setNextMatch}
@@ -35,7 +37,7 @@ function NextGame({ nextMatch, setNextMatch }: Props) {
                         <Stack direction="row" justifyContent="flex-end">
                             <CancelIcon
                                 fontSize="large"
-                                sx={{ color: 'red' }}
+                                sx={{ color: colours.red }}
                                 onClick={() => setShowSpieleDialog(false)}
                             />
                         </Stack>

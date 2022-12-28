@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { Alert, Stack, Typography } from '@mui/material';
+import { Alert, Skeleton, Stack, Typography } from '@mui/material';
 import { useSnackbar } from 'notistack';
 import { useState } from 'react';
 
@@ -23,6 +23,7 @@ function CardownerPart({ gameId }: Props) {
     const [submittedCardOrder, setSubmittedCardOrder] = useState<CardOrder | null>(
         getLocalStorage(storageKeyCardOrder) || null,
     );
+    const [loading, setLoading] = useState(false);
 
     const handleSubmitOrder = async () => {
         let res;
@@ -37,6 +38,7 @@ function CardownerPart({ gameId }: Props) {
                 ...cardOrder,
             });
         }
+        setLoading(() => true);
         if (res.error) {
             snackbar.enqueueSnackbar('Änderungen werden nicht gespeichert', {
                 variant: 'error',
@@ -59,6 +61,7 @@ function CardownerPart({ gameId }: Props) {
             });
             setSubmittedCardOrder(() => ({ ...cardOrder, gameId: gameId }));
         }
+        setLoading(() => false);
     };
 
     const handleChangeOrder = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -71,6 +74,10 @@ function CardownerPart({ gameId }: Props) {
 
         setCardOrder(old => ({ ...old, [id]: _value }));
     };
+
+    if (loading) {
+        return <Skeleton variant="text" />;
+    }
 
     return (
         <>

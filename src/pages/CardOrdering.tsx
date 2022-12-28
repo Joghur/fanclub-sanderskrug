@@ -1,4 +1,4 @@
-import { Skeleton, Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { getAuth } from 'firebase/auth';
 
 import { useNextMatch } from 'src/utils/hooks';
@@ -7,6 +7,7 @@ import AdminPart from './components/CardOrdering/AdminPart';
 import CardownerPart from './components/CardOrdering/CartownerPart';
 import NextGame from './components/CardOrdering/NextGame';
 import InfoCard from './components/InfoCard';
+import SkeletonComponent from './components/SkeletonComponent';
 
 const CardOrdering = () => {
     const theme = useTheme();
@@ -16,7 +17,7 @@ const CardOrdering = () => {
     const mobile = useMediaQuery(theme.breakpoints.down('sm'));
 
     if (!nextMatch || loading) {
-        return <Skeleton variant="text" />;
+        return <SkeletonComponent />;
     }
 
     return (

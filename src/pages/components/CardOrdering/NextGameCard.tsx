@@ -25,11 +25,12 @@ function NextGameCard({ nextMatch, setNextMatch, setShowSpieleDialog }: Props) {
             style={{
                 borderRadius: '50%',
                 border: '2px solid',
-                borderColor: colours.werderGreen,
+                borderColor:
+                    nextMatch.opponent && nextMatch.busTour && nextMatch.active ? colours.werderGreen : colours.red,
                 boxShadow: `5px 10px 9px ${colours.grey}`,
             }}
             sx={{
-                py: 5,
+                py: 2,
                 px: mobile ? 5 : 0,
             }}
         >
@@ -38,7 +39,12 @@ function NextGameCard({ nextMatch, setNextMatch, setShowSpieleDialog }: Props) {
             )}
             {nextMatch.opponent && nextMatch.matchDate && nextMatch.location && (
                 <>
-                    <Typography variant={mobile ? 'body1' : 'h5'} noWrap>
+                    <Typography variant="body2">{format(new Date(nextMatch.matchDate), 'dd/MMM-yyyy')}</Typography>
+                    <Typography variant="body2">am {format(new Date(nextMatch.matchDate), 'HH:mm')} uhr</Typography>
+                    <Typography variant="body2" paragraph>
+                        {nextMatch.location}
+                    </Typography>
+                    <Typography variant={mobile ? 'body2' : 'h4'} noWrap paragraph>
                         <Box component="span" fontWeight="fontWeightBold">
                             {`Werder `}
                         </Box>
@@ -47,31 +53,26 @@ function NextGameCard({ nextMatch, setNextMatch, setShowSpieleDialog }: Props) {
                             {` ${nextMatch.opponent}`}
                         </Box>
                     </Typography>
-                    <Typography variant="body2">{format(new Date(nextMatch.matchDate), 'dd/MMM-yyyy')}</Typography>
-                    <Typography variant="body2">am {format(new Date(nextMatch.matchDate), 'HH:mm')} uhr</Typography>
-                    <Typography variant="body1" paragraph>
-                        {nextMatch.location}
-                    </Typography>
                 </>
             )}
             {!nextMatch.matchDate && <Typography variant="body2">Kein spiel dato</Typography>}
             {nextMatch.opponent && nextMatch.active && nextMatch.matchDate && (
-                <Typography variant={mobile ? 'body1' : 'h4'} color={colours.werderGreen}>
+                <Typography variant={mobile ? 'body2' : 'h5'} color={colours.werderGreen}>
                     Extrakarte möglich
                 </Typography>
             )}
             {nextMatch.opponent && !nextMatch.active && nextMatch.matchDate && (
-                <Typography variant={mobile ? 'body1' : 'h4'} color={colours.red}>
+                <Typography variant={mobile ? 'body2' : 'h5'} color={colours.red}>
                     Extrakarte nicht möglich
                 </Typography>
             )}
             {nextMatch.opponent && nextMatch.busTour && nextMatch.matchDate && (
-                <Typography variant={mobile ? 'body1' : 'h4'} color={colours.werderGreen}>
+                <Typography variant={mobile ? 'body2' : 'h5'} color={colours.werderGreen}>
                     Bus fährt
                 </Typography>
             )}
             {nextMatch.opponent && !nextMatch.busTour && nextMatch.matchDate && (
-                <Typography variant={mobile ? 'body1' : 'h4'} color={colours.red}>
+                <Typography variant={mobile ? 'body2' : 'h5'} color={colours.red}>
                     Kein bus fahrt
                 </Typography>
             )}

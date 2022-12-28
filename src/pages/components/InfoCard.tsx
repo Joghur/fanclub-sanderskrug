@@ -1,3 +1,4 @@
+import CancelIcon from '@mui/icons-material/Cancel';
 import EditIcon from '@mui/icons-material/Edit';
 import { Button, Dialog, Paper, Stack, TextareaAutosize, Typography } from '@mui/material';
 import { getAuth } from 'firebase/auth';
@@ -32,9 +33,23 @@ function InfoCard() {
                 <Dialog open={showInformationDialog}>
                     <Paper sx={{ p: 5 }}>
                         <Stack spacing={2}>
+                            <Stack direction="row" justifyContent="flex-end">
+                                <Button
+                                    variant="outlined"
+                                    color="info"
+                                    onClick={() => changeInformationText(undefined)}
+                                >
+                                    Leermachen
+                                </Button>
+                                <CancelIcon
+                                    fontSize="large"
+                                    sx={{ color: 'red' }}
+                                    onClick={() => setShowInformationDialog(false)}
+                                />
+                            </Stack>
                             <TextareaAutosize
                                 aria-label="empty textarea"
-                                minRows={2}
+                                minRows={3}
                                 value={info}
                                 onChange={changeInformationText}
                             />
