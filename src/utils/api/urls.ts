@@ -18,6 +18,6 @@ export const getCurrentGroupUrl = (league: string) => {
     return `${ligaData.endpoint}/getcurrentgroup/${league}`;
 };
 
-export const getMatchDataUrl = (league: string, year: string, blMatchDay: string) => {
-    return `${ligaData.endpoint}/getmatchdata/${league}/${year}/${blMatchDay}`;
+export const getMatchDataUrl = (league: string, year: string, blMatchDay: number) => {
+    return `${ligaData.endpoint}/getmatchdata/${league}/${year}/${blMatchDay.toString()}`;
 };

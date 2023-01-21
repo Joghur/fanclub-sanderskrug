@@ -14,6 +14,7 @@ import {
 import { format } from 'date-fns';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
+import { colours } from 'src/utils/colours';
 
 import { StyledButton } from '../../../utils/styles';
 import { CardOrder } from '../../../utils/types/Cards';
@@ -88,8 +89,8 @@ const CardTable = ({ cards, nextMatch, handleEdit, handleDelete }: Props) => {
                                                 variant="outlined"
                                                 onClick={() => handleEdit(row)}
                                                 sx={{
-                                                    color: 'black',
-                                                    borderColor: 'blue',
+                                                    color: colours.black,
+                                                    borderColor: colours.werderGreen,
                                                     pl: 6,
                                                     pr: 5,
                                                     py: {
@@ -105,7 +106,7 @@ const CardTable = ({ cards, nextMatch, handleEdit, handleDelete }: Props) => {
                                             <Button
                                                 variant="outlined"
                                                 onClick={() => handleDelete(row)}
-                                                sx={{ color: 'red', ml: 1, py: 1, borderColor: 'red' }}
+                                                sx={{ color: colours.red, ml: 1, py: 1, borderColor: colours.red }}
                                             >
                                                 Löschen
                                             </Button>

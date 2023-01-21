@@ -1,13 +1,18 @@
 import { Card, CardContent, Stack, Tooltip, Typography } from '@mui/material';
 import { format } from 'date-fns';
 
+import { colours } from 'src/utils/colours';
 import { gamesStyle } from 'src/utils/styles';
 
 import { Game, MatchResult } from '../../../utils/types/Game';
 
 //https://github.com/OpenLigaDB/OpenLigaDB-Samples/blob/master/react/app/components/Game.jsx
 
-const GameComponent: React.FunctionComponent<{ match: Game }> = ({ match }) => {
+const GameComponent: React.FunctionComponent<{ match: Game; matchDay: number; showGameStatusText?: boolean }> = ({
+    match,
+    matchDay,
+    showGameStatusText = false,
+}) => {
     const { Team1, Team2, MatchResults, LeagueName, MatchDateTime } = match;
 
     const homeiconsrc = Team1?.TeamIconUrl;
@@ -15,7 +20,7 @@ const GameComponent: React.FunctionComponent<{ match: Game }> = ({ match }) => {
     const hometeamName = Team1?.TeamName;
     const guestteamName = Team2?.TeamName;
 
-    const matchDay = MatchDateTime && format(new Date(MatchDateTime), 'dd/MM-yyyy');
+    const matchDate = MatchDateTime && format(new Date(MatchDateTime), 'dd/MM-yyyy');
     const matchStatus = (MatchResults && MatchResults.length > 0 && MatchResults[0]) as MatchResult;
 
     return (
@@ -23,7 +28,10 @@ const GameComponent: React.FunctionComponent<{ match: Game }> = ({ match }) => {
             <Stack alignItems="center">
                 <CardContent>{LeagueName}</CardContent>
                 <CardContent>
-                    <Typography variant="h4">{matchDay}</Typography>
+                    <Stack alignItems="center">
+                        <Typography variant="h6">{matchDay}. Spieltag</Typography>
+                        <Typography variant="h4">{matchDate}</Typography>
+                    </Stack>
                 </CardContent>
                 <CardContent>
                     <div style={gamesStyle.imgDiv}>
@@ -48,11 +56,11 @@ const GameComponent: React.FunctionComponent<{ match: Game }> = ({ match }) => {
                         <Typography
                             sx={{
                                 py: 3,
-                                color: match.MatchIsFinished ? 'gray' : 'green',
+                                color: match.MatchIsFinished ? colours.grey : colours.werderGreen,
                             }}
                             variant="h6"
                         >
-                            {!!matchStatus?.ResultName && `${matchStatus?.ResultName}`}
+                            {showGameStatusText && !!matchStatus?.ResultName && `${matchStatus?.ResultName}`}
                         </Typography>
                     </div>
                 </CardContent>

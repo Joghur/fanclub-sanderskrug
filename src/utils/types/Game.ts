@@ -81,5 +81,5 @@ interface NextMatchProperties {
 export interface MatchDay {
     GroupId: string;
     GroupName: string;
-    GroupOrderID: string;
+    GroupOrderID: number;
 }

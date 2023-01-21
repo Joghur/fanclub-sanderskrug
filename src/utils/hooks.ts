@@ -19,11 +19,11 @@ export const initNextMatch: NextMatch = {
     matchDate: new Date(),
     location: 'Weser Stadion',
     matchDay: 0,
-    matchType: 'other',
+    matchType: 'league',
     opponent: '',
     nextMatch: false,
     active: false,
-    busTour: true,
+    busTour: false,
 };
 
 export const useNextMatch = () => {
@@ -115,8 +115,13 @@ export const useStartInfo = () => {
         }
     };
 
-    const changeInformationText = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setInfo(event.target.value);
+    const changeInformationText = (event?: React.ChangeEvent<HTMLTextAreaElement>) => {
+        if (!event) {
+            setInfo('');
+        }
+        if (event?.target) {
+            setInfo(event.target.value);
+        }
     };
 
     return [info, submitInformation, changeInformationText] as const;
@@ -167,7 +172,7 @@ export const useleague = (currentSeason: string) => {
 
 export const useBlMatchday = (league: string) => {
     const [blMatchDayData, setBlMatchDayData] = useState<MatchDay>();
-    const [blMatchDay, setBlMatchDay] = useState(blMatchDayData?.GroupOrderID || '0');
+    const [blMatchDay, setBlMatchDay] = useState(blMatchDayData?.GroupOrderID || 0);
 
     const getMatchDayData = async (league: string) => {
         if (league.substring(0, 2) === 'bl') {

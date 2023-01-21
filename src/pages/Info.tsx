@@ -16,7 +16,6 @@ const Info = () => {
     if (initializing) {
         return null;
     }
-
     return (
         <div
             style={{

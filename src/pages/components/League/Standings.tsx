@@ -18,6 +18,7 @@ import {
     useMediaQuery,
     useTheme,
 } from '@mui/material';
+import { useEffect } from 'react';
 
 import { useStandings } from 'src/utils/hooks';
 import { Standing } from 'src/utils/types/Standing';
@@ -46,15 +47,22 @@ interface Props {
     year: string;
     setLeague: (event: SelectChangeEvent) => void;
     setYear: (event: SelectChangeEvent) => void;
+    setAmountOfTeams: (arg: number) => void;
 }
 
-const Standings = ({ year, league, setLeague, setYear }: Props) => {
+const Standings = ({ year, league, setLeague, setYear, setAmountOfTeams }: Props) => {
     const theme = useTheme();
 
     const [standings, loading] = useStandings(league, year);
 
     const mobile = useMediaQuery(theme.breakpoints.down('sm'));
     const pc = !mobile;
+
+    useEffect(() => {
+        if (standings.length > 0) {
+            setAmountOfTeams(standings.length);
+        }
+    }, [standings.length]);
 
     if (loading) {
         return null;

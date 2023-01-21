@@ -1,5 +1,6 @@
 import { Box, Stack, Tooltip, Typography, useMediaQuery, useTheme } from '@mui/material';
 
+import { colours } from 'src/utils/colours';
 import { useGames } from 'src/utils/hooks';
 import { gamesStyle, getStyledText } from 'src/utils/styles';
 
@@ -10,9 +11,10 @@ import GameComponent from './Game';
 
 interface Props {
     url?: string;
+    matchDay?: number;
 }
 
-const Games = ({ url }: Props) => {
+const Games = ({ url, matchDay }: Props) => {
     const [games, loading, error] = useGames(url || '');
 
     const werderGames = games?.filter(
@@ -32,7 +34,11 @@ const Games = ({ url }: Props) => {
     return (
         <Box>
             <Stack spacing={2}>
-                <Box justifyContent="center">{werderGames?.length > 0 && <GameComponent match={werderGames[0]} />}</Box>
+                <Box justifyContent="center">
+                    {werderGames?.length > 0 && matchDay && (
+                        <GameComponent match={werderGames[0]} matchDay={matchDay} showGameStatusText />
+                    )}
+                </Box>
                 <Box justifyContent="center">{otherGames?.length > 0 && <GameComponents matches={otherGames} />}</Box>
             </Stack>
         </Box>
@@ -41,7 +47,10 @@ const Games = ({ url }: Props) => {
 
 export default Games;
 
-const GameComponents: React.FunctionComponent<{ matches: Game[] }> = ({ matches }) => {
+const GameComponents: React.FunctionComponent<{ matches: Game[]; showGameEndText?: boolean }> = ({
+    matches,
+    showGameEndText,
+}) => {
     const theme = useTheme();
     const mobile = useMediaQuery(theme.breakpoints.down('sm'));
     return (
@@ -54,9 +63,9 @@ const GameComponents: React.FunctionComponent<{ matches: Game[] }> = ({ matches 
                 console.log('match.MatchIsFinished', match.MatchIsFinished);
                 console.log('match.MatchResults', match.MatchResults);
 
-                const GoalText = getStyledText('black', mobile ? 12 : '');
-                const TeamText = getStyledText('black', mobile ? 12 : '');
-                const SmallText = getStyledText(match.MatchIsFinished ? 'gray' : 'green', mobile ? 8 : 10);
+                const GoalText = getStyledText(colours.black, mobile ? 12 : '');
+                const TeamText = getStyledText(colours.black, mobile ? 12 : '');
+                const SmallText = getStyledText(match.MatchIsFinished ? colours.grey : colours.green, mobile ? 8 : 10);
 
                 return (
                     <Box key={i}>
@@ -85,7 +94,7 @@ const GameComponents: React.FunctionComponent<{ matches: Game[] }> = ({ matches 
                                                 <Typography variant="h5">-</Typography>
                                                 <GoalText>{matchStatus.PointsTeam2}</GoalText>
                                             </Stack>
-                                            <SmallText>{matchStatus.ResultName}</SmallText>
+                                            {showGameEndText && <SmallText>{matchStatus.ResultName}</SmallText>}
                                         </Stack>
                                     </Box>
                                     <Box sx={{ width: '40%' }}>

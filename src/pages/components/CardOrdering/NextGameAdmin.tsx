@@ -162,14 +162,14 @@ const NextGameAdmin = ({ nextMatch, setNextMatch, setShowSpieleDialog }: Props) 
                             Ändern Sie das Datum nur, wenn niemand eine Karte bestellt hat, z.B. direkt nach einem Spiel
                         </Alert>
                         <StyledButton variant="contained" onClick={handleValidateSubmit}>
-                            Informationen zum nächsten Spiel ändern
+                            Speichern
                         </StyledButton>
                         <StyledButton
                             variant="outlined"
                             color="error"
                             onClick={() => setShowChangeNag(!showNewGameNag)}
                         >
-                            Nächstes Spiel
+                            Nächstes Spiel machen
                         </StyledButton>
                     </Stack>
                     <Dialog open={showValidateNag}>
@@ -188,7 +188,7 @@ const NextGameAdmin = ({ nextMatch, setNextMatch, setShowSpieleDialog }: Props) 
                     </Dialog>
                     <Dialog open={showNewGameNag}>
                         <Paper sx={{ p: 5 }}>
-                            <Typography paragraph>Neu - Bist du sicher!</Typography>
+                            <Typography paragraph>Neu spiele- Bist du sicher!</Typography>
                             <Stack direction="row" spacing={1}>
                                 <Button variant="contained" color="primary" onClick={handleNewMatch}>
                                     Ja
