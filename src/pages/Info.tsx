@@ -36,7 +36,7 @@ const Info = () => {
                                 <Box>{carlData.name}</Box>
                             </Paper>
                         </Grid>
-                        <Grid item>
+                        {/* <Grid item>
                             {authUser ? (
                                 <Button variant="outlined" onClick={handleLogin}>
                                     Ausloggen
@@ -46,7 +46,7 @@ const Info = () => {
                                     Einloggen
                                 </Button>
                             )}
-                        </Grid>
+                        </Grid> */}
                     </Grid>
                     <Box ref={ref} sx={{ p: 5 }}>
                         <Carousel fullHeightHover={true}>

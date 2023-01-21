@@ -99,7 +99,6 @@ function CardownerPart({ gameId }: Props) {
                     </Stack>
                     <Stack>
                         <Typography variant="h6">Werder Stammkartnummer</Typography>
-                        <Typography>{`<info kommt hier>`}</Typography>
                         <StyledTextField
                             id="regularCardNumber"
                             type="number"

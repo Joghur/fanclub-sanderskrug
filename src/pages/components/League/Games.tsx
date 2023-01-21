@@ -49,7 +49,10 @@ const GameComponents: React.FunctionComponent<{ matches: Game[] }> = ({ matches 
             {matches.map((match, i) => {
                 const matchStatus = (match.MatchResults &&
                     match.MatchResults.length > 0 &&
-                    match.MatchResults[0]) as MatchResult;
+                    match.MatchResults[match.MatchIsFinished ? 0 : 1]) as MatchResult;
+
+                console.log('match.MatchIsFinished', match.MatchIsFinished);
+                console.log('match.MatchResults', match.MatchResults);
 
                 const GoalText = getStyledText('black', mobile ? 12 : '');
                 const TeamText = getStyledText('black', mobile ? 12 : '');
