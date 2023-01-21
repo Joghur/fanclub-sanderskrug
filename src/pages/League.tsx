@@ -22,6 +22,7 @@ const League = () => {
     // console.log('blMatchDay', blMatchDay);
 
     const largeDesktopDown = useMediaQuery(theme.breakpoints.down('lg'));
+    const smallDesktopDown = useMediaQuery(theme.breakpoints.down('sm'));
     const amountOfMatchDays = (amountOfTeams - 1) * 2;
 
     const handleChangeYear = (event: SelectChangeEvent) => {
@@ -38,7 +39,11 @@ const League = () => {
     };
 
     const playedDays = Array.from({ length: blMatchDay - 1 }, (_, i) => i + 1).reverse();
-    const futurePlayDays = Array.from({ length: amountOfMatchDays - blMatchDay + 1 }, (_, i) => i + blMatchDay);
+    const futurePlayDays = Array.from(
+        { length: amountOfMatchDays - blMatchDay + 1 },
+        // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+        (_, i) => (i + blMatchDay) as number,
+    );
     const largestArray = playedDays.length > futurePlayDays.length ? playedDays : futurePlayDays;
 
     if (!league || !year) {
@@ -46,7 +51,7 @@ const League = () => {
     }
 
     return (
-        <Stack spacing={3} alignItems="center" sx={{ py: 5, px: 5 }}>
+        <Stack spacing={3} alignItems="center" sx={{ py: 5, px: 1 }}>
             <Standings
                 league={league}
                 year={year}
@@ -63,28 +68,39 @@ const League = () => {
                         {blMatchDay > 1 &&
                             largestArray.map((index: number, i) => {
                                 return (
-                                    <Stack key={index} direction="row" justifyContent="space-between">
+                                    <Stack
+                                        key={index}
+                                        direction="row"
+                                        alignItems="center"
+                                        justifyContent="space-between"
+                                    >
                                         <Box>
                                             {playedDays[i] && (
                                                 <Button
                                                     variant="outlined"
                                                     color="info"
                                                     onClick={() => handleChangeMatchDay(playedDays[i])}
-                                                    sx={{ width: 220 }}
+                                                    size={smallDesktopDown ? 'small' : 'medium'}
                                                 >
-                                                    <Typography>{playedDays[i]}. Spieltag</Typography>
+                                                    <Typography variant={smallDesktopDown ? 'caption' : 'body1'}>
+                                                        {playedDays[i]}. Spieltag
+                                                    </Typography>
                                                 </Button>
                                             )}
                                         </Box>
                                         <Box>
-                                            <Button
-                                                variant="outlined"
-                                                color="secondary"
-                                                onClick={() => handleChangeMatchDay(futurePlayDays[i])}
-                                                sx={{ width: 220 }}
-                                            >
-                                                <Typography>{futurePlayDays[i]}. Spieltag</Typography>
-                                            </Button>
+                                            {futurePlayDays[i] && (
+                                                <Button
+                                                    variant="outlined"
+                                                    color="secondary"
+                                                    onClick={() => handleChangeMatchDay(futurePlayDays[i])}
+                                                    size={smallDesktopDown ? 'small' : 'medium'}
+                                                >
+                                                    <Typography variant={smallDesktopDown ? 'caption' : 'body1'}>
+                                                        {futurePlayDays[i]}. Spieltag
+                                                    </Typography>
+                                                </Button>
+                                            )}
                                         </Box>
                                     </Stack>
                                 );
@@ -93,7 +109,7 @@ const League = () => {
                 </>
             )}
             <Dialog open={showMatchdayResultsDialog} onClose={() => setShowMatchdayResultsDialog(false)}>
-                <Box sx={{ p: 5 }}>
+                <Box sx={{ py: 5, px: 1 }}>
                     <Stack direction="row" justifyContent="space-between">
                         {selectedMatchDay > 1 && (
                             <Button onClick={() => setSelectedMatchDay(selectedMatchDay - 1)}>

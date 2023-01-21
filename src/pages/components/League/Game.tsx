@@ -21,6 +21,7 @@ const GameComponent: React.FunctionComponent<{ match: Game; matchDay: number; sh
     const guestteamName = Team2?.TeamName;
 
     const matchDate = MatchDateTime && format(new Date(MatchDateTime), 'dd/MM-yyyy');
+    const matchHour = MatchDateTime && format(new Date(MatchDateTime), 'HH:mm');
     const matchStatus = (MatchResults && MatchResults.length > 0 && MatchResults[0]) as MatchResult;
 
     return (
@@ -31,6 +32,7 @@ const GameComponent: React.FunctionComponent<{ match: Game; matchDay: number; sh
                     <Stack alignItems="center">
                         <Typography variant="h6">{matchDay}. Spieltag</Typography>
                         <Typography variant="h4">{matchDate}</Typography>
+                        <Typography variant="h5">{matchHour}</Typography>
                     </Stack>
                 </CardContent>
                 <CardContent>

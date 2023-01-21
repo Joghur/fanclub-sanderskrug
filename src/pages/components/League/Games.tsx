@@ -39,7 +39,9 @@ const Games = ({ url, matchDay }: Props) => {
                         <GameComponent match={werderGames[0]} matchDay={matchDay} showGameStatusText />
                     )}
                 </Box>
-                <Box justifyContent="center">{otherGames?.length > 0 && <GameComponents matches={otherGames} />}</Box>
+                <Box justifyContent="center">
+                    {otherGames?.length > 0 && <GameComponents matches={otherGames} showGameEndText />}
+                </Box>
             </Stack>
         </Box>
     );
@@ -54,14 +56,11 @@ const GameComponents: React.FunctionComponent<{ matches: Game[]; showGameEndText
     const theme = useTheme();
     const mobile = useMediaQuery(theme.breakpoints.down('sm'));
     return (
-        <Box>
+        <Box sx={{ width: '100%' }}>
             {matches.map((match, i) => {
                 const matchStatus = (match.MatchResults &&
                     match.MatchResults.length > 0 &&
                     match.MatchResults[match.MatchIsFinished ? 0 : 1]) as MatchResult;
-
-                console.log('match.MatchIsFinished', match.MatchIsFinished);
-                console.log('match.MatchResults', match.MatchResults);
 
                 const GoalText = getStyledText(colours.black, mobile ? 12 : '');
                 const TeamText = getStyledText(colours.black, mobile ? 12 : '');
