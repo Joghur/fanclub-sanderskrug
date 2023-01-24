@@ -1,8 +1,10 @@
 import { Box, Stack, Tooltip, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { format } from 'date-fns';
 
 import { colours } from 'src/utils/colours';
 import { useGames } from 'src/utils/hooks';
 import { gamesStyle, getStyledText } from 'src/utils/styles';
+import { getMatchStatus } from 'src/utils/utilities';
 
 import { werderData } from '../../../config/settings';
 import { Game, MatchResult } from '../../../utils/types/Game';
@@ -55,21 +57,32 @@ const GameComponents: React.FunctionComponent<{ matches: Game[]; showGameEndText
 }) => {
     const theme = useTheme();
     const mobile = useMediaQuery(theme.breakpoints.down('sm'));
+
     return (
         <Box sx={{ width: '100%' }}>
             {matches.map((match, i) => {
-                const matchStatus = (match.MatchResults &&
+                const matchStatus = getMatchStatus(match?.MatchDateTime, match?.MatchIsFinished);
+
+                const matchResult = (match.MatchResults &&
                     match.MatchResults.length > 0 &&
-                    match.MatchResults[match.MatchIsFinished ? 0 : 1]) as MatchResult;
+                    match.MatchResults[0]) as MatchResult;
 
                 const GoalText = getStyledText(colours.black, mobile ? 12 : '');
                 const TeamText = getStyledText(colours.black, mobile ? 12 : '');
                 const SmallText = getStyledText(match.MatchIsFinished ? colours.grey : colours.green, mobile ? 8 : 10);
 
+                console.log('Match', match);
                 return (
                     <Box key={i}>
                         <Stack>
-                            <Tooltip title={matchStatus?.ResultDescription}>
+                            <Tooltip
+                                title={
+                                    matchResult.ResultDescription
+                                        ? matchResult.ResultDescription
+                                        : match?.MatchDateTime &&
+                                          format(new Date(match?.MatchDateTime), 'dd/MM - HH:mm')
+                                }
+                            >
                                 <Stack direction="row" alignItems="center" spacing={1} sx={{ height: 50 }}>
                                     <Box sx={{ width: '10%' }}>
                                         <img
@@ -89,11 +102,11 @@ const GameComponents: React.FunctionComponent<{ matches: Game[]; showGameEndText
                                                 alignItems="center"
                                                 justifyContent="center"
                                             >
-                                                <GoalText>{matchStatus.PointsTeam1}</GoalText>
+                                                <GoalText>{matchResult.PointsTeam1}</GoalText>
                                                 <Typography variant="h5">-</Typography>
-                                                <GoalText>{matchStatus.PointsTeam2}</GoalText>
+                                                <GoalText>{matchResult.PointsTeam2}</GoalText>
                                             </Stack>
-                                            {showGameEndText && <SmallText>{matchStatus.ResultName}</SmallText>}
+                                            {showGameEndText && <SmallText>{matchStatus}</SmallText>}
                                         </Stack>
                                     </Box>
                                     <Box sx={{ width: '40%' }}>

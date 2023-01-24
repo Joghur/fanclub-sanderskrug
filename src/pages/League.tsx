@@ -39,11 +39,7 @@ const League = () => {
     };
 
     const playedDays = Array.from({ length: blMatchDay - 1 }, (_, i) => i + 1).reverse();
-    const futurePlayDays = Array.from(
-        { length: amountOfMatchDays - blMatchDay + 1 },
-        // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-        (_, i) => (i + blMatchDay) as number,
-    );
+    const futurePlayDays = Array.from({ length: amountOfMatchDays - blMatchDay + 1 }, (_, i) => i + blMatchDay);
     const largestArray = playedDays.length > futurePlayDays.length ? playedDays : futurePlayDays;
 
     if (!league || !year) {
