@@ -21,6 +21,7 @@ const League = () => {
     const [blMatchDay] = useBlMatchday(league);
     // console.log('blMatchDay', blMatchDay);
 
+    const mobile = useMediaQuery(theme.breakpoints.down('md'));
     const largeDesktopDown = useMediaQuery(theme.breakpoints.down('lg'));
     const smallDesktopDown = useMediaQuery(theme.breakpoints.down('sm'));
     const amountOfMatchDays = (amountOfTeams - 1) * 2;
@@ -39,9 +40,9 @@ const League = () => {
     };
 
     const playedDays = Array.from({ length: blMatchDay - 1 }, (_, i) => i + 1).reverse();
-    const futurePlayDays = Array.from({ length: amountOfMatchDays - blMatchDay + 1 }, (_, i) => i + blMatchDay);
-    const largestArray = playedDays.length > futurePlayDays.length ? playedDays : futurePlayDays;
-
+    const futurePlayDays = Array.from({ length: amountOfMatchDays - blMatchDay }, (_, i) => i + blMatchDay + 1);
+    const largestArray = playedDays.length > futurePlayDays.length ? [...playedDays] : [...futurePlayDays];
+    console.log('largestArray', largestArray);
     if (!league || !year) {
         return <SkeletonComponent />;
     }

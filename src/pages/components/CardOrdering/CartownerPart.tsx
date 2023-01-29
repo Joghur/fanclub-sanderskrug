@@ -16,7 +16,7 @@ interface Props {
     gameId: string;
 }
 
-function CardownerPart({ gameId }: Props) {
+const CardownerPart = ({ gameId }: Props) => {
     const snackbar = useSnackbar();
 
     const [cardOrder, setCardOrder] = useState<CardOrder | null>({ ...getLocalStorage(storageKeyCardOwner) } || null);
@@ -145,6 +145,6 @@ function CardownerPart({ gameId }: Props) {
             )}
         </>
     );
-}
+};
 
 export default CardownerPart;

@@ -11,7 +11,7 @@ interface Props {
     nextMatch: NextMatch;
 }
 
-function AdminPart({ gameId, nextMatch }: Props) {
+const AdminPart = ({ gameId, nextMatch }: Props) => {
     const [cards] = useExtraCardsOrder(gameId);
 
     return (
@@ -21,6 +21,6 @@ function AdminPart({ gameId, nextMatch }: Props) {
             <CardTable cards={cards} nextMatch={nextMatch} />
         </>
     );
-}
+};
 
 export default AdminPart;

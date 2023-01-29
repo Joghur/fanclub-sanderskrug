@@ -13,7 +13,7 @@ interface Props {
     setShowSpieleDialog?: (arg: boolean) => void;
 }
 
-function NextGameCard({ nextMatch, setNextMatch, setShowSpieleDialog }: Props) {
+const NextGameCard = ({ nextMatch, setNextMatch, setShowSpieleDialog }: Props) => {
     const theme = useTheme();
     const auth = getAuth();
 
@@ -78,6 +78,6 @@ function NextGameCard({ nextMatch, setNextMatch, setShowSpieleDialog }: Props) {
             )}
         </Stack>
     );
-}
+};
 
 export default NextGameCard;

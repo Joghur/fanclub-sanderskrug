@@ -6,7 +6,7 @@ import League from './pages/League';
 import NoPage from './pages/NoPage';
 import Layout from './pages/components/Layout';
 
-function App() {
+const App = () => {
     return (
         <BrowserRouter>
             <Routes>
@@ -19,6 +19,6 @@ function App() {
             </Routes>
         </BrowserRouter>
     );
-}
+};
 
 export default App;

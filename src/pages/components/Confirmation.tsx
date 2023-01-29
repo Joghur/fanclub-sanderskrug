@@ -13,7 +13,7 @@ interface Props {
     onAction: () => void;
 }
 
-export default function AlertDialog(props: Props) {
+export const AlertDialog = (props: Props) => {
     const { header, alertText, open, onClose, onAction } = props;
 
     const handleClick = () => {
@@ -44,4 +44,6 @@ export default function AlertDialog(props: Props) {
             </Dialog>
         </div>
     );
-}
+};
+
+export default AlertDialog;

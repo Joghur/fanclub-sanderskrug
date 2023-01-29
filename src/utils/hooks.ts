@@ -158,7 +158,7 @@ export const useFirebaseAuth = () => {
 export const useleague = (currentSeason: string) => {
     const [league, setLeague] = useState<string>('');
     useEffect(() => {
-        (async function () {
+        (async () => {
             const _league = await getWerderLeagueStatus(currentSeason);
 
             if (_league) {

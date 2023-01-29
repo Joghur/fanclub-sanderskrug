@@ -6,7 +6,7 @@ import { useState } from 'react';
 
 import { useStartInfo } from 'src/utils/hooks';
 
-function InfoCard() {
+const InfoCard = () => {
     const auth = getAuth();
 
     const [showInformationDialog, setShowInformationDialog] = useState(false);
@@ -62,6 +62,6 @@ function InfoCard() {
             )}
         </>
     );
-}
+};
 
 export default InfoCard;

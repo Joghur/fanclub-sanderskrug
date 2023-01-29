@@ -15,7 +15,7 @@ interface Props {
     setNextMatch?: Dispatch<SetStateAction<NextMatch>>;
 }
 
-function NextGame({ nextMatch, setNextMatch }: Props) {
+const NextGame = ({ nextMatch, setNextMatch }: Props) => {
     const auth = getAuth();
     const theme = useTheme();
 
@@ -51,6 +51,6 @@ function NextGame({ nextMatch, setNextMatch }: Props) {
             )}
         </>
     );
-}
+};
 
 export default NextGame;
