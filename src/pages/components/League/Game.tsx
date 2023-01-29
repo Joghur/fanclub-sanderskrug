@@ -1,5 +1,5 @@
 import { Card, CardContent, Stack, Tooltip, Typography, useMediaQuery, useTheme } from '@mui/material';
-import { format, differenceInMinutes } from 'date-fns';
+import { format } from 'date-fns';
 
 import { colours } from 'src/utils/colours';
 import { gamesStyle } from 'src/utils/styles';
@@ -26,11 +26,22 @@ const GameComponent: React.FunctionComponent<{ match: Game; matchDay: number; sh
     const hometeamName = mobile ? Team1?.ShortName : Team1?.TeamName;
     const guestteamName = mobile ? Team2?.ShortName : Team2?.TeamName;
 
+    // useEffect(() => {
+    //     setTimeout(() => {
+
+    //     }, 5000);
+
+    //     return () => {
+    //         second;
+    //     };
+    // }, []);
+
     const matchDate = MatchDateTime && format(new Date(MatchDateTime), 'dd/MM-yyyy');
     const matchHour = MatchDateTime && format(new Date(MatchDateTime), 'HH:mm');
     const matchResult = (MatchResults && MatchResults.length > 0 && MatchResults[0]) as MatchResult;
     const matchStatus = getMatchStatus(MatchDateTime, !!matchResult, !!MatchIsFinished);
-    const matchIsStarted = Boolean(MatchDateTime && differenceInMinutes(new Date(), new Date(MatchDateTime)) > 0);
+    // const matchIsStarted = Boolean(MatchDateTime && differenceInMinutes(new Date(), new Date(MatchDateTime)) > 0);
+    const matchIsStarted = Boolean(matchResult);
 
     return (
         <Card variant="outlined">
@@ -71,6 +82,43 @@ const GameComponent: React.FunctionComponent<{ match: Game; matchDay: number; sh
                             {showGameStatusText && !matchStatus.status.includes('/') && matchStatus.status}
                         </Typography>
                     </div>
+                    <Stack alignItems="center">
+                        <Stack spacing={1}>
+                            {match?.Goals?.reverse().map(o => (
+                                <Typography key={o.GoalID}>
+                                    <Stack direction="row" alignItems="center" spacing={1}>
+                                        <span
+                                            style={{
+                                                backgroundColor: 'green',
+                                                color: 'whitesmoke',
+                                                padding: '5px 4px 4px 5px',
+                                                borderRadius: 20,
+                                            }}
+                                        >{`${o.ScoreTeam1}-${o.ScoreTeam2}`}</span>
+                                        <span>{`${o.MatchMinute}'`}</span>
+                                        <span> {`${o.GoalGetterName}`}</span>
+                                        <span
+                                            style={{
+                                                color: 'red',
+                                            }}
+                                        >
+                                            {`${o.IsPenalty ? 'Elfmeter ' : ''}`}
+                                        </span>
+                                        <span
+                                            style={{
+                                                color: 'red',
+                                            }}
+                                        >{`${o.IsOwnGoal ? 'Eigentor' : ''}`}</span>
+                                        <span
+                                            style={{
+                                                color: 'red',
+                                            }}
+                                        >{`${o.IsOvertime ? 'Nachspielzeit' : ''}`}</span>
+                                    </Stack>
+                                </Typography>
+                            ))}
+                        </Stack>
+                    </Stack>
                 </CardContent>
             </Stack>
         </Card>
