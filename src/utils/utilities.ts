@@ -12,11 +12,11 @@ export const getMatchStatus = (MatchDateTime: Date | undefined, MatchIsFinished:
     const minuteDiff = differenceInMinutes(new Date(), new Date(MatchDateTime));
     const isToday = today(new Date(MatchDateTime));
     const date = format(new Date(MatchDateTime), 'dd/MMM');
-    console.log('minuteDiff', minuteDiff / 60);
+    const absMinuteDiff = Math.abs(minuteDiff);
     const time =
-        Math.abs(minuteDiff) >= 60
-            ? `${Math.floor(Math.abs(minuteDiff) / 60)}:${Math.abs(minuteDiff % 60)}`
-            : `${Math.abs(minuteDiff)} min`;
+        absMinuteDiff >= 60
+            ? `${Math.floor(absMinuteDiff / 60)}:${absMinuteDiff % 60 < 10 ? '0' : ''}${absMinuteDiff % 60}`
+            : `${absMinuteDiff} min`;
 
     if (minuteDiff < 0) {
         return { status: isToday ? time : date, colour: 'red' };
@@ -25,5 +25,5 @@ export const getMatchStatus = (MatchDateTime: Date | undefined, MatchIsFinished:
     if (minuteDiff >= 0 && isToday && !MatchIsFinished) {
         return { status: time, colour: 'green' };
     }
-    return { status: 'Endergebnis', colour: 'grey' };
+    return { status: isToday ? 'Endergebnis' : date, colour: 'grey' };
 };
