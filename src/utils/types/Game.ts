@@ -83,3 +83,8 @@ export interface MatchDay {
     GroupName: string;
     GroupOrderID: number;
 }
+
+export interface MatchStatus {
+    status: string;
+    colour: string;
+}

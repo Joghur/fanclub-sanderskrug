@@ -12,10 +12,10 @@ export const StyledTextField = styled(TextField)({
     marginBottom: 10,
 });
 
-export const getStyledText = (color: string, size?: number | string) => {
+export const getStyledText = (color: string, size?: number) => {
     return styled(Typography)({
         fontFamily: 'sans-serif',
-        fontSize: size || '',
+        fontSize: size,
         color: color || colours.black,
     });
 };

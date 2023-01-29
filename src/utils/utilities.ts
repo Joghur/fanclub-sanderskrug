@@ -1,26 +1,29 @@
-import { differenceInMinutes, isToday, format } from 'date-fns';
+import { differenceInMinutes, isToday as today, format } from 'date-fns';
+
+import { MatchStatus } from './types/Game';
 
 export const thisYear = new Date().getFullYear();
 export const thisSeason = String(new Date().getMonth() > 5 ? thisYear : thisYear - 1);
 
-export const getMatchStatus = (
-    MatchDateTime: Date | undefined,
-    MatchIsFinished: boolean | undefined,
-): string | undefined => {
+export const getMatchStatus = (MatchDateTime: Date | undefined, MatchIsFinished: boolean | undefined): MatchStatus => {
     if (!MatchDateTime) {
-        return undefined;
+        return { status: '', colour: 'grey' };
     }
-    if (!isToday(new Date(MatchDateTime))) {
-        return `${format(new Date(MatchDateTime), 'dd/MMM')}`;
-    }
-    if (MatchDateTime && !MatchIsFinished) {
-        let minuteDiff = differenceInMinutes(new Date(), new Date(MatchDateTime));
+    const minuteDiff = differenceInMinutes(new Date(), new Date(MatchDateTime));
+    const isToday = today(new Date(MatchDateTime));
+    const date = format(new Date(MatchDateTime), 'dd/MMM');
+    console.log('minuteDiff', minuteDiff / 60);
+    const time =
+        Math.abs(minuteDiff) >= 60
+            ? `${Math.floor(Math.abs(minuteDiff) / 60)}:${Math.abs(minuteDiff % 60)}`
+            : `${Math.abs(minuteDiff)} min`;
 
-        // faking changing half.
-        if (minuteDiff > 59) {
-            minuteDiff -= 15;
-        }
-        return `${minuteDiff}'`;
+    if (minuteDiff < 0) {
+        return { status: isToday ? time : date, colour: 'red' };
     }
-    return 'Endergebnis';
+
+    if (minuteDiff >= 0 && isToday && !MatchIsFinished) {
+        return { status: time, colour: 'green' };
+    }
+    return { status: 'Endergebnis', colour: 'grey' };
 };

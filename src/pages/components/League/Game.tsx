@@ -1,4 +1,4 @@
-import { Card, CardContent, Stack, Tooltip, Typography } from '@mui/material';
+import { Card, CardContent, Stack, Tooltip, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { format, differenceInMinutes } from 'date-fns';
 
 import { colours } from 'src/utils/colours';
@@ -16,12 +16,15 @@ const GameComponent: React.FunctionComponent<{ match: Game; matchDay: number; sh
     matchDay,
     showGameStatusText = false,
 }) => {
+    const theme = useTheme();
+    const mobile = useMediaQuery(theme.breakpoints.down('sm'));
+
     const { Team1, Team2, MatchResults, LeagueName, MatchDateTime, MatchIsFinished } = match;
 
     const homeiconsrc = Team1?.TeamIconUrl;
     const guesticonsrc = Team2?.TeamIconUrl;
-    const hometeamName = Team1?.TeamName;
-    const guestteamName = Team2?.TeamName;
+    const hometeamName = mobile ? Team1?.ShortName : Team1?.TeamName;
+    const guestteamName = mobile ? Team2?.ShortName : Team2?.TeamName;
 
     const matchDate = MatchDateTime && format(new Date(MatchDateTime), 'dd/MM-yyyy');
     const matchHour = MatchDateTime && format(new Date(MatchDateTime), 'HH:mm');
@@ -65,7 +68,7 @@ const GameComponent: React.FunctionComponent<{ match: Game; matchDay: number; sh
                             }}
                             variant="h6"
                         >
-                            {showGameStatusText && matchStatus && !matchStatus.includes('/') && matchStatus}
+                            {showGameStatusText && !matchStatus.status.includes('/') && matchStatus.status}
                         </Typography>
                     </div>
                 </CardContent>
