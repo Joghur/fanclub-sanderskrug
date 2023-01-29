@@ -61,11 +61,11 @@ const GameComponents: React.FunctionComponent<{ matches: Game[]; showGameEndText
     return (
         <Box sx={{ width: '100%' }}>
             {matches.map((match, i) => {
-                const matchStatus = getMatchStatus(match?.MatchDateTime, match?.MatchIsFinished);
-
                 const matchResult = (match.MatchResults &&
                     match.MatchResults.length > 0 &&
                     match.MatchResults[0]) as MatchResult;
+
+                const matchStatus = getMatchStatus(match?.MatchDateTime, !!matchResult, match?.MatchIsFinished);
 
                 const GoalText = getStyledText(colours.black, mobile ? 12 : undefined);
                 const TeamText = getStyledText(colours.black, mobile ? 12 : undefined);
@@ -74,7 +74,6 @@ const GameComponents: React.FunctionComponent<{ matches: Game[]; showGameEndText
                 const team1Name = mobile ? match.Team1?.ShortName : match.Team1?.TeamName;
                 const team2Name = mobile ? match.Team2?.ShortName : match.Team2?.TeamName;
 
-                console.log('Match', match);
                 return (
                     <Box key={i}>
                         <Stack>

@@ -29,7 +29,7 @@ const GameComponent: React.FunctionComponent<{ match: Game; matchDay: number; sh
     const matchDate = MatchDateTime && format(new Date(MatchDateTime), 'dd/MM-yyyy');
     const matchHour = MatchDateTime && format(new Date(MatchDateTime), 'HH:mm');
     const matchResult = (MatchResults && MatchResults.length > 0 && MatchResults[0]) as MatchResult;
-    const matchStatus = getMatchStatus(MatchDateTime, !!MatchIsFinished);
+    const matchStatus = getMatchStatus(MatchDateTime, !!matchResult, !!MatchIsFinished);
     const matchIsStarted = Boolean(MatchDateTime && differenceInMinutes(new Date(), new Date(MatchDateTime)) > 0);
 
     return (
