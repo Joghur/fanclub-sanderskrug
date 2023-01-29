@@ -42,6 +42,10 @@ const GameComponent: React.FunctionComponent<{ match: Game; matchDay: number; sh
     const matchStatus = getMatchStatus(MatchDateTime, !!matchResult, !!MatchIsFinished);
     // const matchIsStarted = Boolean(MatchDateTime && differenceInMinutes(new Date(), new Date(MatchDateTime)) > 0);
     const matchIsStarted = Boolean(matchResult);
+    const team1IsWerder = Team1?.TeamName === 'Werder Bremen';
+
+    let team1Goals = 0;
+    let team2Goals = 0;
 
     return (
         <Card variant="outlined">
@@ -84,39 +88,49 @@ const GameComponent: React.FunctionComponent<{ match: Game; matchDay: number; sh
                     </div>
                     <Stack alignItems="center">
                         <Stack spacing={1}>
-                            {match?.Goals?.reverse().map(o => (
-                                <Typography key={o.GoalID}>
-                                    <Stack direction="row" alignItems="center" spacing={1}>
-                                        <span
-                                            style={{
-                                                backgroundColor: 'green',
-                                                color: 'whitesmoke',
-                                                padding: '5px 4px 4px 5px',
-                                                borderRadius: 20,
-                                            }}
-                                        >{`${o.ScoreTeam1}-${o.ScoreTeam2}`}</span>
-                                        <span>{`${o.MatchMinute}'`}</span>
-                                        <span> {`${o.GoalGetterName}`}</span>
-                                        <span
-                                            style={{
-                                                color: 'red',
-                                            }}
-                                        >
-                                            {`${o.IsPenalty ? 'Elfmeter ' : ''}`}
-                                        </span>
-                                        <span
-                                            style={{
-                                                color: 'red',
-                                            }}
-                                        >{`${o.IsOwnGoal ? 'Eigentor' : ''}`}</span>
-                                        <span
-                                            style={{
-                                                color: 'red',
-                                            }}
-                                        >{`${o.IsOvertime ? 'Nachspielzeit' : ''}`}</span>
-                                    </Stack>
-                                </Typography>
-                            ))}
+                            {match?.Goals?.reverse().map(o => {
+                                const team1Scored = o.ScoreTeam1 !== team1Goals;
+                                if (team1Scored) {
+                                    team1Goals++;
+                                } else {
+                                    team2Goals++;
+                                }
+
+                                const werderScored = team1Scored && team1IsWerder;
+                                return (
+                                    <Typography key={o.GoalID}>
+                                        <Stack direction="row" alignItems="center" spacing={1}>
+                                            <span
+                                                style={{
+                                                    backgroundColor: werderScored ? 'green' : 'red',
+                                                    color: 'whitesmoke',
+                                                    padding: '5px 4px 4px 5px',
+                                                    borderRadius: 20,
+                                                }}
+                                            >{`${o.ScoreTeam1}-${o.ScoreTeam2}`}</span>
+                                            <span>{`${o.MatchMinute}'`}</span>
+                                            <span> {`${o.GoalGetterName}`}</span>
+                                            <span
+                                                style={{
+                                                    color: 'red',
+                                                }}
+                                            >
+                                                {`${o.IsPenalty ? 'Elfmeter ' : ''}`}
+                                            </span>
+                                            <span
+                                                style={{
+                                                    color: 'red',
+                                                }}
+                                            >{`${o.IsOwnGoal ? 'Eigentor' : ''}`}</span>
+                                            <span
+                                                style={{
+                                                    color: 'red',
+                                                }}
+                                            >{`${o.IsOvertime ? 'Nachspielzeit' : ''}`}</span>
+                                        </Stack>
+                                    </Typography>
+                                );
+                            })}
                         </Stack>
                     </Stack>
                 </CardContent>
