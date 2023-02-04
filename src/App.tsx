@@ -5,7 +5,7 @@ import CardOrdering from './pages/CardOrdering';
 import Info from './pages/Info';
 import League from './pages/League';
 import NoPage from './pages/NoPage';
-import Layout from './pages/components/Layout';
+import Layout from './pages/components/common/Layout';
 
 const App = () => {
     return (

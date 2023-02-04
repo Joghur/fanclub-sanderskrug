@@ -5,7 +5,7 @@ import { useState } from 'react';
 
 // import { useSpecialOrder } from 'src/utils/hooks';
 
-import SkeletonComponent from '../SkeletonComponent';
+import SkeletonComponent from '../common/SkeletonComponent';
 
 // interface Props {
 //     specialOrder: string;

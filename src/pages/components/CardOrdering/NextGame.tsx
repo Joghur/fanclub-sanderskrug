@@ -7,7 +7,7 @@ import { colours } from 'src/utils/colours';
 
 import { NextMatch } from '../../../utils/types/Game';
 
-import NextGameAdmin from './NextGameAdmin';
+import NextGameAdmin from '../admin/NextGameAdmin';
 import NextGameCard from './NextGameCard';
 
 interface Props {

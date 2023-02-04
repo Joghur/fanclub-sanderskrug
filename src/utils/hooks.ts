@@ -52,7 +52,7 @@ export const useNextMatch = () => {
     return [value, setValue, loading] as const;
 };
 
-export const useExtraCardsOrder = (gameId: string) => {
+export const useExtraCardsOrder = (gameId?: string) => {
     const [cards, setCards] = useState<CardOrder[]>([]);
 
     const fetchingCards = async () => {

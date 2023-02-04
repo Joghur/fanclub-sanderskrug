@@ -1,13 +1,12 @@
 import { Divider, Typography } from '@mui/material';
 
 import { useExtraCardsOrder } from 'src/utils/hooks';
-
-import { NextMatch } from '../../../utils/types/Game';
+import { NextMatch } from 'src/utils/types/Game';
 
 import CardTable from './CardTable';
 
 interface Props {
-    gameId: string;
+    gameId?: string;
     nextMatch: NextMatch;
 }
 

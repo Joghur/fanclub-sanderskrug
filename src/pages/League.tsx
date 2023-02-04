@@ -8,7 +8,7 @@ import { thisSeason } from '../utils/utilities';
 
 import Games from './components/League/Games';
 import Standings from './components/League/Standings';
-import SkeletonComponent from './components/SkeletonComponent';
+import SkeletonComponent from './components/common/SkeletonComponent';
 
 const League = () => {
     const theme = useTheme();

@@ -3,11 +3,11 @@ import { getAuth } from 'firebase/auth';
 
 import { useNextMatch } from 'src/utils/hooks';
 
-import AdminPart from './components/CardOrdering/AdminPart';
 import CardownerPart from './components/CardOrdering/CartownerPart';
-import NextGame from './components/CardOrdering/NextGame';
 import InfoCard from './components/CardOrdering/InfoCard';
-import SkeletonComponent from './components/SkeletonComponent';
+import NextGame from './components/CardOrdering/NextGame';
+import AdminPart from './components/admin/AdminPart';
+import SkeletonComponent from './components/common/SkeletonComponent';
 
 const CardOrdering = () => {
     const theme = useTheme();

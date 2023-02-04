@@ -201,7 +201,7 @@ const Header = () => {
                                                 },
                                             }}
                                         />
-                                        <Typography>Carl Admin</Typography>
+                                        <Typography>Carl Administrator</Typography>
                                     </Box>
                                 </NavLink>
                             </Box>
