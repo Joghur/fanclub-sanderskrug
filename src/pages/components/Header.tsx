@@ -2,6 +2,7 @@ import BookOnline from '@mui/icons-material/BookOnline';
 import HomeRounded from '@mui/icons-material/HomeRounded';
 import MenuIcon from '@mui/icons-material/Menu';
 import SportsSoccerIcon from '@mui/icons-material/SportsSoccer';
+import { getAuth } from 'firebase/auth';
 import {
     AppBar,
     BottomNavigation,
@@ -22,6 +23,7 @@ import { colours } from 'src/utils/colours';
 
 const Header = () => {
     const navigate = useNavigate();
+    const auth = getAuth();
 
     const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
     const [ref, { width }] = useMeasure<HTMLDivElement>();
@@ -82,7 +84,7 @@ const Header = () => {
                 sx={{ display: { xs: 'flex', sm: 'none' } }}
             >
                 <BottomNavigationAction
-                    label="Kartenvorbestellung"
+                    label="Vorbestellung"
                     value=""
                     icon={
                         <BookOnline
@@ -94,6 +96,21 @@ const Header = () => {
                         />
                     }
                 />
+                {auth.currentUser && (
+                    <BottomNavigationAction
+                        label="Carl Admin"
+                        value="admin"
+                        icon={
+                            <BookOnline
+                                sx={{
+                                    '& .Mui-selected': {
+                                        fontSize: '0.75rem',
+                                    },
+                                }}
+                            />
+                        }
+                    />
+                )}
                 <BottomNavigationAction
                     label="Liga"
                     value="liga"
@@ -161,6 +178,34 @@ const Header = () => {
                                 </Box>
                             </NavLink>
                         </Box>
+                        {auth.currentUser && (
+                            <Box sx={{ minWidth: 100, display: { xs: 'none', sm: 'flex' } }}>
+                                <NavLink
+                                    to="admin"
+                                    style={({ isActive }) => ({
+                                        color: isActive ? colours.greenyellow : colours.white,
+                                        textDecoration: 'none',
+                                        boxShadow: isActive ? '1px 2px 3px 4px rgba(20,20,20,0.4)' : '',
+                                    })}
+                                >
+                                    <Box
+                                        alignItems="center"
+                                        sx={{
+                                            p: 2,
+                                        }}
+                                    >
+                                        <SportsSoccerIcon
+                                            sx={{
+                                                '& .Mui-selected': {
+                                                    fontSize: '0.75rem',
+                                                },
+                                            }}
+                                        />
+                                        <Typography>Carl Admin</Typography>
+                                    </Box>
+                                </NavLink>
+                            </Box>
+                        )}
                         <Box sx={{ minWidth: 100, display: { xs: 'none', sm: 'flex' } }}>
                             <NavLink
                                 to="liga"
