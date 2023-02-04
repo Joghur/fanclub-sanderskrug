@@ -32,6 +32,7 @@ module.exports = {
                 project: './tsconfig.json',
             },
             rules: {
+                'prettier/prettier': 'warn',
                 '@typescript-eslint/restrict-template-expressions': 'off',
                 '@typescript-eslint/explicit-function-return-type': 'off',
                 '@typescript-eslint/interface-name-prefix': 'off',

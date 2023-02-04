@@ -19,7 +19,7 @@ export const getMatchStatus = (
     }
     const minuteDiff = differenceInMinutes(new Date(), new Date(MatchDateTime));
     const isToday = today(new Date(MatchDateTime));
-    const date = format(new Date(MatchDateTime), 'dd/MMM');
+    const date = format(new Date(MatchDateTime), 'd/MMM');
     const absMinuteDiff = Math.abs(minuteDiff);
     const time =
         absMinuteDiff >= 60
@@ -29,7 +29,7 @@ export const getMatchStatus = (
     status = 'Endergebnis';
     if (!MatchHasStarted) {
         colour = 'red';
-        status = isToday ? time : date;
+        status = isToday ? `-${time}` : date;
     }
     if (MatchHasStarted && !MatchIsFinished) {
         colour = 'green';

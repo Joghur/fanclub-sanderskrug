@@ -3,7 +3,7 @@ import { Dialog, Paper, Stack, Typography, useMediaQuery, useTheme } from '@mui/
 import { getAuth } from 'firebase/auth';
 import { useState } from 'react';
 
-import { useSpecialOrder } from 'src/utils/hooks';
+// import { useSpecialOrder } from 'src/utils/hooks';
 
 import SkeletonComponent from '../SkeletonComponent';
 
@@ -16,15 +16,15 @@ const SpecialOrderComponent = () => {
     const theme = useTheme();
     const [showSpecialOrderDialog, setShowSpecialOrderDialog] = useState(false);
 
-    const [specialOrder, setSpecialOrder, specialOrderLoading] = useSpecialOrder();
+    // const [specialOrder, setSpecialOrder, specialOrderLoading] = useSpecialOrder();
 
     const mobile = useMediaQuery(theme.breakpoints.down('sm'));
-    console.log('specialOrder', specialOrder);
-    console.log('specialOrderLoading', specialOrderLoading);
+    // console.log('specialOrder', specialOrder);
+    // console.log('specialOrderLoading', specialOrderLoading);
 
-    if (!specialOrder || specialOrderLoading) {
-        return <SkeletonComponent />;
-    }
+    // if (!specialOrder || specialOrderLoading) {
+    //     return <SkeletonComponent />;
+    // }
 
     // const handleChange = second => {
     //     third;
@@ -38,7 +38,7 @@ const SpecialOrderComponent = () => {
     return (
         <Stack alignItems="center" spacing={3} sx={{ py: 5, px: mobile ? 5 : 0, alignItems: 'center' }}>
             {auth.currentUser && <EditIcon onClick={() => setShowSpecialOrderDialog(true)} />}
-            {specialOrder && <Typography>{specialOrder.specialOrderInfo}</Typography>}
+            {/* {specialOrder && <Typography>{specialOrder.specialOrderInfo}</Typography>} */}
             {auth.currentUser && (
                 <Dialog open={showSpecialOrderDialog}>
                     <Paper sx={{ p: 5 }}>
