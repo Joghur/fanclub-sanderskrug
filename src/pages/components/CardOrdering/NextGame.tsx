@@ -1,5 +1,5 @@
 import CancelIcon from '@mui/icons-material/Cancel';
-import { Box, Dialog, Paper, Stack, useMediaQuery, useTheme } from '@mui/material';
+import { Dialog, Grid, Paper, Stack } from '@mui/material';
 import { getAuth } from 'firebase/auth';
 import { Dispatch, SetStateAction, useState } from 'react';
 
@@ -17,20 +17,18 @@ interface Props {
 
 const NextGame = ({ nextMatch, setNextMatch }: Props) => {
     const auth = getAuth();
-    const theme = useTheme();
 
     const [showSpieleDialog, setShowSpieleDialog] = useState(false);
-    const smalldesktop = useMediaQuery(theme.breakpoints.down('md'));
 
     return (
         <>
-            <Box sx={{ width: smalldesktop ? '95%' : '50%', justifyItems: 'center' }}>
+            <Grid item sx={{ justifyItems: 'center' }}>
                 <NextGameCard
                     nextMatch={nextMatch}
                     setNextMatch={setNextMatch}
                     setShowSpieleDialog={setShowSpieleDialog}
                 />
-            </Box>
+            </Grid>
             {auth.currentUser && setNextMatch && (
                 <Dialog open={showSpieleDialog}>
                     <Paper sx={{ p: 5 }}>

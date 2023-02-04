@@ -85,7 +85,7 @@ const CardownerPart = ({ gameId }: Props) => {
                 <Stack>
                     <Typography>Sie haben für dieses Spiel Folgendes extrakarte bestellt</Typography>
                     <Typography>
-                        <b>Name</b>: {submittedCardOrder.name!} (Stammkartnummer:{' '}
+                        <b>Name</b>: {submittedCardOrder.name!} (Stammkartennummer:{' '}
                         {submittedCardOrder.regularCardNumber!})
                     </Typography>
                     <Typography></Typography>
@@ -105,7 +105,7 @@ const CardownerPart = ({ gameId }: Props) => {
                         <StyledTextField id="name" value={cardOrder?.name || ''} onChange={handleChangeOrder} />
                     </Stack>
                     <Stack>
-                        <Typography variant="h6">Werder Stammkartnummer</Typography>
+                        <Typography variant="h6">Werder Stammkartennummer</Typography>
                         <StyledTextField
                             id="regularCardNumber"
                             type="number"

@@ -69,7 +69,7 @@ const CardTable = ({ cards, nextMatch, handleEdit, handleDelete }: Props) => {
                                 <TableCell></TableCell>
                                 <TableCell>Name</TableCell>
                                 <TableCell>Anzahl</TableCell>
-                                <TableCell>Stammkart nummer</TableCell>
+                                <TableCell>Stammkarten nummer</TableCell>
                                 <TableCell>Kommentare</TableCell>
                             </StyledTableRow>
                         </TableHead>

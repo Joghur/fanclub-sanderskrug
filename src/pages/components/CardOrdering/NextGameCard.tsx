@@ -17,7 +17,7 @@ const NextGameCard = ({ nextMatch, setNextMatch, setShowSpieleDialog }: Props) =
     const theme = useTheme();
     const auth = getAuth();
 
-    const mobile = useMediaQuery(theme.breakpoints.down('sm'));
+    const mobile = useMediaQuery(theme.breakpoints.down('md'));
 
     return (
         <Stack
@@ -31,7 +31,7 @@ const NextGameCard = ({ nextMatch, setNextMatch, setShowSpieleDialog }: Props) =
             }}
             sx={{
                 py: 2,
-                px: mobile ? 5 : 0,
+                px: mobile ? 7 : 10,
             }}
         >
             {auth.currentUser && setNextMatch && setShowSpieleDialog && (
