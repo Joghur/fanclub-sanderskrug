@@ -46,6 +46,7 @@ export const useNextMatch = () => {
     };
 
     useEffect(() => {
+        console.log('useNextMatch useEffect');
         fetchingStartInfo();
     }, []);
 

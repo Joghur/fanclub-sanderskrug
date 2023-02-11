@@ -16,9 +16,15 @@ const CardOrdering = () => {
 
     const mobile = useMediaQuery(theme.breakpoints.down('sm'));
 
+    console.log('nextMatch', nextMatch);
+    console.log('CardOrdering1');
+    console.log('loading', loading);
+
     if (!nextMatch || loading) {
         return <SkeletonComponent />;
     }
+
+    console.log('CardOrdering2');
 
     return (
         <Stack alignItems="center" spacing={3} sx={{ py: 5, px: mobile ? 5 : 0, alignItems: 'center' }}>

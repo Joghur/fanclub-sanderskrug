@@ -1,4 +1,4 @@
-import { Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { Divider, Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { getAuth } from 'firebase/auth';
 
 import { useExtraCardsOrder, useNextMatch } from 'src/utils/hooks';
@@ -29,6 +29,13 @@ const Admin = () => {
                     )}
                     {nextMatch.active && (
                         <>
+                            {cards.length > 0 && <CardTable cards={cards} nextMatch={nextMatch} />}
+                            {cards.length === 0 && <Typography variant="h5">Keine bestellungen</Typography>}
+                        </>
+                    )}
+                    {nextMatch.active && (
+                        <>
+                            <Divider variant="middle" />
                             {cards.length > 0 && <CardTable cards={cards} nextMatch={nextMatch} />}
                             {cards.length === 0 && <Typography variant="h5">Keine bestellungen</Typography>}
                         </>
