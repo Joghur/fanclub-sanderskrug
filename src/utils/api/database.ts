@@ -19,6 +19,15 @@ export interface Result<T> {
     error?: unknown;
 }
 
+export const getCollectionFirestoreData = (coll: string) => {
+    return (
+        collection(db, coll),
+        {
+            snapshotListenOptions: { includeMetadataChanges: true },
+        }
+    );
+};
+
 export const saveData = async <T>(dataCollection: string, data: T) => {
     const result: Result<string> = { success: undefined, error: undefined };
     if (!data) {

@@ -3,10 +3,10 @@ import { getAuth } from 'firebase/auth';
 
 import { useNextMatch } from 'src/utils/hooks';
 
-import CardownerPart from './components/CardOrdering/CartownerPart';
-import InfoCard from './components/CardOrdering/InfoCard';
-import NextGame from './components/CardOrdering/NextGame';
 import AdminPart from './components/admin/AdminPart';
+import CardownerPart from './components/admin/CartownerPart';
+import InfoCard from './components/cardOrdering/InfoCard';
+import NextGame from './components/cardOrdering/NextGame';
 import SkeletonComponent from './components/common/SkeletonComponent';
 
 const CardOrdering = () => {

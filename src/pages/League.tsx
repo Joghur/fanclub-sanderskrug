@@ -6,8 +6,8 @@ import { useBlMatchday, useleague } from 'src/utils/hooks';
 
 import { thisSeason } from '../utils/utilities';
 
-import Games from './components/League/Games';
-import Standings from './components/League/Standings';
+import Games from './components/league/Games';
+import Standings from './components/league/Standings';
 import SkeletonComponent from './components/common/SkeletonComponent';
 
 const League = () => {
