@@ -96,7 +96,7 @@ const Header = () => {
                         />
                     }
                 />
-                {auth.currentUser && (
+                {/* {auth.currentUser && (
                     <BottomNavigationAction
                         label="Carl Admin"
                         value="admin"
@@ -110,7 +110,7 @@ const Header = () => {
                             />
                         }
                     />
-                )}
+                )} */}
                 <BottomNavigationAction
                     label="Liga"
                     value="liga"
@@ -178,7 +178,7 @@ const Header = () => {
                                 </Box>
                             </NavLink>
                         </Box>
-                        {auth.currentUser && (
+                        {/* {auth.currentUser && (
                             <Box sx={{ minWidth: 100, display: { xs: 'none', sm: 'flex' } }}>
                                 <NavLink
                                     to="admin"
@@ -205,7 +205,7 @@ const Header = () => {
                                     </Box>
                                 </NavLink>
                             </Box>
-                        )}
+                        )} */}
                         <Box sx={{ minWidth: 100, display: { xs: 'none', sm: 'flex' } }}>
                             <NavLink
                                 to="liga"
