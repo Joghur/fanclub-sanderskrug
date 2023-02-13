@@ -5,8 +5,8 @@ import { useNextMatch } from 'src/utils/hooks';
 
 import AdminPart from './components/CardOrdering/AdminPart';
 import CardownerPart from './components/CardOrdering/CartownerPart';
-import NextGame from './components/CardOrdering/NextGame';
 import InfoCard from './components/CardOrdering/InfoCard';
+import NextGame from './components/CardOrdering/NextGame';
 import SkeletonComponent from './components/SkeletonComponent';
 
 const CardOrdering = () => {

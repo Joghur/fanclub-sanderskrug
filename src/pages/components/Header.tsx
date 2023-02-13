@@ -2,7 +2,6 @@ import BookOnline from '@mui/icons-material/BookOnline';
 import HomeRounded from '@mui/icons-material/HomeRounded';
 import MenuIcon from '@mui/icons-material/Menu';
 import SportsSoccerIcon from '@mui/icons-material/SportsSoccer';
-import { getAuth } from 'firebase/auth';
 import {
     AppBar,
     BottomNavigation,
@@ -14,6 +13,7 @@ import {
     Typography,
 } from '@mui/material';
 import { Container } from '@mui/system';
+import { getAuth } from 'firebase/auth';
 import { IKImage } from 'imagekitio-react';
 import { useCallback, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';

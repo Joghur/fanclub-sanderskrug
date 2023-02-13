@@ -14,6 +14,7 @@ import {
 import { format } from 'date-fns';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
+
 import { colours } from 'src/utils/colours';
 
 import { StyledButton } from '../../../utils/styles';
