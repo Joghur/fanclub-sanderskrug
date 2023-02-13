@@ -1,7 +1,6 @@
 import { Card, CardContent, Stack, Tooltip, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { format } from 'date-fns';
 
-import { colours } from 'src/utils/colours';
 import { gamesStyle } from 'src/utils/styles';
 import { getMatchStatus } from 'src/utils/utilities';
 
@@ -80,7 +79,7 @@ const GameComponent: React.FunctionComponent<{ match: Game; matchDay: number; sh
                         <Typography
                             sx={{
                                 py: 3,
-                                color: MatchIsFinished ? colours.grey : colours.werderGreen,
+                                color: matchStatus.colour,
                             }}
                             variant="h6"
                         >
