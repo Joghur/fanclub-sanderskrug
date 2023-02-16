@@ -19,12 +19,13 @@ const NextGameCard = ({ nextMatch, setNextMatch, setShowSpieleDialog }: Props) =
 
     const mobile = useMediaQuery(theme.breakpoints.down('md'));
     const smMobile = useMediaQuery(theme.breakpoints.down('sm'));
+    const longName = nextMatch.opponent.length > 16;
 
     return (
         <Stack
             alignItems="center"
             style={{
-                borderRadius: '50%',
+                borderRadius: '40%',
                 border: '2px solid',
                 borderColor:
                     nextMatch.opponent && nextMatch.busTour && nextMatch.active ? colours.werderGreen : colours.red,
@@ -32,7 +33,7 @@ const NextGameCard = ({ nextMatch, setNextMatch, setShowSpieleDialog }: Props) =
             }}
             sx={{
                 py: 2,
-                px: mobile ? (smMobile ? 5 : 7) : 10,
+                px: mobile ? (smMobile ? 3 : 7) : 10,
             }}
         >
             {auth.currentUser && setNextMatch && setShowSpieleDialog && (
@@ -49,7 +50,7 @@ const NextGameCard = ({ nextMatch, setNextMatch, setShowSpieleDialog }: Props) =
                     <Typography variant="body2" paragraph>
                         {nextMatch.location}
                     </Typography>
-                    <Typography variant={mobile ? (smMobile ? 'body2' : 'body1') : 'h4'} noWrap paragraph>
+                    <Typography variant={mobile ? (longName ? 'body2' : 'h6') : 'h4'} noWrap paragraph>
                         <Box component="span" fontWeight="fontWeightBold">
                             {`Werder `}
                         </Box>

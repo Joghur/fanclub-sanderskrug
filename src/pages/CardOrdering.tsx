@@ -21,7 +21,7 @@ const CardOrdering = () => {
     }
 
     return (
-        <Stack alignItems="center" spacing={3} sx={{ py: 5, px: mobile ? 5 : 0, alignItems: 'center' }}>
+        <Stack alignItems={mobile ? 'inherit' : 'center'} spacing={3} sx={{ py: 5, px: mobile ? 1 : 0 }}>
             {(auth.currentUser || nextMatch.gameId) && <NextGame nextMatch={nextMatch} setNextMatch={setNextMatch} />}
             <InfoCard />
             {nextMatch.gameId && nextMatch.active && (

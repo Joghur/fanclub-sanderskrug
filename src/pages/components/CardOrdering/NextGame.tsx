@@ -22,16 +22,10 @@ const NextGame = ({ nextMatch, setNextMatch }: Props) => {
 
     return (
         <>
-            <Grid item sx={{ justifyItems: 'center' }}>
-                <NextGameCard
-                    nextMatch={nextMatch}
-                    setNextMatch={setNextMatch}
-                    setShowSpieleDialog={setShowSpieleDialog}
-                />
-            </Grid>
+            <NextGameCard nextMatch={nextMatch} setNextMatch={setNextMatch} setShowSpieleDialog={setShowSpieleDialog} />
             {auth.currentUser && setNextMatch && (
                 <Dialog open={showSpieleDialog}>
-                    <Paper sx={{ p: 5 }}>
+                    <Paper sx={{ p: 3 }}>
                         <Stack direction="row" justifyContent="flex-end">
                             <CancelIcon
                                 fontSize="large"
