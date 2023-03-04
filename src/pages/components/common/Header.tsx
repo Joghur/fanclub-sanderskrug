@@ -1,8 +1,8 @@
+import { css, Theme } from '@emotion/react';
 import BookOnline from '@mui/icons-material/BookOnline';
 import HomeRounded from '@mui/icons-material/HomeRounded';
 import MenuIcon from '@mui/icons-material/Menu';
 import SportsSoccerIcon from '@mui/icons-material/SportsSoccer';
-import { getAuth } from 'firebase/auth';
 import {
     AppBar,
     BottomNavigation,
@@ -14,21 +14,49 @@ import {
     Typography,
 } from '@mui/material';
 import { Container } from '@mui/system';
+import { getAuth } from 'firebase/auth';
 import { IKImage } from 'imagekitio-react';
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useMeasure } from 'react-use';
 
 import { colours } from 'src/utils/colours';
 
+interface MenuPosition {
+    position: 'belowImage' | 'top';
+}
+
+const menu = css`
+    position: fixed;
+    top: 0;
+    z-index: 101;
+    transition: top 0.3s ease-in-out;
+`;
+
+const menuBelowImage = css`
+    top: 100%;
+`;
+
 const Header = () => {
     const navigate = useNavigate();
     const auth = getAuth();
+    const [menuPosition, setMenuPosition] = useState<MenuPosition>({ position: 'belowImage' });
 
     const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
     const [ref, { width }] = useMeasure<HTMLDivElement>();
     const [value, setValue] = useState('');
 
+    useEffect(() => {
+        const handleScroll = () => {
+            const scrollPosition = window.scrollY;
+            const threshold = 300;
+            const newPosition = scrollPosition > threshold ? 'top' : 'belowImage';
+            setMenuPosition({ position: newPosition });
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
     const handleChange = useCallback(
         (event: React.SyntheticEvent, newValue: string) => {
             setValue(newValue);
@@ -142,6 +170,7 @@ const Header = () => {
                 position="static"
                 style={{ backgroundColor: colours.werderGreen }}
                 sx={{ display: { xs: 'none', sm: 'flex' } }}
+                css={menuPosition.position === 'top' ? menu : menuBelowImage}
             >
                 <Container maxWidth="lg">
                     <Box
