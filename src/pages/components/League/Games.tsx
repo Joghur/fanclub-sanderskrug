@@ -20,17 +20,17 @@ const Games = ({ url, matchDay }: Props) => {
     const [games, loading, error] = useGames(url || '');
 
     const werderGames = games?.filter(
-        (game: Game) => game.Team1?.TeamName === werderData.teamName || game.Team2?.TeamName === werderData.teamName,
+        (game: Game) => game.team1?.teamName === werderData.teamName || game.team2?.teamName === werderData.teamName,
     );
     const otherGames = games?.filter(
-        (game: Game) => game.Team1?.TeamName !== werderData.teamName && game.Team2?.TeamName !== werderData.teamName,
+        (game: Game) => game.team1?.teamName !== werderData.teamName && game.team2?.teamName !== werderData.teamName,
     );
 
     if (loading) {
         return <Typography>Lade Daten...</Typography>;
     }
-    if (error || !games) {
-        return <Typography>Keine Fußballspiele gefunden</Typography>;
+    if (error || games.length === 0) {
+        return <Typography> Keine Fußballspiele gefunden</Typography>;
     }
 
     return (
@@ -61,35 +61,35 @@ const GameComponents: React.FunctionComponent<{ matches: Game[]; showGameEndText
     return (
         <Box sx={{ width: '100%' }}>
             {matches.map((match, i) => {
-                const matchResult = (match.MatchResults &&
-                    match.MatchResults.length > 0 &&
-                    match.MatchResults[0]) as MatchResult;
+                const matchResult = (match.matchResults &&
+                    match.matchResults.length > 0 &&
+                    match.matchResults[0]) as MatchResult;
 
-                const matchStatus = getMatchStatus(match?.MatchDateTime, !!matchResult, match?.MatchIsFinished);
+                const matchStatus = getMatchStatus(match?.matchDateTime, !!matchResult, match?.matchIsFinished);
 
                 const GoalText = getStyledText(colours.black, mobile ? 12 : undefined);
                 const TeamText = getStyledText(colours.black, mobile ? 12 : undefined);
                 const SmallText = getStyledText(matchStatus.colour, mobile ? 8 : 10);
 
-                const team1Name = mobile ? match.Team1?.ShortName : match.Team1?.TeamName;
-                const team2Name = mobile ? match.Team2?.ShortName : match.Team2?.TeamName;
+                const team1Name = mobile ? match.team1?.shortName : match.team1?.teamName;
+                const team2Name = mobile ? match.team2?.shortName : match.team2?.teamName;
 
                 return (
                     <Box key={i}>
                         <Stack>
                             <Tooltip
                                 title={
-                                    matchResult.ResultDescription
-                                        ? matchResult.ResultDescription
-                                        : match?.MatchDateTime &&
-                                          format(new Date(match?.MatchDateTime), 'dd/MM - HH:mm')
+                                    matchResult && matchResult.resultDescription
+                                        ? matchResult.resultDescription
+                                        : match?.matchDateTime &&
+                                          format(new Date(match?.matchDateTime), 'dd/MM - HH:mm')
                                 }
                             >
                                 <Stack direction="row" alignItems="center" spacing={1} sx={{ height: 50 }}>
                                     <Box sx={{ width: '10%' }}>
                                         <img
                                             id="homeicon"
-                                            src={match.Team1?.TeamIconUrl}
+                                            src={match.team1?.teamIconUrl}
                                             style={gamesStyle.thumpStyle}
                                         />
                                     </Box>
@@ -104,11 +104,11 @@ const GameComponents: React.FunctionComponent<{ matches: Game[]; showGameEndText
                                                 alignItems="center"
                                                 justifyContent="center"
                                             >
-                                                <GoalText>{matchResult.PointsTeam1}</GoalText>
+                                                <GoalText>{matchResult?.pointsTeam1}</GoalText>
                                                 <Typography variant="h5">-</Typography>
-                                                <GoalText>{matchResult.PointsTeam2}</GoalText>
+                                                <GoalText>{matchResult?.pointsTeam2}</GoalText>
                                             </Stack>
-                                            {showGameEndText && <SmallText>{matchStatus.status}</SmallText>}
+                                            {showGameEndText && <SmallText>{matchStatus?.status}</SmallText>}
                                         </Stack>
                                     </Box>
                                     <Box sx={{ width: '40%' }}>
@@ -117,7 +117,7 @@ const GameComponents: React.FunctionComponent<{ matches: Game[]; showGameEndText
                                     <Box sx={{ width: '10%' }}>
                                         <img
                                             id="homeicon"
-                                            src={match.Team2?.TeamIconUrl}
+                                            src={match.team2?.teamIconUrl}
                                             style={gamesStyle.thumpStyle}
                                         />
                                     </Box>

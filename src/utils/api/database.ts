@@ -27,13 +27,12 @@ export const saveData = async <T>(dataCollection: string, data: T) => {
     }
     try {
         const docRef = await addDoc(collection(db, dataCollection), data);
-        console.log('Document written with ID: ', docRef.id);
+        // console.log('Document written with ID: ', docRef.id);
         result.success = docRef.id;
     } catch (e) {
         console.error('saveData - Error adding document: ', e);
         result.error = e;
     }
-    console.log('result', result);
     return result;
 };
 

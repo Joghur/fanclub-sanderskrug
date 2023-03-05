@@ -9,6 +9,7 @@ import { thisSeason } from './utilities';
 
 const storageKeyWerderStatus = `${storageKeyPrefix}werder_league`;
 
+// TODO exchange with local axios call
 export const getLeagueStanding = async (league: League, currentSeason: string): Promise<Standing[] | undefined> => {
     const standingsUrl = getLeagueStandingUrl(league, currentSeason);
     const [value, loading] = useAxios<Standing[]>(standingsUrl);
@@ -27,9 +28,9 @@ export const werderLeagueStatus = async () => {
         for (let index = 0; index < leagues.length; index++) {
             const lg = await getLeagueStanding(leagues[index], currentSeason);
             if (lg && lg?.length > 0) {
-                const ret = lg[lg.findIndex(item => item.ShortName == shortName)];
+                const ret = lg[lg.findIndex(item => item.shortName == shortName)];
                 if (ret) {
-                    console.log(`Werder League stored for season ${currentSeason} - ${leagues[index]}`);
+                    // console.log(`Werder League stored for season ${currentSeason} - ${leagues[index]}`);
                     setLocalStorage(storageKeyWerderStatus, {
                         currentSeason: currentSeason,
                         currentLeague: leagues[index],
@@ -58,6 +59,6 @@ export const getWerderLeagueStatus = async (currentSeason: string) => {
         }
     }
 
-    console.log(`Storage Werder League found for season ${thisSeason} - ${localStorage.currentLeague}`);
+    // console.log(`Storage Werder League found for season ${thisSeason} - ${localStorage.currentLeague}`);
     return localStorage.currentLeague || 'bl1';
 };

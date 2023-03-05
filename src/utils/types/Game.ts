@@ -1,60 +1,60 @@
 import { Timestamp } from 'firebase/firestore/lite';
 
 export interface Game {
-    Goals?: Goal[];
-    Group?: Group;
-    LastUpdateDateTime?: Date;
-    LeagueId?: number;
-    LeagueName?: string;
-    LeagueSeason?: number;
-    LeagueShortcut?: string;
-    Location?: null;
-    MatchDateTime?: Date;
-    MatchDateTimeUTC?: Date;
-    MatchID?: number;
-    MatchIsFinished?: boolean;
-    MatchResults?: MatchResult[];
-    NumberOfViewers?: number;
-    Team1?: Team;
-    Team2?: Team;
-    TimeZoneID?: string;
+    goals?: Goal[];
+    group?: Group;
+    lastUpdateDateTime?: Date;
+    leagueId?: number;
+    leagueName?: string;
+    leagueSeason?: number;
+    leagueShortcut?: string;
+    location?: null;
+    matchDateTime?: Date;
+    matchDateTimeUTC?: Date;
+    matchID?: number;
+    matchIsFinished?: boolean;
+    matchResults?: MatchResult[];
+    numberOfViewers?: number;
+    team1?: Team;
+    team2?: Team;
+    timeZoneID?: string;
 }
 
 export interface MatchResult {
-    ResultID: number;
-    ResultName: string;
-    PointsTeam1: number;
-    PointsTeam2: number;
-    ResultDescription: string;
-    ResultOrderID: number;
-    ResultTypeID: number;
+    resultID: number;
+    resultName: string;
+    pointsTeam1: number;
+    pointsTeam2: number;
+    resultDescription: string;
+    resultOrderID: number;
+    resultTypeID: number;
 }
 
 export interface Goal {
-    Comment?: string;
-    GoalGetterID?: number;
-    GoalGetterName?: string;
-    GoalID?: number;
-    IsOvertime?: boolean;
-    IsOwnGoal?: boolean;
-    IsPenalty?: boolean;
-    MatchMinute?: number;
-    ScoreTeam1?: number;
-    ScoreTeam2?: number;
+    comment?: string;
+    goalGetterID?: number;
+    goalGetterName?: string;
+    goalID?: number;
+    isOvertime?: boolean;
+    isOwnGoal?: boolean;
+    isPenalty?: boolean;
+    matchMinute?: number;
+    scoreTeam1?: number;
+    scoreTeam2?: number;
 }
 
 export interface Group {
-    GroupID?: number;
-    GroupOrderID?: number;
-    GroupName?: string;
+    groupID?: number;
+    groupOrderID?: number;
+    groupName?: string;
 }
 
 export interface Team {
-    ShortName?: string;
-    TeamGroupName?: string;
-    TeamIconUrl?: string;
-    TeamId?: number;
-    TeamName?: string;
+    shortName?: string;
+    teamGroupName?: string;
+    teamIconUrl?: string;
+    teamId?: number;
+    teamName?: string;
 }
 
 export type GameType = 'league' | 'cup' | 'other';
@@ -79,9 +79,9 @@ interface NextMatchProperties {
 }
 
 export interface MatchDay {
-    GroupId: string;
-    GroupName: string;
-    GroupOrderID: number;
+    groupId: string;
+    groupName: string;
+    groupOrderID: number;
 }
 
 export interface MatchStatus {

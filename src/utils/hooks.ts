@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
 import { useSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
@@ -42,7 +42,8 @@ export const useNextMatch = () => {
             setLoading(() => false);
             return;
         }
-        console.log('Error in NextMatch: ', res.error);
+        console.log('Error in NextMatch');
+        // console.log('Error in NextMatch: ', res.error);
     };
 
     useEffect(() => {
@@ -65,7 +66,8 @@ export const useExtraCardsOrder = (gameId: string) => {
             setCards(_cards);
             return;
         }
-        console.log('Error in Cards: ', dbCards.error);
+        // console.log('Error in Cards: ', dbCards.error);
+        console.log('Error in Cards');
     };
 
     useEffect(() => {
@@ -172,7 +174,7 @@ export const useleague = (currentSeason: string) => {
 
 export const useBlMatchday = (league: string) => {
     const [blMatchDayData, setBlMatchDayData] = useState<MatchDay>();
-    const [blMatchDay, setBlMatchDay] = useState(blMatchDayData?.GroupOrderID || 0);
+    const [blMatchDay, setBlMatchDay] = useState(blMatchDayData?.groupOrderID || 0);
 
     const getMatchDayData = async (league: string) => {
         if (league.substring(0, 2) === 'bl') {
@@ -183,43 +185,80 @@ export const useBlMatchday = (league: string) => {
     };
 
     useEffect(() => {
-        if (blMatchDayData?.GroupOrderID) {
-            setBlMatchDay(() => blMatchDayData.GroupOrderID);
+        if (blMatchDayData?.groupOrderID) {
+            setBlMatchDay(() => blMatchDayData.groupOrderID);
         }
-    }, [blMatchDayData?.GroupOrderID]);
+    }, [blMatchDayData?.groupOrderID]);
 
     useEffect(() => {
         if (league) {
             getMatchDayData(league);
         }
     }, [league]);
-
     return [blMatchDay] as const;
 };
 
 export const useStandings = (league: string, year: string) => {
     const [standings, setStandings] = useState<Standing[]>([]);
     const standingsUrl = getLeagueStandingUrl(league, year);
-    const [data, loading, error] = useAxios<Standing[]>(standingsUrl || '');
+    const [loading, setLoading] = useState<boolean | undefined>(true);
+    const [error, setError] = useState<string | undefined>(undefined);
 
     useEffect(() => {
-        if (data) {
-            setStandings(data);
+        if (standingsUrl) {
+            fetchAxios(standingsUrl);
         }
-    }, [data]);
+    }, [standingsUrl]);
+
+    const fetchAxios = async (url: string) => {
+        let res: Standing[];
+        try {
+            res = await (await fetch(url)).json();
+            if (res) {
+                setStandings(() => res);
+            }
+        } catch (err) {
+            if (axios.isAxiosError(err)) {
+                const serverError = err as AxiosError<Error>;
+                if (serverError && serverError.response) {
+                    setError(serverError.response.data.message);
+                }
+            }
+        }
+        setLoading(() => false);
+    };
 
     return [standings, loading, error] as const;
 };
 
 export const useGames = (url: string) => {
     const [games, setGames] = useState<Game[]>([]);
-    const [data, loading, error] = useAxios<Game[]>(url || '');
+    const [loading, setLoading] = useState<boolean | undefined>(true);
+    const [error, setError] = useState<string | undefined>(undefined);
 
     useEffect(() => {
-        if (data) {
-            setGames(data);
+        if (url) {
+            fetchAxios(url);
         }
-    }, [data]);
+    }, [url]);
+
+    const fetchAxios = async (url: string) => {
+        let res: Game[];
+        try {
+            res = await (await fetch(url)).json();
+            if (res) {
+                setGames(() => res);
+            }
+        } catch (err) {
+            if (axios.isAxiosError(err)) {
+                const serverError = err as AxiosError<Error>;
+                if (serverError && serverError.response) {
+                    setError(serverError.response.data.message);
+                }
+            }
+        }
+        setLoading(() => false);
+    };
 
     return [games, loading, error] as const;
 };

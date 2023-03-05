@@ -40,7 +40,8 @@ export const getLocalStorage = <T>(key: string) => {
             return JSON.parse(res) as T;
         }
     } catch (error) {
-        console.log('getStorage error: ', error);
+        // console.log('getStorage error: ', error);
+        console.log('Local Storage error');
     }
     return null;
 };

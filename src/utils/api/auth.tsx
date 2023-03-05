@@ -9,7 +9,8 @@ export const logIn = async ({ email, password }: { email: string; password: stri
     try {
         userObj = await signInWithEmailAndPassword(auth, email, password);
     } catch (error) {
-        console.log('Login error: ', error);
+        // console.log('Login error: ', error);
+        console.log('Logout error');
     }
 
     return userObj;
@@ -20,7 +21,8 @@ export const logOut = async () => {
     try {
         await signOut(auth);
     } catch (error) {
-        console.log('Logout error: ', error);
+        // console.log('Logout error: ', error);
+        console.log('Logout error');
     }
 };
 
@@ -28,6 +30,7 @@ export const resetPassword = async (email: string) => {
     try {
         await sendPasswordResetEmail(auth, email, undefined);
     } catch (error) {
-        console.log('Logout error: ', error);
+        // console.log('Logout error: ', error);
+        console.log('Logout error');
     }
 };

@@ -38,7 +38,7 @@ const League = () => {
     };
 
     const playedDays = Array.from({ length: blMatchDay - 1 }, (_, i) => i + 1).reverse();
-    const futurePlayDays = Array.from({ length: amountOfMatchDays - blMatchDay }, (_, i) => i + blMatchDay + 1);
+    const futurePlayDays = Array.from({ length: amountOfMatchDays - blMatchDay }, (_, i: number) => 1 + blMatchDay + i);
     const largestArray = playedDays.length > futurePlayDays.length ? [...playedDays] : [...futurePlayDays];
 
     if (!league || !year) {
@@ -54,7 +54,7 @@ const League = () => {
                 setYear={handleChangeYear}
                 setAmountOfTeams={setAmountOfTeams}
             />
-            {league.substring(0, 2) === 'bl' && blMatchDay > 0 && (
+            {league.substring(0, 2) === 'bl' && blMatchDay > 0 && largestArray.length !== 0 && (
                 <>
                     <Box sx={{ width: largeDesktopDown ? '100%' : '45%' }}>
                         <Games url={getMatchDataUrl(league, year, blMatchDay)} matchDay={blMatchDay} />

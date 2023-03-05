@@ -148,7 +148,7 @@ const Standings = ({ year, league, setLeague, setYear, setAmountOfTeams }: Props
                             </TableHead>
                             <TableBody>
                                 {standings.map((row: Standing, index: number) => {
-                                    const isWerder = row.TeamName === 'Werder Bremen';
+                                    const isWerder = row.teamName === 'Werder Bremen';
 
                                     return (
                                         <StyledTableRow
@@ -158,7 +158,7 @@ const Standings = ({ year, league, setLeague, setYear, setAmountOfTeams }: Props
                                                     backgroundColor: 'lightgreen',
                                                 }),
                                             }}
-                                            key={row.TeamInfoId}
+                                            key={row.teamInfoId}
                                         >
                                             {pc && (
                                                 <>
@@ -166,16 +166,16 @@ const Standings = ({ year, league, setLeague, setYear, setAmountOfTeams }: Props
                                                         {index + 1}
                                                     </TableCell>
                                                     <TableCell align="center">
-                                                        <img src={row.TeamIconUrl} height="35" alt="" />
+                                                        <img src={row.teamIconUrl} height="35" alt="" />
                                                     </TableCell>
-                                                    <TableCell align="center">{row.TeamName}</TableCell>
-                                                    <TableCell align="center">{row.Matches}</TableCell>
-                                                    <TableCell align="center">{row.Points}</TableCell>
-                                                    <TableCell align="center">{row.Won}</TableCell>
-                                                    <TableCell align="center">{row.Draw}</TableCell>
-                                                    <TableCell align="center">{row.Lost}</TableCell>
+                                                    <TableCell align="center">{row.teamName}</TableCell>
+                                                    <TableCell align="center">{row.matches}</TableCell>
+                                                    <TableCell align="center">{row.points}</TableCell>
+                                                    <TableCell align="center">{row.won}</TableCell>
+                                                    <TableCell align="center">{row.draw}</TableCell>
+                                                    <TableCell align="center">{row.lost}</TableCell>
                                                     <TableCell align="center">
-                                                        {`${row.Goals} - ${row.OpponentGoals} (${row.GoalDiff})`}
+                                                        {`${row.goals} - ${row.opponentGoals} (${row.goalDiff})`}
                                                     </TableCell>
                                                 </>
                                             )}
@@ -185,12 +185,12 @@ const Standings = ({ year, league, setLeague, setYear, setAmountOfTeams }: Props
                                                         {index + 1}
                                                     </MobileTableCell>
                                                     <MobileTableCell align="center">
-                                                        {row.ShortName ? row.ShortName : row.TeamName}
+                                                        {row.shortName ? row.shortName : row.teamName}
                                                     </MobileTableCell>
-                                                    <MobileTableCell align="center">{row.Points}</MobileTableCell>
-                                                    <MobileTableCell align="center">{`${row.Won}/${row.Draw}/${row.Lost}`}</MobileTableCell>
+                                                    <MobileTableCell align="center">{row.points}</MobileTableCell>
+                                                    <MobileTableCell align="center">{`${row.won}/${row.draw}/${row.lost}`}</MobileTableCell>
                                                     <MobileTableCell align="center">
-                                                        {`${row.Goals}-${row.OpponentGoals}`}
+                                                        {`${row.goals}-${row.opponentGoals}`}
                                                     </MobileTableCell>
                                                 </>
                                             )}

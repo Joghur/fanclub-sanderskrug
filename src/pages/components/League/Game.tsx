@@ -6,10 +6,6 @@ import { getMatchStatus } from 'src/utils/utilities';
 
 import { Game, MatchResult } from '../../../utils/types/Game';
 
-//https://github.com/OpenLigaDB/OpenLigaDB-Samples/blob/master/react/app/components/Game.jsx
-
-// for matchinfo https://www.openligadb.de/api/getmatchdata/39738
-
 const GameComponent: React.FunctionComponent<{ match: Game; matchDay: number; showGameStatusText?: boolean }> = ({
     match,
     matchDay,
@@ -18,39 +14,27 @@ const GameComponent: React.FunctionComponent<{ match: Game; matchDay: number; sh
     const theme = useTheme();
     const mobile = useMediaQuery(theme.breakpoints.down('sm'));
 
-    const { Team1, Team2, MatchResults, LeagueName, MatchDateTime, MatchIsFinished } = match;
+    const { team1, team2, matchResults, leagueName, matchDateTime, matchIsFinished } = match;
 
-    const homeiconsrc = Team1?.TeamIconUrl;
-    const guesticonsrc = Team2?.TeamIconUrl;
-    const hometeamName = mobile ? Team1?.ShortName : Team1?.TeamName;
-    const guestteamName = mobile ? Team2?.ShortName : Team2?.TeamName;
-
-    // useEffect(() => {
-    //     setTimeout(() => {
-
-    //     }, 5000);
-
-    //     return () => {
-    //         second;
-    //     };
-    // }, []);
-
-    const matchDate = MatchDateTime && format(new Date(MatchDateTime), 'dd/MM-yyyy');
-    const matchHour = MatchDateTime && format(new Date(MatchDateTime), 'HH:mm');
-    const matchResult = (MatchResults && MatchResults.length > 0 && MatchResults[0]) as MatchResult;
-    const matchStatus = getMatchStatus(MatchDateTime, !!matchResult, !!MatchIsFinished);
-    // const matchIsStarted = Boolean(MatchDateTime && differenceInMinutes(new Date(), new Date(MatchDateTime)) > 0);
+    const homeiconsrc = team1?.teamIconUrl;
+    const guesticonsrc = team2?.teamIconUrl;
+    const hometeamName = mobile ? team1?.shortName : team1?.teamName;
+    const guestteamName = mobile ? team2?.shortName : team2?.teamName;
+    const matchDate = matchDateTime && format(new Date(matchDateTime), 'dd/MM-yyyy');
+    const matchHour = matchDateTime && format(new Date(matchDateTime), 'HH:mm');
+    const matchResult = (matchResults && matchResults.length > 0 && matchResults[0]) as MatchResult;
+    const matchStatus = getMatchStatus(matchDateTime, !!matchResult, !!matchIsFinished);
     const matchIsStarted = Boolean(matchResult);
-    const team1IsWerder = Team1?.TeamName === 'Werder Bremen';
+    const team1IsWerder = team1?.teamName === 'Werder Bremen';
 
     let team1Goals = 0;
 
-    const goals = match?.Goals;
+    const goals = match?.goals;
 
     return (
         <Card variant="outlined">
             <Stack alignItems="center">
-                <CardContent>{LeagueName}</CardContent>
+                <CardContent>{leagueName}</CardContent>
                 <CardContent>
                     <Stack alignItems="center">
                         <Typography variant="h6">{matchDay}. Spieltag</Typography>
@@ -69,9 +53,9 @@ const GameComponent: React.FunctionComponent<{ match: Game; matchDay: number; sh
                         <p id="guestteamname">{guestteamName}</p>
                     </div>
                     <div style={gamesStyle.imgDiv}>
-                        <Tooltip title={matchResult?.ResultDescription}>
+                        <Tooltip title={matchResult?.resultDescription}>
                             <Typography variant="h4">
-                                {matchIsStarted && `${matchResult?.PointsTeam1} - ${matchResult?.PointsTeam2}`}
+                                {matchIsStarted && `${matchResult?.pointsTeam1} - ${matchResult?.pointsTeam2}`}
                             </Typography>
                         </Tooltip>
                     </div>
@@ -90,7 +74,7 @@ const GameComponent: React.FunctionComponent<{ match: Game; matchDay: number; sh
                         <Stack spacing={1}>
                             {goals &&
                                 goals.map(o => {
-                                    const team1Scored = o.ScoreTeam1 !== team1Goals;
+                                    const team1Scored = o.scoreTeam1 !== team1Goals;
 
                                     if (team1Scored) {
                                         team1Goals++;
@@ -100,7 +84,7 @@ const GameComponent: React.FunctionComponent<{ match: Game; matchDay: number; sh
                                         (team1Scored && team1IsWerder) || (!team1Scored && !team1IsWerder);
 
                                     return (
-                                        <Typography key={o.GoalID}>
+                                        <Typography key={o.goalID}>
                                             <Stack direction="row" alignItems="center" spacing={1}>
                                                 <span
                                                     style={{
@@ -109,26 +93,26 @@ const GameComponent: React.FunctionComponent<{ match: Game; matchDay: number; sh
                                                         padding: '5px 4px 4px 5px',
                                                         borderRadius: 20,
                                                     }}
-                                                >{`${o.ScoreTeam1}-${o.ScoreTeam2}`}</span>
-                                                <span>{`${o.MatchMinute}'`}</span>
-                                                <span> {`${o.GoalGetterName}`}</span>
+                                                >{`${o.scoreTeam1}-${o.scoreTeam2}`}</span>
+                                                <span>{`${o.matchMinute}'`}</span>
+                                                <span> {`${o.goalGetterName}`}</span>
                                                 <span
                                                     style={{
                                                         color: 'red',
                                                     }}
                                                 >
-                                                    {`${o.IsPenalty ? 'Elfmeter' : ''}`}
+                                                    {`${o.isPenalty ? 'Elfmeter' : ''}`}
                                                 </span>
                                                 <span
                                                     style={{
                                                         color: 'red',
                                                     }}
-                                                >{`${o.IsOwnGoal ? 'Eigentor' : ''}`}</span>
+                                                >{`${o.isOwnGoal ? 'Eigentor' : ''}`}</span>
                                                 <span
                                                     style={{
                                                         color: 'red',
                                                     }}
-                                                >{`${o.IsOvertime ? 'Nachspielzeit' : ''}`}</span>
+                                                >{`${o.isOvertime ? 'Nachspielzeit' : ''}`}</span>
                                             </Stack>
                                         </Typography>
                                     );
