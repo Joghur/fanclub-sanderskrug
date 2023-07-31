@@ -1,7 +1,7 @@
-import { Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { getAuth } from 'firebase/auth';
-
 import { useNextMatch } from 'src/utils/hooks';
+
+import { Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
 
 import AdminPart from './components/CardOrdering/AdminPart';
 import CardownerPart from './components/CardOrdering/CartownerPart';
@@ -32,13 +32,13 @@ const CardOrdering = () => {
                     {auth.currentUser && <AdminPart gameId={nextMatch.gameId} nextMatch={nextMatch} />}
                 </>
             )}
-            {(!nextMatch.gameId || !nextMatch.active) && (
+            {/* {(!nextMatch.gameId || !nextMatch.active) && (
                 <Stack>
                     {auth.currentUser && (
                         <Typography variant="h5">Karteninhaber können keine Zusatzkarten bestellen</Typography>
                     )}
                 </Stack>
-            )}
+            )} */}
         </Stack>
     );
 };

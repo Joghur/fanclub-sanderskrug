@@ -1,25 +1,18 @@
-import BookOnline from '@mui/icons-material/BookOnline';
-import HomeRounded from '@mui/icons-material/HomeRounded';
-import MenuIcon from '@mui/icons-material/Menu';
-import SportsSoccerIcon from '@mui/icons-material/SportsSoccer';
-import {
-    AppBar,
-    BottomNavigation,
-    BottomNavigationAction,
-    Box,
-    IconButton,
-    Menu,
-    Stack,
-    Typography,
-} from '@mui/material';
-import { Container } from '@mui/system';
 import { getAuth } from 'firebase/auth';
 import { IKImage } from 'imagekitio-react';
 import { useCallback, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useMeasure } from 'react-use';
-
 import { colours } from 'src/utils/colours';
+
+import BookOnline from '@mui/icons-material/BookOnline';
+import HomeRounded from '@mui/icons-material/HomeRounded';
+import MenuIcon from '@mui/icons-material/Menu';
+import SportsSoccerIcon from '@mui/icons-material/SportsSoccer';
+import {
+    AppBar, BottomNavigation, BottomNavigationAction, Box, IconButton, Menu, Stack, Typography
+} from '@mui/material';
+import { Container } from '@mui/system';
 
 const Header = () => {
     const navigate = useNavigate();
@@ -111,7 +104,7 @@ const Header = () => {
                         }
                     />
                 )} */}
-                <BottomNavigationAction
+                {/* <BottomNavigationAction
                     label="Liga"
                     value="liga"
                     icon={
@@ -123,7 +116,7 @@ const Header = () => {
                             }}
                         />
                     }
-                />
+                /> */}
                 <BottomNavigationAction
                     label="Sander's Krug"
                     value="info"
@@ -206,7 +199,7 @@ const Header = () => {
                                 </NavLink>
                             </Box>
                         )} */}
-                        <Box sx={{ minWidth: 100, display: { xs: 'none', sm: 'flex' } }}>
+                        {/* <Box sx={{ minWidth: 100, display: { xs: 'none', sm: 'flex' } }}>
                             <NavLink
                                 to="liga"
                                 style={({ isActive }) => ({
@@ -231,7 +224,7 @@ const Header = () => {
                                     <Typography>Bundesliga</Typography>
                                 </Box>
                             </NavLink>
-                        </Box>
+                        </Box> */}
                         <Box sx={{ minWidth: 100, display: { xs: 'none', sm: 'flex' } }}>
                             <NavLink
                                 to="/info"
